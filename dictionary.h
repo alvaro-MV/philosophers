@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dictionary.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:23 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/12 22:09:26 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/13 02:04:44 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 typedef struct s_t_dic_entry
 {
 	char	*key;
-	char	*value;
+	//char	*value;
+	int		fork_held;
 }			t_dic_entry;
 
 typedef struct dict
@@ -37,7 +38,7 @@ typedef struct dict
 t_dictionary	*dict_init(int capacity);
 void			dict_insert(t_dictionary **dic_p, t_dic_entry *entry);
 int				dict_expand(t_dictionary **dic_pointer);
-char			*dict_get(t_dictionary *dic, char *key);
+int				dict_get(t_dictionary *dic, char *key);
 unsigned int	dict_hash(char *key);
 void			dict_delete(t_dictionary *dic);
 

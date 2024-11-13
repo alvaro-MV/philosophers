@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   dictionary2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:31 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/12 22:09:32 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/13 02:04:09 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dictionary.h"
 
-char	*dict_get(t_dictionary *dic, char *key)
+int	dict_get(t_dictionary *dic, char *key)
 {
 	unsigned int	index;
 	unsigned int	counter;
@@ -25,7 +25,7 @@ char	*dict_get(t_dictionary *dic, char *key)
 	{
 		if (dic->entries[index]
 			&& !strcmp(dic->entries[index]->key, key))
-			return (dic->entries[index]->value);
+			return (dic->entries[index]->fork_held);
 		index++;
 		if (index == dic->capacity - 1)
 			index = 0;
@@ -62,7 +62,7 @@ void	dict_delete(t_dictionary *dic)
 		if (dic->entries[i] != NULL)
 		{
 			free(dic->entries[i]->key);
-			free(dic->entries[i]->value);
+			//free(dic->entries[i]->value);
 		}
 		free(dic->entries[i]);
 		i++;
