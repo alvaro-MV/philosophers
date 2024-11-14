@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/14 20:14:27 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/14 21:25:40 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHILO_H
+# define PHILO_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +19,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include "dictionary.h"
+#include <sys/time.h>
+#include <time.h>
 
 typedef struct s_philo	
 {
@@ -26,5 +30,16 @@ typedef struct s_philo
 	int				*forks_in_use;
 }					t_philo;
 
-void    ft_putstr_fd(char *s, int fd);
-void    ft_putnbr_fd(int n, int fd);
+void    			ft_putstr_fd(char *s, int fd);
+void    			ft_putnbr_fd(int n, int fd);
+void				manage_usleep(__useconds_t	usenconds);
+unsigned long long	get_actual_time(void);
+unsigned long long	get_timestamp(unsigned long long timestamp);
+
+void	take_fork_log(unsigned long long timestamp, t_philo *args);
+void	eating_log(unsigned long long timestamp, t_philo *args);
+void	sleeping_log(unsigned long long timestamp, t_philo *args);
+void	thinking_log(unsigned long long timestamp, t_philo *args);
+void	died_log(unsigned long long timestamp, t_philo *args);
+
+#endif

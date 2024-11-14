@@ -12,33 +12,30 @@
 
 #include "philo.h"
 
-int	compatible(t_philo *args)
-{
-	int	tid;
-	tid = args->tid;
-	if (!args->forks_in_use[tid] && !args->forks_in_use[tid])
-		return (1);
-	else
-		return (0);
-}
-
 void	*philo_routine(void *vargs)
 {
-	t_philo	*args;
+	t_philo				*args;
+	unsigned long long	timestamp;
 
 	args = (t_philo *) vargs;
 	pthread_mutex_lock(args->forks_mutex);
 
 	if (!compatible(args))
 		manage_usleep(1);
+	timestamp = get_actual_time();
 	pthread_mutex_lock(&args->forks_mutex[args->tid]);
+	take_fork_log(timestamp, args);
 	args->forks_in_use[args->tid] = 1;
 	pthread_mutex_lock(&args->forks_mutex[(args->tid + 1) % 5]);
+	take_fork_log(timestamp, args);
 	args->forks_in_use[(args->tid) % 5] = 1;
-	ft_putnbr_fd(get)
-	ft_putstr_fd(" has taken a fork", 1);
+	eating__log(timestamp, args),
+
+	usleep(1); //Número aleatorio tmstmp para sobar.
+	sleeping_log(timestamp, args),
+	usleep(1);
+	thinking_log(timestamp, args);
 	pthread_mutex_unlock(args->forks_mutex);
-	
 }
 
 int	main(void)
