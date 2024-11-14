@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/13 02:17:57 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:14:27 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,3 +25,6 @@ typedef struct s_philo
 	int				tid;
 	int				*forks_in_use;
 }					t_philo;
+
+void    ft_putstr_fd(char *s, int fd);
+void    ft_putnbr_fd(int n, int fd);

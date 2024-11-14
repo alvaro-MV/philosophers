@@ -35,7 +35,8 @@ void	*philo_routine(void *vargs)
 	args->forks_in_use[args->tid] = 1;
 	pthread_mutex_lock(&args->forks_mutex[(args->tid + 1) % 5]);
 	args->forks_in_use[(args->tid) % 5] = 1;
-
+	ft_putnbr_fd(get)
+	ft_putstr_fd(" has taken a fork", 1);
 	pthread_mutex_unlock(args->forks_mutex);
 	
 }
