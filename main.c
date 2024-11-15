@@ -16,28 +16,34 @@ void	*philo_routine(void *vargs)
 {
 	t_philo				*args;
 	unsigned long long	timestamp;
+	int					i;
 
 	args = (t_philo *) vargs;
 	pthread_mutex_lock(args->forks_mutex);
-
-	if (!compatible(args))
-		manage_usleep(1);
-	timestamp = get_actual_time();
-	pthread_mutex_lock(&args->forks_mutex[args->tid]);
-	take_fork_log(timestamp, args);
-	args->forks_in_use[args->tid] = 1;
-	pthread_mutex_lock(&args->forks_mutex[(args->tid + 1) % 5]);
-	take_fork_log(timestamp, args);
-	args->forks_in_use[(args->tid) % 5] = 1;
-	eating__log(timestamp, args),
-
-	usleep(1); //Número aleatorio tmstmp para sobar.
-	sleeping_log(timestamp, args),
-	usleep(1);
-	thinking_log(timestamp, args);
-	pthread_mutex_unlock(args->forks_mutex);
+	i = 0;
+	while (i++ < args->n_of_eats)
+	{
+		if (!compatible(args))
+			manage_usleep(1);
+		timestamp = get_actual_time();
+		pthread_mutex_lock(&args->forks_mutex[args->tid]);
+		take_fork_log(timestamp, args);
+		args->forks_in_use[args->tid] = 1;
+		pthread_mutex_lock(&args->forks_mutex[(args->tid + 1) % 5]);
+		take_fork_log(timestamp, args);
+		args->forks_in_use[(args->tid) % 5] = 1;
+		eating__log(timestamp, args),
+		usleep(1); //Número aleatorio tmstmp para sobar.
+		sleeping_log(timestamp, args),
+		usleep(1);
+		thinking_log(timestamp, args);
+		pthread_mutex_unlock(args->forks_mutex);
+	}
 }
 
+/*
+	Crear dos funciones, una para 
+*/
 int	main(void)
 {
 	pthread_t	forks[5];

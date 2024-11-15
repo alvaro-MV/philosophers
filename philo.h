@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/14 21:25:40 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/15 00:51:48 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 
 typedef struct s_philo	
 {
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				n_of_eats;
 	pthread_mutex_t	*forks_mutex;
 	pthread_mutex_t	*forks;
 	int				tid;
