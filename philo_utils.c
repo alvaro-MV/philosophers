@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 21:08:19 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/14 21:17:22 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:42:41 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	compatible(t_philo *args)
 {
 	int	tid;
 	tid = args->tid;
-	if (!args->forks_in_use[tid] && !args->forks_in_use[tid])
+	if (!args->forks_used[tid] && !args->forks_used[tid])
 		return (1);
 	else
 		return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:12 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/12 22:31:56by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:39:29by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,68 +19,96 @@ void	*philo_routine(void *vargs)
 	int					i;
 
 	args = (t_philo *) vargs;
-	pthread_mutex_lock(args->forks_mutex);
+	pthread_mutex_lock(args->general_vars.proc_mutex);
 	i = 0;
-	while (i++ < args->n_of_eats)
+	while (i++ < args->general_vars.n_of_eats)
 	{
 		if (!compatible(args))
 			manage_usleep(1);
 		timestamp = get_actual_time();
-		pthread_mutex_lock(&args->forks_mutex[args->tid]);
+		pthread_mutex_lock(&args->general_vars.proc_mutex[args->tid]);
 		take_fork_log(timestamp, args);
-		args->forks_in_use[args->tid] = 1;
-		pthread_mutex_lock(&args->forks_mutex[(args->tid + 1) % 5]);
+		args->general_vars.forks_used[args->tid] = 1;
+		pthread_mutex_lock(&args->general_vars.proc_mutex[(args->tid + 1) % 5]);
 		take_fork_log(timestamp, args);
-		args->forks_in_use[(args->tid) % 5] = 1;
+		args->general_vars.forks_used[(args->tid) % 5] = 1;
 		eating__log(timestamp, args),
 		usleep(1); //Número aleatorio tmstmp para sobar.
 		sleeping_log(timestamp, args),
 		usleep(1);
 		thinking_log(timestamp, args);
-		pthread_mutex_unlock(args->forks_mutex);
+		pthread_mutex_unlock(args->general_vars.proc_mutex);
 	}
 }
 
-/*
-	Crear dos funciones, una para 
-*/
-int	main(void)
+void	init_protect_mutex(t_general_vars *general_vars)
 {
+	if (pthread_mutex_init(general_vars->proc_mutex, NULL))
+	{
+		write(2, "Mala creasion\n", 15);
+		exit(-1);
+	}
+}
+
+void	init_forks(t_general_vars *general_vars)
+{
+	int	i;
 	pthread_t	forks[5];
-	pthread_t	philosophers[5];
-	t_philo		arg[5];
-	int			i;
-	int			*forks_in_use;
 
 	i = 0;
-	forks_in_use = (int *) ft_calloc(5, sizeof(int));
+	general_vars->forks_used = (int *) ft_calloc(5, sizeof(int));
+	if (!general_vars->forks_used)
+		exit (-1);
+	free(general_vars->forks_used);
 	while (i < 5)
 	{
 		if (pthread_mutex_init(forks[i], NULL));
 		{
-			write(1, "Mala creasion\n", 15);
+			write(2, "Mala creasion\n", 15);
 			exit(-1);
 		}
+		free(general_vars->forks_used);
 	}
-	i = 0;
-	while (i < 5)
-	{
-		if (pthread_mutex_init(&arg[i].forks_mutex, NULL))
-		{
-			write(1, "Mala creasion\n", 15);
-			exit(-1);
-		}
-		arg[i].forks = forks;
-		arg[i].tid = i;
-		arg[i].forks_in_use = forks_in_use;
-		if (pthread_create(philosophers[i++], NULL, philo_routine, &arg[i]));
-		{
-			write(1, "Mala creasion\n", 15);
-			exit(-1);
-		}
-	}
+	general_vars->forks = forks;
+}
+
+void	wait_philos(pthread_t *philosophers)
+{
+	int	i;
+
 	i = 0;
 	while (i < 5)
 		pthread_join(philosophers[i++], NULL);
-	free(forks_in_use);
+}
+
+void	run_philos(t_general_vars *general_vars)
+{
+	int			i;
+	t_philo		arg[5];
+	pthread_t	philosophers[5];
+
+	i = 0;
+	while (i < 5)
+	{
+		arg[i].general_vars = *general_vars;	
+		arg[i].tid = i;
+		if (pthread_create(philosophers[i++], NULL, philo_routine, &arg[i]));
+		{
+			wite(2, "Mala creasion\n", 15);
+			free(general_vars->forks_used);
+			exit(-1);
+		}
+	}
+	wait_philos(philosophers);
+}
+
+int	main(void)
+{
+	t_general_vars	general_vars;
+
+	// Parseo necesario: Nuevos campos dentro de la estructura: los philos y toda la hostia.
+	init_protect_mutex(&general_vars);
+	init_forks(&general_vars);
+	run_philos(&general_vars);
+	free_forks(&general_vars);
 }
