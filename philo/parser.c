@@ -22,9 +22,9 @@ int	is_in_range_of_ulong(char *next_n)
 
 	if (!check_number(next_n))
 		return (0);
-	max_common = "cholonnnnnnn";
+	max_common = "1844674407370955161"; //20 dígitos.
 	len = ft_strlen(next_n) - 1;
-	if (len + 1 > 20) //20 es el numero de digito sde ULLON_MAX
+	if (len + 1 > 21) //20 es el numero de digito sde ULLON_MAX
 		return (0);
 	else if (len + 1 < 20)
 		return (1);
@@ -37,29 +37,44 @@ int	is_in_range_of_ulong(char *next_n)
 		return (free(ch_number), 1);
 }
 
+int	is_in_range_of_ulong(char *next_n)
+{
+	size_t				len;
+	unsigned long long	max_common;
+	char				*ch_number;
+
+	if (!check_number(next_n))
+		return (0);
+	max_common = 1844674407370955161; //20 dígitos.
+	len = ft_strlen(next_n) - 1;
+	if (len + 1 > 21) //20 es el numero de digito sde ULLON_MAX
+		return (0);
+	else if (len + 1 < 21)
+		return (1);
+	ch_number = ft_substr(next_n, 0, len);
+	if (ft_atoul(ch_number) > max_common) //Crear la function ft_atoul
+		return (free(ch_number), 0);
+	else if (next_n[len] > '5') //la ultima cifra
+		return (free(ch_number), 0);
+	else
+		return (free(ch_number), 1);
+}
 int	is_in_range_of_uint(char *next_n)
 {
 	size_t	len;
 	int		max_common;
 	char	*ch_number;
-	int		sign;
 
 	len = ft_strlen(next_n) - 1;
-	sign = next_n[0] == '-';
-	max_common = 214748364;
-	if (len + 1 > 11 || (len + 1 == 11 && !sign))
+	max_common = 429496729;
+	if (len + 1 > 11)
 		return (0);
-	else if (len + 1 < 10)
+	else if (len + 1 < 11)
 		return (1);
-	if (next_n[0] == '-')
-	{
-		next_n++;
-		len--;
-	}
 	ch_number = ft_substr(next_n, 0, len);
-	if (ft_atoi(ch_number) > max_common)
+	if (ft_atoui(ch_number) > max_common)
 		return (free(ch_number), 0);
-	else if ((sign && next_n[len] > '8') || (!sign && next_n[len] > '7'))
+	else if (next_n[len] > '5')
 		return (free(ch_number), 0);
 	else
 		return (free(ch_number), 1);

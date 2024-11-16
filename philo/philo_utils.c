@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 21:08:19 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/16 01:50:47 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:54:07by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,9 @@ int	compatible(t_philo *args)
 unsigned long long	get_actual_time(void)
 {
 	struct timeval		tv;
-	unsigned long long	timestamp;
 
 	gettimeofday(&tv, NULL);
-	timestamp = tv.tv_sec * 1000 + tv.tv_usec / 1000 - timestamp;
-	return (timestamp);
+	return (tv.tv_usec);
 }
 
 unsigned long long	get_timestamp(unsigned long long timestamp)
@@ -41,3 +39,22 @@ unsigned long long	get_timestamp(unsigned long long timestamp)
 	timestamp = get_actual_time() - timestamp;
 	return (timestamp);
 }
+
+// int	main(void)
+// {
+// 	unsigned long long	timestamp;
+// 	unsigned long long	zero_tmstmp;
+// 	struct timeval		tv;
+// 	int	i = 0;
+
+// 	gettimeofday(&tv, NULL);
+// 	zero_tmstmp = tv.tv_usec;
+// 	while (i < 7)
+// 	{
+// 		gettimeofday(&tv, NULL);
+// 		timestamp = tv.tv_usec - zero_tmstmp;
+// 		printf("Paco Javier: %llu\n", timestamp);
+// 		i++;
+// 	}
+// 	return (0);
+// }
