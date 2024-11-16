@@ -12,35 +12,6 @@
 
 #include "philo.h"
 
-void	*philo_routine(void *vargs)
-{
-	t_philo				*args;
-	unsigned long long	timestamp;
-	int					i;
-
-	args = (t_philo *) vargs;
-	pthread_mutex_lock(args->general_vars.proc_mutex);
-	i = 0;
-	while (i++ < args->general_vars.n_of_eats)
-	{
-		if (!compatible(args))
-			manage_usleep(1);
-		timestamp = get_actual_time();
-		pthread_mutex_lock(&args->general_vars.proc_mutex[args->tid]);
-		take_fork_log(timestamp, args);
-		args->general_vars.forks_used[args->tid] = 1;
-		pthread_mutex_lock(&args->general_vars.proc_mutex[(args->tid + 1) % 5]);
-		take_fork_log(timestamp, args);
-		args->general_vars.forks_used[(args->tid) % 5] = 1;
-		eating__log(timestamp, args),
-		usleep(1); //Número aleatorio tmstmp para sobar.
-		sleeping_log(timestamp, args),
-		usleep(1);
-		thinking_log(timestamp, args);
-		pthread_mutex_unlock(args->general_vars.proc_mutex);
-	}
-}
-
 void	init_protect_mutex(t_general_vars *general_vars)
 {
 	if (pthread_mutex_init(general_vars->proc_mutex, NULL))
@@ -102,11 +73,17 @@ void	run_philos(t_general_vars *general_vars)
 	wait_philos(philosophers);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_general_vars	general_vars;
 
-	// Parseo necesario: Nuevos campos dentro de la estructura: los philos y toda la hostia.
+	if (argc < 5 || argc > 6)
+	{
+		write(1, "Format: ./philo <n_philo> <time_to_die> <time_to_eat>", 54);
+		write(1, "<time_to_sleep> [n_times_must_eat]", 35);
+		exit(1);
+	}
+	argv++;
 	init_protect_mutex(&general_vars);
 	init_forks(&general_vars);
 	run_philos(&general_vars);

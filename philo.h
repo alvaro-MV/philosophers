@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/15 14:11:42 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/16 01:46:59 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <time.h>
+#include <limits.h>
 
 typedef struct s_general_vars
 {
 	pthread_mutex_t	*proc_mutex;
 	pthread_mutex_t *forks;
+	int				n_philo;
 	int				*forks_used;	
 	int				time_to_die;
 	int				time_to_eat;
@@ -39,13 +41,16 @@ typedef struct s_philo
 	int				tid;
 }					t_philo;
 
-
+# define MAX_PHILOS 50
+# define WAI_T 5
 
 void    			ft_putstr_fd(char *s, int fd);
 void    			ft_putnbr_fd(int n, int fd);
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	get_timestamp(unsigned long long timestamp);
+
+void				*philo_routine(void *vargs);
 
 void				take_fork_log(unsigned long long timestamp, t_philo *args);
 void				eating_log(unsigned long long timestamp, t_philo *args);
