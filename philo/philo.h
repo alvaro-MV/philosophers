@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/16 01:46:59 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/17 12:49:21 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -22,6 +23,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <limits.h>
+#include "libft/libft.h"
 
 typedef struct s_general_vars
 {
@@ -44,8 +46,6 @@ typedef struct s_philo
 # define MAX_PHILOS 50
 # define WAI_T 5
 
-void    			ft_putstr_fd(char *s, int fd);
-void    			ft_putnbr_fd(int n, int fd);
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	get_timestamp(unsigned long long timestamp);
