@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/17 12:49:21 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/17 13:08:14 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@
 
 typedef struct s_general_vars
 {
-	pthread_mutex_t	*proc_mutex;
-	pthread_mutex_t *forks;
-	int				n_philo;
-	int				*forks_used;	
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				n_of_eats;
-}					t_general_vars;
+	pthread_mutex_t		*proc_mutex;
+	pthread_mutex_t 	*forks;
+	unsigned int		n_philo;
+	int					*forks_used;	
+	unsigned long long	time_to_die;
+	unsigned long long	time_to_eat;
+	unsigned long long	time_to_sleep;
+	unsigned int		n_of_eats;
+}						t_general_vars;
 
 typedef struct s_philo	
 {

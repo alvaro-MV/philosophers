@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 	{
 		write(1, "Format: ./philo <n_philo> <time_to_die> <time_to_eat>", 54);
-		write(1, "<time_to_sleep> [n_times_must_eat]", 35);
+		write(1, " <time_to_sleep> [n_times_must_eat]", 35);
 		exit(1);
 	}
 	argv++;
