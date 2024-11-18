@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/18 10:06:48 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/18 11:32:10 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ typedef struct s_philo
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	time_diff_usecs(unsigned long long start);
+void				parse_input(t_general_vars *general_vars, char **argv);
+void				philo_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
+
 
 void				*philo_routine(void *vargs);
 

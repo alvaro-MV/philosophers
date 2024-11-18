@@ -91,22 +91,22 @@ void	parse_input(t_general_vars *general_vars, char **argv)
 	}
 }
 
-int	main(int argc, char **argv)
-{
-	t_general_vars	general_vars;
+//int	main(int argc, char **argv)
+//{
+	//t_general_vars	general_vars;
 	
-	if (argc < 5 || argc > 6)
-	{
-		write(1, "Format: ./philo <n_philo> <time_to_die> <time_to_eat>", 54);
-		write(1, " <time_to_sleep> [n_times_must_eat]", 35);
-		exit(1);
-	}
-	argv++;
-	parse_input(&general_vars, argv);
-	printf("gen->n_philo: %u\n", general_vars.n_philo);
-	printf("gen->time_to_die: %llu\n", general_vars.time_to_die);
-	printf("gen->time_to_eat: %llu\n", general_vars.time_to_eat);
-	printf("gen->time_to_sleep: %llu\n", general_vars.time_to_sleep);
-	if (argc  == 6)
-		printf("gen->n_of_eats: %u\n", general_vars.n_of_eats);
-}
+	//if (argc < 5 || argc > 6)
+	//{
+		//write(1, "Format: ./philo <n_philo> <time_to_die> <time_to_eat>", 54);
+		//write(1, " <time_to_sleep> [n_times_must_eat]", 35);
+		//exit(1);
+	//}
+	//argv++;
+	//parse_input(&general_vars, argv);
+	//printf("gen->n_philo: %u\n", general_vars.n_philo);
+	//printf("gen->time_to_die: %llu\n", general_vars.time_to_die);
+	//printf("gen->time_to_eat: %llu\n", general_vars.time_to_eat);
+	//printf("gen->time_to_sleep: %llu\n", general_vars.time_to_sleep);
+	//if (argc  == 6)
+		//printf("gen->n_of_eats: %u\n", general_vars.n_of_eats);
+//}

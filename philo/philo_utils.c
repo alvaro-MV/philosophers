@@ -40,9 +40,29 @@ unsigned long long	time_diff_usecs(unsigned long long start)
 	return (start);
 }
 
-void	check_philo_died(void)
+void	philo_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
 {
-	
+	unsigned int	n_philo;
+	pthread_mutex_t		*forks;
+
+	n_philo = gen_vars->n_philo;
+	gen_vars->forks_used = (int *) ft_calloc(n_philo, sizeof(int));
+	forks = (pthread_mutex_t *) ft_calloc(n_philo, sizeof(pthread_mutex_t));
+	if (!forks)
+		ft_free_exit(gen_vars->forks_used);
+	args = (t_philo *) ft_calloc(n_philo, sizeof(t_philo));
+	if (!args)
+	{
+		free(gen_vars->forks_used);
+		ft_free_exit(gen_vars->forks);
+	}
+	philo = (pthread_t *) ft_calloc(n_philo, sizeof(pthread_t));
+	if (!philo)
+	{
+		free(gen_vars->forks_used);
+		free(gen_vars->forks);
+		ft_free_exit(args);
+	}
 }
 
 // int	main(void)
