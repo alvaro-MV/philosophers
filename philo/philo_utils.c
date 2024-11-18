@@ -34,10 +34,15 @@ unsigned long long	get_actual_time(void)
 	return (tv.tv_usec);
 }
 
-unsigned long long	get_timestamp(unsigned long long timestamp)
+unsigned long long	time_diff_usecs(unsigned long long start)
 {
-	timestamp = get_actual_time() - timestamp;
-	return (timestamp);
+	start = get_actual_time() - start;
+	return (start);
+}
+
+void	check_philo_died(void)
+{
+	
 }
 
 // int	main(void)

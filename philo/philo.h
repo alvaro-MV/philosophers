@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/17 13:08:14 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/18 10:06:48 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo
 
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
-unsigned long long	get_timestamp(unsigned long long timestamp);
+unsigned long long	time_diff_usecs(unsigned long long start);
 
 void				*philo_routine(void *vargs);
 

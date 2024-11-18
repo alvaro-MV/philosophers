@@ -40,6 +40,7 @@ unsigned long long	eat_routine(t_philo *args)
 	take_fork_log(timestamp, args);
 	args->general_vars.forks_used[args->tid] = 1;
 	pthread_mutex_lock(&gen.proc_mutex[(args->tid + 1) % gen.n_philo]);
+	timestamp = get_actual_time();
 	take_fork_log(timestamp, args);
 	gen.forks_used[(args->tid) % gen.n_philo] = 1;
 
