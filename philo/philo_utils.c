@@ -14,16 +14,15 @@
 
 int	compatible(t_philo *args)
 {
-	int	tid;
+	t_general_vars gen;
 
-	tid = args->tid;
-	if (!args->general_vars.forks_used[tid])
+	gen = args->general_vars;
+	if (!gen.forks_used[args->tid])
 	{
-		if (!args->general_vars.forks_used[(tid + 1) % 5])
+		if (!gen.forks_used[(args->tid + 1) % gen.n_philo])
 			return (1);
 	}
-	else
-		return (0);
+	return (0);
 }
 
 unsigned long long	get_actual_time(void)
@@ -40,7 +39,7 @@ unsigned long long	time_diff_usecs(unsigned long long start)
 	return (start);
 }
 
-void	philo_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
+void	p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
 {
 	unsigned int	n_philo;
 	pthread_mutex_t		*forks;
@@ -63,6 +62,14 @@ void	philo_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
 		free(gen_vars->forks);
 		ft_free_exit(args);
 	}
+}
+
+void	p_free(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
+{
+	free(gen_vars->forks_used);
+	free(gen_vars->forks);
+	free(args);
+	ft_free_exit(philo);
 }
 
 // int	main(void)

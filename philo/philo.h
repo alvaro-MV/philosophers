@@ -6,29 +6,29 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/18 11:32:10 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/18 13:27:40 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <pthread.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <time.h>
-#include <limits.h>
-#include "libft/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <pthread.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <unistd.h>
+# include <sys/time.h>
+# include <time.h>
+# include <limits.h>
+# include "libft/libft.h"
 
 typedef struct s_general_vars
 {
 	pthread_mutex_t		*proc_mutex;
-	pthread_mutex_t 	*forks;
+	pthread_mutex_t		*forks;
 	unsigned int		n_philo;
 	int					*forks_used;	
 	unsigned long long	time_to_die;
@@ -37,10 +37,12 @@ typedef struct s_general_vars
 	unsigned int		n_of_eats;
 }						t_general_vars;
 
-typedef struct s_philo	
+typedef struct	s_philo	
 {
-	t_general_vars	general_vars;
-	int				tid;
+	t_general_vars		general_vars;
+	int					tid;
+	pthread_t			thread_ptr;
+	unsigned long long	time_last_meal;
 }					t_philo;
 
 # define MAX_PHILOS 50
@@ -50,15 +52,17 @@ void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	time_diff_usecs(unsigned long long start);
 void				parse_input(t_general_vars *general_vars, char **argv);
-void				philo_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
-
+void				p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
+void				p_free(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
 
 void				*philo_routine(void *vargs);
+void				*manager_routine(t_philo *arr_args);
 
-void				take_fork_log(unsigned long long timestamp, t_philo *args);
-void				eating_log(unsigned long long timestamp, t_philo *args);
-void				sleeping_log(unsigned long long timestamp, t_philo *args);
-void				thinking_log(unsigned long long timestamp, t_philo *args);
-void				died_log(unsigned long long timestamp, t_philo *args);
+void				take_forks(t_philo *args);
+void				take_fork_log(t_philo *args);
+void				eating_log(t_philo *args);
+void				sleeping_log(t_philo *args);
+void				thinking_log(t_philo *args);
+void				died_log(t_philo *args);
 
 #endif

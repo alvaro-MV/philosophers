@@ -1,26 +1,41 @@
 #include "philo.h"
 
-void	take_fork_log(unsigned long long timestamp, t_philo *args)
+void	take_fork_log(t_philo *args)
 {
-	printf("%llu %d has taken a fork", time_diff_usecs(timestamp), args->tid);
+	unsigned long long 	time;
+	
+	time = get_actual_time();
+	printf("%llu %d has taken a fork", time, args->tid);
 }
 
-void	eating_log(unsigned long long timestamp, t_philo *args)
+void	eating_log(t_philo *args)
 {
-	printf("%llu %d is eating", time_diff_usecs(timestamp), args->tid);
+	unsigned long long 	time;
+	
+	time = get_actual_time();
+	printf("%llu %d is eating", time, args->tid);
 }
 
-void	sleeping_log(unsigned long long timestamp, t_philo *args)
+void	sleeping_log(t_philo *args)
 {
-	printf("%llu %d is sleeping", time_diff_usecs(timestamp), args->tid);	
+	unsigned long long 	time;
+	
+	time = get_actual_time();
+	printf("%llu %d is sleeping", time, args->tid);	
 }
 
-void	thinking_log(unsigned long long timestamp, t_philo *args)
+void	thinking_log(t_philo *args)
 {
-	printf("%llu %d is thinking", time_diff_usecs(timestamp), args->tid);	
+	unsigned long long 	time;
+	
+	time = get_actual_time();
+	printf("%llu %d is thinking", time, args->tid);	
 }
 
-void	died_log(unsigned long long timestamp, t_philo *args)
+void	died_log(t_philo *args)
 {
-	printf("%llu %d is thinking", time_diff_usecs(timestamp), args->tid);	
+	unsigned long long 	time;
+	
+	time = get_actual_time();
+	printf("%llu %d is thinking", time, args->tid);	
 }

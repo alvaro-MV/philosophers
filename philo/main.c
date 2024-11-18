@@ -32,9 +32,8 @@ void	init_forks(t_general_vars *general_vars)
 		if (pthread_mutex_init(&general_vars->forks[i], NULL))
 		{
 			write(2, "Mala creasion\n", 15);
-			exit(-1);
+			ft_free_exit(general_vars->forks_used);
 		}
-		free(general_vars->forks_used);
 	}
 }
 
@@ -50,18 +49,24 @@ void	wait_philos(pthread_t *philosophers)
 void	run_philos(t_general_vars *gen_vars, t_philo* args, pthread_t *philo)
 {
 	int			i;
+	pthread_t	manager;
 
 	i = 0;
 	while (i < gen_vars->n_philo)
 	{
 		args[i].general_vars = *gen_vars;	
 		args[i].tid = i;
+		args[i].thread_ptr = philo[i];
 		if (pthread_create(philo[i++], NULL, philo_routine, &args[i]));
 		{
-			wite(2, "Mala creasion\n", 15);
-			free(gen_vars->forks_used);
-			exit(-1);
+			write(2, "Mala creasion\n", 15);
+			p_free(gen_vars, args, philo);
 		}
+	}
+	if (pthread_create(manager, NULL, manager_routine, args))
+	{
+		write(2, "Mala creasion\n", 15);
+		p_free(gen_vars, args, philo);
 	}
 	wait_philos(philo);
 }
@@ -80,7 +85,7 @@ int	main(int argc, char **argv)
 	}
 	argv++;
 	parse_input(&general_vars, argv);
-	philo_alloc(&general_vars, args, philosophers);	
+	p_alloc(&general_vars, args, philosophers);	
 	init_protect_mutex(&general_vars);
 	init_forks(&general_vars);
 	run_philos(&general_vars, args, philosophers);
