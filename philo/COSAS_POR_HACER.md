@@ -14,3 +14,6 @@
 	  el cambio sería o para get_actual_time o p.e. sleep_log(gen_vars->init_tmstmp, args);
 
 ## 4. Cambiar todos los args habidos y por haber a dinner.
+
+## 5. En el caso de que usleep() falle
+	Cancelar todos los hilos y liberar toda la memoria. O lo que es lo mismo, pasar un 

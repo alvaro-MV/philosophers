@@ -19,11 +19,21 @@ unsigned long long	think_routine(t_philo *args)
 
 unsigned long long	eat_routine(t_philo *args)
 {
-	usleep(args->general_vars->time_to_eat);
-	pthread_mutex_lock(&args->general_vars->logs_mutex);
+	t_gen_var		*gen;
+
+	gen = args->general_vars;
+	pthread_mutex_lock(&gen->logs_mutex);
+
+	pthread_mutex_lock(&args->last_meal_mutex);
 	args->time_last_meal = get_actual_time();
+	args->n_of_meals++;
+	gen->forks_used[args->tid] = 0;
+	gen->forks_used[(args->tid) % gen->n_philo] = 0;
+	pthread_mutex_unlock(&args->last_meal_mutex);
+	usleep(gen->time_to_eat);
 	eating_log(args);
-	pthread_mutex_unlock(&args->general_vars->logs_mutex);
+
+	pthread_mutex_unlock(&gen->logs_mutex);
 }
 
 void	take_forks(t_philo *args)
@@ -53,9 +63,9 @@ void	*philo_routine(void *vargs)
 
 	args = (t_philo *) vargs;
 	i = 0;
-	while (i++ < args->general_vars->n_of_eats)
+	while (i++ < args->general_vars->max_meals)
 	{
-		//take_forks(args);
+		take_forks(args);
 		eat_routine(args);
 		sleep_routine(args);
 		think_routine(args);//Thinking que pongo weyyy

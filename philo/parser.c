@@ -70,7 +70,7 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	{
 		general_vars->n_philo = ft_atoui(argv[0]);
 		if (general_vars->n_philo > MAX_PHILOS) //testeo
-			exit (-1); //testeo
+			exit (-1);
 		general_vars->time_to_die = ft_atoul(argv[1]);
 	}
 	else
@@ -85,10 +85,11 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	if (argv[4])
 	{
 		if (is_in_range_of_ulong(argv[4]))
-			general_vars->n_of_eats = ft_atoui(argv[4]);
+			general_vars->max_meals = ft_atoui(argv[4]);
 		else
 			exit(-1);
 	}
+	general_vars->philo_alive = general_vars->n_philo;
 }
 
 //int	main(int argc, char **argv)

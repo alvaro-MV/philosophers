@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/19 13:54:04 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/19 18:41:53 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ typedef struct s_general_vars
 	unsigned long long	time_to_die;
 	unsigned long long	time_to_eat;
 	unsigned long long	time_to_sleep;
-	unsigned int		n_of_eats;
+	unsigned int		max_meals;
+	unsigned int		philo_alive;
 }						t_gen_var;
 
 typedef struct	s_philo	
 {
 	t_gen_var			*general_vars;
 	int					tid;
+	int					n_of_meals;
 	pthread_t			thread_ptr;
 	unsigned long long	time_last_meal;
 	pthread_mutex_t		last_meal_mutex;
