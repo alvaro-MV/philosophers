@@ -25,7 +25,7 @@ void	take_forks(t_philo *args)
 	t_general_vars		gen;
 
 	gen = args->general_vars;
-	pthread_mutex_lock(gen.proc_mutex);
+	pthread_mutex_lock(&gen.proc_mutex);
 
 	if (!compatible(args))
 		manage_usleep(WAI_T);
@@ -36,7 +36,7 @@ void	take_forks(t_philo *args)
 	take_fork_log(args);
 	gen.forks_used[(args->tid) % gen.n_philo] = 1;
 
-	pthread_mutex_unlock(gen.proc_mutex);
+	pthread_mutex_unlock(&gen.proc_mutex);
 }
 
 void	*philo_routine(void *vargs)
@@ -49,8 +49,8 @@ void	*philo_routine(void *vargs)
 	i = 0;
 	while (i++ < args->general_vars.n_of_eats)
 	{
-		take_forks(args);
-		eating_routine(args);
+		//take_forks(args);
+		eat_routine(args);
 		sleep_routine(args);
 		think_routine(args);//Thinking que pongo weyyy
 	}

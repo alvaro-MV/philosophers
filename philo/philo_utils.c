@@ -46,7 +46,7 @@ void	p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
 
 	n_philo = gen_vars->n_philo;
 	gen_vars->forks_used = (int *) ft_calloc(n_philo, sizeof(int));
-	forks = (pthread_mutex_t *) ft_calloc(n_philo, sizeof(pthread_mutex_t));
+	forks = (pthread_mutex_t *) malloc(n_philo * sizeof(pthread_mutex_t));
 	if (!forks)
 		ft_free_exit(gen_vars->forks_used);
 	args = (t_philo *) ft_calloc(n_philo, sizeof(t_philo));
@@ -55,7 +55,7 @@ void	p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
 		free(gen_vars->forks_used);
 		ft_free_exit(gen_vars->forks);
 	}
-	philo = (pthread_t *) ft_calloc(n_philo, sizeof(pthread_t));
+	philo = (pthread_t *) malloc(n_philo * sizeof(pthread_t));
 	if (!philo)
 	{
 		free(gen_vars->forks_used);

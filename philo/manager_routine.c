@@ -9,18 +9,20 @@ void	cancel_philos(unsigned int n_philo, t_philo *arr_args)
 	while (i < n_philo)
 	{
 		pthread_cancel(arr_args[i].thread_ptr);
-		p_free(&arr_args[i].general_vars, arr_args, arr_args->thread_ptr);
+		p_free(&arr_args[i].general_vars, arr_args, &arr_args->thread_ptr);
 		i++;
 	}
 }
 
-void	manager_routine(t_philo *arr_args)
+void	*manager_routine(void *args)
 {
 	t_general_vars		gen;
+	t_philo				*arr_args;
 	unsigned int		i;
 	unsigned long long	diff_time;
 
 	i = 0;
+	arr_args = (t_philo *) args;
 	gen = arr_args->general_vars;
 	while (i < gen.n_philo)
 	{
@@ -32,4 +34,5 @@ void	manager_routine(t_philo *arr_args)
 		}
 		i++;
 	}
+	return (NULL);
 }

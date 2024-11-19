@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/18 13:27:40 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/19 12:06:45 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 typedef struct s_general_vars
 {
-	pthread_mutex_t		*proc_mutex;
+	pthread_mutex_t		proc_mutex;
 	pthread_mutex_t		*forks;
 	unsigned int		n_philo;
 	int					*forks_used;	
@@ -56,7 +56,8 @@ void				p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
 void				p_free(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
 
 void				*philo_routine(void *vargs);
-void				*manager_routine(t_philo *arr_args);
+void				*manager_routine(void *args);
+int					compatible(t_philo *args);
 
 void				take_forks(t_philo *args);
 void				take_fork_log(t_philo *args);
