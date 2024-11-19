@@ -1,12 +1,17 @@
 #include "philo.h"
 
-void	init_protect_mutex(t_gen_var *general_vars)
+void	init_protection_mutexs(t_gen_var *general_vars)
 {
 	if (pthread_mutex_init(&general_vars->proc_mutex, NULL))
 	{
 		write(2, "philo: error initialization of protection mutex\n", 49);
 		exit(-1);
 	}
+	if (pthread_mutex_init(&general_vars->logs_mutex, NULL))
+	{
+		write(2, "philo: error initialization of protection mutex\n", 49);
+		exit(-1);
+	}	
 }
 
 void	init_forks(t_gen_var *general_vars)
