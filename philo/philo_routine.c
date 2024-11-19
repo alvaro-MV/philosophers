@@ -24,14 +24,16 @@ unsigned long long	eat_routine(t_philo *args)
 	gen = args->general_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
 
+	usleep(gen->time_to_eat);
+	eating_log(args);
 	pthread_mutex_lock(&args->last_meal_mutex);
 	args->time_last_meal = get_actual_time();
 	args->n_of_meals++;
+	pthread_mutex_unlock(&gen->forks[args->tid]);
+	pthread_mutex_unlock(&gen->forks[(args->tid + 1) % gen->n_philo]);
 	gen->forks_used[args->tid] = 0;
 	gen->forks_used[(args->tid) % gen->n_philo] = 0;
 	pthread_mutex_unlock(&args->last_meal_mutex);
-	usleep(gen->time_to_eat);
-	eating_log(args);
 
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
@@ -43,7 +45,7 @@ void	take_forks(t_philo *args)
 	gen = args->general_vars;
 	pthread_mutex_lock(&gen->proc_mutex);
 
-	if (!compatible(args))
+	while (!compatible(args))
 		manage_usleep(WAI_T);
 	pthread_mutex_lock(&gen->forks[args->tid]);
 	take_fork_log(args);

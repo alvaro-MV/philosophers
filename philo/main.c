@@ -31,7 +31,7 @@ void	wait_philos(t_philo *args, pthread_t *philosophers)
 void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 {
 	int			i;
-	// pthread_t	manager;
+	pthread_t	manager;
 
 	i = 0;
 	init_args(gen_vars, args, philo);
@@ -44,13 +44,13 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 		}
 		i++;
 	}
-	// if (pthread_create(&manager, NULL, manager_routine, args))
-	// {
-	// 	write(2, "Mala creasion\n", 15);
-	// 	p_free(gen_vars, args, philo);
-	// }
+	if (pthread_create(&manager, NULL, manager_routine, args))
+	{
+		write(2, "Mala creasion\n", 15);
+		p_free(gen_vars, args, philo);
+	}
 	wait_philos(args, philo);
-	// pthread_join(manager, NULL);
+	pthread_join(manager, NULL);
 }
 
 int	main(int argc, char **argv)

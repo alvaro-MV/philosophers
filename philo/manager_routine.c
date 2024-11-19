@@ -26,10 +26,13 @@ void	*manager_routine(void *args)
 	gen = arr_args->general_vars;
 	while (gen->philo_alive)
 	{
+		write(1, "\n-------pollooooonnn-------------------\n\n", 42); //testeo
 		while (i < gen->n_philo)
 		{
 			pthread_mutex_lock(&arr_args[i].last_meal_mutex);
 			diff_time = get_actual_time() - arr_args[i].time_last_meal;
+			ft_putstr_fd("diff time: ", 1); //testeo
+			printf("%llu\n", diff_time); //testeo
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
