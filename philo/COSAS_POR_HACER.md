@@ -12,3 +12,5 @@
 
 	- En cualquier caso, no tiene sentido comparar desde que empezó a comer, por lo tanto,
 	  el cambio sería o para get_actual_time o p.e. sleep_log(gen_vars->init_tmstmp, args);
+
+## 4. Cambiar todos los args habidos y por haber a dinner.

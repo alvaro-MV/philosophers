@@ -64,7 +64,7 @@ int	is_in_range_of_uint(char *next_n)
 		return (free(ch_number), 1);
 }
 
-void	parse_input(t_general_vars *general_vars, char **argv)
+void	parse_input(t_gen_var *general_vars, char **argv)
 {
 	if (is_in_range_of_uint(argv[0]) && is_in_range_of_ulong(argv[1]))
 	{

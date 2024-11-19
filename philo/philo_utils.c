@@ -14,12 +14,12 @@
 
 int	compatible(t_philo *args)
 {
-	t_general_vars gen;
+	t_gen_var *gen;
 
 	gen = args->general_vars;
-	if (!gen.forks_used[args->tid])
+	if (!gen->forks_used[args->tid])
 	{
-		if (!gen.forks_used[(args->tid + 1) % gen.n_philo])
+		if (!gen->forks_used[(args->tid + 1) % gen->n_philo])
 			return (1);
 	}
 	return (0);
@@ -39,32 +39,33 @@ unsigned long long	time_diff_usecs(unsigned long long start)
 	return (start);
 }
 
-void	p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
+void	p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo)
 {
 	unsigned int	n_philo;
-	pthread_mutex_t		*forks;
+	pthread_mutex_t	*forks;
 
 	n_philo = gen_vars->n_philo;
 	gen_vars->forks_used = (int *) ft_calloc(n_philo, sizeof(int));
 	forks = (pthread_mutex_t *) malloc(n_philo * sizeof(pthread_mutex_t));
 	if (!forks)
 		ft_free_exit(gen_vars->forks_used);
-	args = (t_philo *) ft_calloc(n_philo, sizeof(t_philo));
-	if (!args)
+	gen_vars->forks = forks;
+	*args = (t_philo *) malloc(n_philo * sizeof(t_philo));
+	if (!*args)
 	{
 		free(gen_vars->forks_used);
 		ft_free_exit(gen_vars->forks);
 	}
-	philo = (pthread_t *) malloc(n_philo * sizeof(pthread_t));
-	if (!philo)
+	*philo = (pthread_t *) malloc(n_philo * sizeof(pthread_t));
+	if (!*philo)
 	{
 		free(gen_vars->forks_used);
 		free(gen_vars->forks);
-		ft_free_exit(args);
+		ft_free_exit(*args);
 	}
 }
 
-void	p_free(t_general_vars *gen_vars, t_philo *args, pthread_t *philo)
+void	p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo)
 {
 	free(gen_vars->forks_used);
 	free(gen_vars->forks);

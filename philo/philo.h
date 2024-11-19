@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/19 12:06:45 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/19 13:29:29 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ typedef struct s_general_vars
 	unsigned long long	time_to_eat;
 	unsigned long long	time_to_sleep;
 	unsigned int		n_of_eats;
-}						t_general_vars;
+}						t_gen_var;
 
 typedef struct	s_philo	
 {
-	t_general_vars		general_vars;
+	t_gen_var			*general_vars;
 	int					tid;
 	pthread_t			thread_ptr;
 	unsigned long long	time_last_meal;
-}					t_philo;
+	pthread_mutex_t		last_meal_mutex;
+}						t_philo;
 
 # define MAX_PHILOS 50
 # define WAI_T 5
@@ -51,9 +52,15 @@ typedef struct	s_philo
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	time_diff_usecs(unsigned long long start);
-void				parse_input(t_general_vars *general_vars, char **argv);
-void				p_alloc(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
-void				p_free(t_general_vars *gen_vars, t_philo *args, pthread_t *philo);
+void				parse_input(t_gen_var *general_vars, char **argv);
+void				p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo);
+void				p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+
+
+void				init_protect_mutex(t_gen_var *general_vars);
+void				init_forks(t_gen_var *general_vars);
+void				init_args(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+
 
 void				*philo_routine(void *vargs);
 void				*manager_routine(void *args);
