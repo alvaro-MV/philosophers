@@ -1,6 +1,6 @@
 #include "philo.h"
 
-unsigned long long	sleep_routine(t_philo *args)
+void	sleep_routine(t_philo *args)
 {
 	usleep(args->general_vars->time_to_sleep);
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
@@ -8,7 +8,7 @@ unsigned long long	sleep_routine(t_philo *args)
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);
 }
 
-unsigned long long	think_routine(t_philo *args)
+void	think_routine(t_philo *args)
 {
 	usleep(1); //Thinking que pongo weyyy
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
@@ -17,7 +17,7 @@ unsigned long long	think_routine(t_philo *args)
 }
 
 
-unsigned long long	eat_routine(t_philo *args)
+void	eat_routine(t_philo *args)
 {
 	t_gen_var		*gen;
 

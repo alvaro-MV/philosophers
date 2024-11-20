@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/19 18:41:53 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/21 00:10:00 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_general_vars
 	pthread_mutex_t		proc_mutex;
 	pthread_mutex_t		logs_mutex;
 	pthread_mutex_t		*forks;
+	pthread_t			*philo_ptrs;
 	unsigned int		n_philo;
 	int					*forks_used;	
 	unsigned long long	time_to_die;
@@ -44,7 +45,6 @@ typedef struct	s_philo
 	t_gen_var			*general_vars;
 	int					tid;
 	int					n_of_meals;
-	pthread_t			thread_ptr;
 	unsigned long long	time_last_meal;
 	pthread_mutex_t		last_meal_mutex;
 }						t_philo;

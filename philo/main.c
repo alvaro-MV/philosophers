@@ -35,8 +35,10 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 
 	i = 0;
 	init_args(gen_vars, args, philo);
+	printf("gen_vars dentro de main: %p\n", gen_vars);
 	while (i < gen_vars->n_philo)
 	{
+		ft_putnbr_fd(args[i].tid, 1);
 		if (pthread_create(&philo[i], NULL, philo_routine, &args[i]))
 		{
 			write(2, "philo: error creating philosophers\n", 36);
@@ -44,9 +46,10 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 		}
 		i++;
 	}
+	gen_vars->philo_ptrs = philo;
 	if (pthread_create(&manager, NULL, manager_routine, args))
 	{
-		write(2, "Mala creasion\n", 15);
+		write(2, "philo: error creating philosophers\n", 36);
 		p_free(gen_vars, args, philo);
 	}
 	wait_philos(args, philo);
