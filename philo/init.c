@@ -43,6 +43,7 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 	{
 		dinner[i].general_vars = gen_vars;	
 		dinner[i].tid = i + 1;
+		dinner[i].time_last_meal = 0;
 		if (pthread_mutex_init(&dinner[i].last_meal_mutex, NULL))
 		{
 			write(2, "philo: error  creating mutex\n", 30);

@@ -35,7 +35,6 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 
 	i = 0;
 	init_args(gen_vars, args, philo);
-	printf("gen_vars dentro de main: %p\n", gen_vars);
 	while (i < gen_vars->n_philo)
 	{
 		ft_putnbr_fd(args[i].tid, 1);

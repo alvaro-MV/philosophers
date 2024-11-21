@@ -8,12 +8,11 @@ void	cancel_philos(unsigned int n_philo, t_philo *arr_args)
 
 	while (i < n_philo)
 	{
-		printf("arr i: %d\n", arr_args[i].tid);
-		write(1, "francisco Javier\n", 18);
+		write(1, "El dragon en la voloba me hace decidir\n", 40);
 		pthread_cancel(arr_args[i].general_vars->philo_ptrs[i]);
 		i++;
 	}
-	free(arr_args[i].general_vars);
+	free(arr_args->general_vars);
 	free(arr_args);
 }
 
@@ -26,17 +25,17 @@ void	*manager_routine(void *args)
 
 	arr_args = (t_philo *) args;
 	gen = arr_args->general_vars;
-	printf("gen args dentro de manager: %p\n", gen);
 	while (gen->philo_alive)
 	{
 		i = 0;
-		//write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
-		pthread_mutex_lock(&arr_args[i].last_meal_mutex);
+		write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
+		pthread_mutex_lock(&arr_args->general_vars->proc_mutex);
 		while (i < gen->n_philo)
 		{
-			diff_time = get_actual_time() - arr_args[i].time_last_meal;
-			//ft_putstr_fd("diff time: ", 1); //testeo
-			//printf("%llu\n", diff_time); //testeo
+			//pthread_mutex_lock(&arr_args[i].last_meal_mutex);
+			diff_time = time_diff_usecs(arr_args[i].time_last_meal);
+			ft_putstr_fd("diff time: ", 1); //testeo
+			printf("%llu\n", diff_time); //testeo
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
@@ -45,7 +44,8 @@ void	*manager_routine(void *args)
 			}
 			i++;
 		}
-		pthread_mutex_unlock(&arr_args[i].last_meal_mutex);
+		pthread_mutex_unlock(&arr_args->general_vars->proc_mutex);
+		write(1, "\n--------------------------------------\n\n", 42); //testeo
 	}
 	return (NULL);
 }
