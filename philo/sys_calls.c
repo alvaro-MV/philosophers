@@ -3,6 +3,6 @@
 
 void	manage_usleep(__useconds_t	usenconds)
 {
-	if (usleep(usenconds) == -1)
+	if (usleep(usenconds / 3) == -1)
 		exit (-1);  //Tiene que cancelar los hilos y liberar memoria de todos.
 }
