@@ -30,8 +30,6 @@ void	eat_routine(t_philo *args)
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
 	pthread_mutex_unlock(&gen->forks[args->tid  % gen->n_philo]);
-	gen->forks_used[args->tid] = 0;
-	gen->forks_used[(args->tid) % gen->n_philo] = 0;
 
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
@@ -41,18 +39,35 @@ void	take_forks(t_philo *args)
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
-	pthread_mutex_lock(&gen->proc_mutex);
 
-	while (!compatible(args))
+	if (args->tid % 2 == 0)
+	{
 		manage_usleep(WAI_T);
-	pthread_mutex_lock(&gen->forks[args->tid - 1]);
-	take_fork_log(args);
-	gen->forks_used[args->tid] = 1;
-	pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
-	take_fork_log(args);
-	gen->forks_used[args->tid % gen->n_philo] = 1;
+		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
 
-	pthread_mutex_unlock(&gen->proc_mutex);
+		pthread_mutex_lock(&gen->logs_mutex);
+		take_fork_log(args);
+		pthread_mutex_unlock(&gen->logs_mutex);
+
+		pthread_mutex_lock(&gen->forks[args->tid - 1]);
+
+		pthread_mutex_lock(&gen->logs_mutex);
+		take_fork_log(args);
+		pthread_mutex_unlock(&gen->logs_mutex);
+	}
+	else
+	{
+		pthread_mutex_lock(&gen->forks[args->tid - 1]);
+		pthread_mutex_lock(&args->general_vars->logs_mutex);
+		take_fork_log(args);
+		pthread_mutex_unlock(&args->general_vars->logs_mutex);
+
+		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
+		pthread_mutex_lock(&args->general_vars->logs_mutex);
+		take_fork_log(args);
+		pthread_mutex_unlock(&args->general_vars->logs_mutex);
+	}
+
 }
 
 void	*philo_routine(void *vargs)

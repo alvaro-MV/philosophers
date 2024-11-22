@@ -8,8 +8,8 @@ void	cancel_philos(unsigned int n_philo, t_philo *arr_args)
 	pthread_mutex_lock(&arr_args->last_meal_mutex);
 	while (i < n_philo)
 	{
-		pthread_cancel(arr_args[i].general_vars->philo_ptrs[i]);
-		write(1, "El dragon en la voloba me hace decidir\n", 40);
+		pthread_join(arr_args[i].general_vars->philo_ptrs[i], NULL);
+		write(1, "Esto tira??\n", 13);
 		i++;
 	}
 	pthread_mutex_unlock(&arr_args->last_meal_mutex);
@@ -22,12 +22,13 @@ void	*manager_routine(void *args)
 	unsigned int		i;
 	unsigned long long	diff_time;
 
+	write(1, "entra en manageeeeeeeeeer\n", 27);
 	arr_args = (t_philo *) args;
 	gen = arr_args->general_vars;
 	while (gen->philo_alive)
 	{
 		i = 0;
-		pthread_mutex_lock(&arr_args->general_vars->proc_mutex);
+		pthread_mutex_lock(&arr_args->general_vars->logs_mutex);
 		write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
 		while (i < gen->n_philo)
 		{
@@ -38,12 +39,12 @@ void	*manager_routine(void *args)
 			{
 				died_log(&arr_args[i]);
 				cancel_philos(gen->n_philo, arr_args);
-				pthread_mutex_unlock(&arr_args->general_vars->proc_mutex);
+				pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
 				return (NULL);
 			}
 			i++;
 		}
-		pthread_mutex_unlock(&arr_args->general_vars->proc_mutex);
+		pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
 		write(1, "\n--------------------------------------\n\n", 42); //testeo
 	}
 	return (NULL);
