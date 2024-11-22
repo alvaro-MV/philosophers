@@ -3,13 +3,15 @@
 void	cancel_philos(unsigned int n_philo, t_philo *arr_args)
 {
 	unsigned int	i;
+	pthread_t		*philosophers;
 
 	i = 0;
+	philosophers = arr_args->general_vars->philo_ptrs;
 	pthread_mutex_lock(&arr_args->last_meal_mutex);
 	while (i < n_philo)
 	{
-		pthread_join(arr_args[i].general_vars->philo_ptrs[i], NULL);
-		write(1, "Esto tira??\n", 13);
+		pthread_cancel(philosophers[i]);
+		// write(1, "Esto tira??\n", 13);
 		i++;
 	}
 	pthread_mutex_unlock(&arr_args->last_meal_mutex);
@@ -22,7 +24,6 @@ void	*manager_routine(void *args)
 	unsigned int		i;
 	unsigned long long	diff_time;
 
-	write(1, "entra en manageeeeeeeeeer\n", 27);
 	arr_args = (t_philo *) args;
 	gen = arr_args->general_vars;
 	while (gen->philo_alive)
