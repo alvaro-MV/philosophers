@@ -32,7 +32,6 @@ unsigned long long	get_actual_time(void)
 
 	gettimeofday(&tv, NULL);
 	timestamp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	// timestamp = tv.tv_usec;
 	return (timestamp);
 }
 

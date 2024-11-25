@@ -10,7 +10,7 @@ void	sleep_routine(t_philo *args)
 
 void	think_routine(t_philo *args)
 {
-	usleep(100); //Thinking que pongo weyyy
+	usleep(1); //Thinking que pongo weyyy
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
 	thinking_log(args);
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);
@@ -66,6 +66,22 @@ void	take_forks(t_philo *args)
 	}
 }
 
+static int	check_running(t_philo *args)
+{
+	static int	i = 0;
+
+	if (args->general_vars->run_4ever) return (1);
+	else
+	{
+		if (i < args->general_vars->max_meals)
+		{
+			i++;
+			return (1);
+		}
+		else return (0);
+	}
+}
+
 void	*philo_routine(void *vargs)
 {
 	t_philo				*args;
@@ -74,7 +90,7 @@ void	*philo_routine(void *vargs)
 
 	args = (t_philo *) vargs;
 	i = 0;
-	while (i++ < args->general_vars->max_meals)
+	while (check_running(args))
 	{
 		take_forks(args);
 		eat_routine(args);

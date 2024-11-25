@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 22:09:15 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/25 14:08:45 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/25 14:20:56 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_general_vars
 	unsigned long long	time_to_sleep;
 	unsigned int		max_meals;
 	unsigned int		philo_alive;
+	int					run_4ever;
 }						t_gen_var;
 
 typedef struct	s_philo	

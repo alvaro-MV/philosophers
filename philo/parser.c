@@ -85,10 +85,15 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	if (argv[4])
 	{
 		if (is_in_range_of_ulong(argv[4]))
+		{
 			general_vars->max_meals = ft_atoui(argv[4]);
+			general_vars->run_4ever = 0;
+		}
 		else
 			exit(-1);
 	}
+	else
+		general_vars->run_4ever = 1;
 	general_vars->philo_alive = general_vars->n_philo;
 }
 
