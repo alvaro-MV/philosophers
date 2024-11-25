@@ -39,18 +39,15 @@ void	take_forks(t_philo *args)
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
-
 	if (args->tid % 2 == 0)
 	{
 		manage_usleep(WAI_T);
 		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
-
 		pthread_mutex_lock(&gen->logs_mutex);
 		take_fork_log(args);
 		pthread_mutex_unlock(&gen->logs_mutex);
 
 		pthread_mutex_lock(&gen->forks[args->tid - 1]);
-
 		pthread_mutex_lock(&gen->logs_mutex);
 		take_fork_log(args);
 		pthread_mutex_unlock(&gen->logs_mutex);
@@ -67,7 +64,6 @@ void	take_forks(t_philo *args)
 		take_fork_log(args);
 		pthread_mutex_unlock(&args->general_vars->logs_mutex);
 	}
-
 }
 
 void	*philo_routine(void *vargs)
@@ -83,7 +79,7 @@ void	*philo_routine(void *vargs)
 		take_forks(args);
 		eat_routine(args);
 		sleep_routine(args);
-		think_routine(args);//Thinking que pongo weyyy
+		think_routine(args);
 	}
 	return (NULL);
 }

@@ -30,12 +30,12 @@ void	*manager_routine(void *args)
 	{
 		i = 0;
 		pthread_mutex_lock(&arr_args->general_vars->logs_mutex);
-		write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
+		// write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
 		while (i < gen->n_philo)
 		{
 			diff_time = time_diff_usecs(arr_args[i].time_last_meal);
-			ft_putstr_fd("diff time: ", 1); //testeo
-			printf("%llu\n", diff_time); //testeo
+			// ft_putstr_fd("diff time: ", 1); //testeo
+			// ft_printf("%l\n", diff_time); //testeo
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
@@ -46,7 +46,8 @@ void	*manager_routine(void *args)
 			i++;
 		}
 		pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
-		write(1, "\n--------------------------------------\n\n", 42); //testeo
+		// write(1, "\n--------------------------------------\n\n", 42); //testeo
+		manage_usleep(WAI_T);
 	}
 	return (NULL);
 }

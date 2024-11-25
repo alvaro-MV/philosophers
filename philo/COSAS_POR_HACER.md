@@ -17,3 +17,6 @@
 
 ## 5. En el caso de que usleep() falle
 	Cancelar todos los hilos y liberar toda la memoria. O lo que es lo mismo, pasar un 
+
+
+## 6. Cuando se utiliza el timestamp veradero, el manager_routine corre sin discreccion, pero no termina de morir, lo que es indicativo de que han tenido que morir, a no ser que corra lo suficientemente rápido como para que le de tiempo a hacer varias vueltas antes de que la palme un filosofo. Lo cual induce a pensar que tratar con el timestamp completo hace que no sea tan apetecible para el dispatcher esos hilos (hipotesis fumeta).

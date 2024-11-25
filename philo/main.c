@@ -12,8 +12,6 @@
 
 #include "philo.h"
 
-
-
 void	wait_philos(t_philo *args, pthread_t *philosophers)
 {
 	unsigned int	n_philo;
@@ -21,9 +19,11 @@ void	wait_philos(t_philo *args, pthread_t *philosophers)
 
 	i = 0;
 	n_philo = args->general_vars->n_philo;
+
 	while (i < n_philo)
 	{
 		pthread_join(philosophers[i], NULL);
+		args->general_vars->philo_alive--;
 		i++;
 	}
 }
