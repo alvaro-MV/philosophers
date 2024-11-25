@@ -10,7 +10,7 @@ void	sleep_routine(t_philo *args)
 
 void	think_routine(t_philo *args)
 {
-	usleep(1); //Thinking que pongo weyyy
+	usleep(100); //Thinking que pongo weyyy
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
 	thinking_log(args);
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);

@@ -51,7 +51,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 		write(2, "philo: error creating philosophers\n", 36);
 		p_free(gen_vars, args, philo);
 	}
-	//wait_philos(args, philo);
+	wait_philos(args, philo);
 	pthread_join(manager, NULL);
 }
 
