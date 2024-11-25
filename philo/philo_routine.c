@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_routine.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
+/*   Updated: 2024/11/25 22:40:59 by alvmoral         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	sleep_routine(t_philo *args)
@@ -20,8 +32,10 @@ void	think_routine(t_philo *args)
 void	eat_routine(t_philo *args)
 {
 	t_gen_var		*gen;
+	pthread_t		*philo;
 
 	gen = args->general_vars;
+	philo = args->general_vars->philo_ptrs;
 	pthread_mutex_lock(&gen->logs_mutex);
 
 	usleep(gen->time_to_eat);
@@ -30,7 +44,11 @@ void	eat_routine(t_philo *args)
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
 	pthread_mutex_unlock(&gen->forks[args->tid  % gen->n_philo]);
-
+	if (args->n_of_meals == gen->max_meals);
+	{
+		gen->philo_alive--;
+		pthread_join(philo[args->tid], NULL);
+	}
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
 
