@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/26 22:38:23 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/26 23:07:18 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ unsigned long long	time_diff_usecs(unsigned long long start);
 void				parse_input(t_gen_var *general_vars, char **argv);
 void				p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo);
 void				p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+void				wait_philos(t_philo *args, pthread_t *philosophers);
 
 
 void				init_protection_mutexs(t_gen_var *general_vars);
@@ -67,7 +68,7 @@ void				init_args(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
 
 
 void				*philo_routine(void *vargs);
-void				*manager_routine(void *args);
+void				*manager_routine(void *args, pthread_t *philosophers);
 int					compatible(t_philo *args);
 
 void				take_forks(t_philo *args);
