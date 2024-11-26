@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/25 22:40:59 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:25:48 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,11 @@ void	eat_routine(t_philo *args)
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
 	pthread_mutex_unlock(&gen->forks[args->tid  % gen->n_philo]);
-	if (args->n_of_meals == gen->max_meals);
+	if (args->n_of_meals == gen->max_meals)
 	{
 		gen->philo_alive--;
-		pthread_join(philo[args->tid], NULL);
+		pthread_mutex_unlock(&gen->logs_mutex);
+		// pthread_join(philo[args->tid - 1], NULL);
 	}
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
@@ -84,16 +85,14 @@ void	take_forks(t_philo *args)
 	}
 }
 
-static int	check_running(t_philo *args)
+static int	check_running(t_philo *args, int *i)
 {
-	static int	i = 0;
-
 	if (args->general_vars->run_4ever) return (1);
 	else
 	{
-		if (i < args->general_vars->max_meals)
+		if (*i < args->general_vars->max_meals)
 		{
-			i++;
+			*i = *i + 1;
 			return (1);
 		}
 		else return (0);
@@ -108,7 +107,7 @@ void	*philo_routine(void *vargs)
 
 	args = (t_philo *) vargs;
 	i = 0;
-	while (check_running(args))
+	while (check_running(args, &i))
 	{
 		take_forks(args);
 		eat_routine(args);
