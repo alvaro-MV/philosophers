@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 15:53:08 by alvaro            #+#    #+#             */
-/*   Updated: 2024/11/25 12:15:34 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/26 22:45:57 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	write_arguments(char const *s1, va_list argum, int *counter)
 		*counter += ft_chtoa_w(va_arg(argum, int));
 	else if (format == 'i' || format == 'd')
 		*counter += ft_itoa_w(va_arg(argum, int));
-	else if (format = 'l')
+	else if (format == 'l')
 		*counter += ft_llutoa_w(va_arg(argum, unsigned long long));
 	else if (format == '%')
 		*counter += write(1, &format, 1);

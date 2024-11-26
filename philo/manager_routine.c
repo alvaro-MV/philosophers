@@ -6,28 +6,11 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/26 22:25:41 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:37:10 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// void	cancel_philos(unsigned int n_philo, t_philo *arr_args)
-// {
-// 	unsigned int	i;
-// 	pthread_t		*philosophers;
-
-// 	i = 0;
-// 	philosophers = arr_args->general_vars->philo_ptrs;
-// 	pthread_mutex_lock(&arr_args->last_meal_mutex);
-// 	while (i < n_philo)
-// 	{
-// 		pthread_(philosophers[i]);
-// 		// write(1, "Esto tira??\n", 13);
-// 		i++;
-// 	}
-// 	pthread_mutex_unlock(&arr_args->last_meal_mutex);
-// }
 
 void	*manager_routine(void *args)
 {
@@ -53,7 +36,6 @@ void	*manager_routine(void *args)
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
-				// cancel_philos(gen->n_philo, arr_args);
 				pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
 				return (NULL);
 			}

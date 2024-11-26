@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/25 22:41:45 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/26 22:38:23 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_philo
 }						t_philo;
 
 # define MAX_PHILOS 50
-# define WAI_T 100
+# define WAI_T 5
 
 void				manage_usleep(__useconds_t	usenconds);
 unsigned long long	get_actual_time(void);
