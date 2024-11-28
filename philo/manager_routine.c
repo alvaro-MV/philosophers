@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/26 23:07:55 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/27 17:06:08 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ void	*manager_routine(void *args, pthread_t *philo)
 		i = 0;
 		manage_usleep(WAI_T);
 		pthread_mutex_lock(&arr_args->general_vars->logs_mutex);
-		write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
+		// write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
 		while (i < gen->n_philo)
 		{
 			diff_time = time_diff_usecs(arr_args[i].time_last_meal);
-			ft_printf("philo_alive: %u\n", gen->philo_alive); //testeo
-			ft_putstr_fd("diff time: ", 1); //testeo
-			ft_printf("%l\n", diff_time); //testeo
+			// ft_printf("philo_alive: %u\n", gen->philo_alive); //testeo
+			// ft_putstr_fd("diff time: ", 1); //testeo
+			// ft_printf("%l\n", diff_time); //testeo
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
@@ -43,7 +43,8 @@ void	*manager_routine(void *args, pthread_t *philo)
 			i++;
 		}
 		pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
-		write(1, "\n--------------------------------------\n\n", 42); //testeo
+		// write(1, "\n--------------------------------------\n\n", 42); //testeo
 	}
+	wait_philos(args, philo);
 	return (NULL);
 }
