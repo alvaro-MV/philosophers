@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 18:54:50 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:26:57 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	*manager_routine(void *args, pthread_t *philo)
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
-				wait_philos(arr_args, philo);
 				pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
 				return (NULL);
 			}

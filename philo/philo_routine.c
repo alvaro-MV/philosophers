@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 20:10:21 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:25:29 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	think_routine(t_philo *args)
 	if (args->n_of_meals == args->general_vars->max_meals)
 	{
 		args->general_vars->philo_alive--;
-		args->not_dead = 0;
 	}
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);
 }
