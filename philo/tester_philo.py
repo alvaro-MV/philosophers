@@ -64,11 +64,11 @@ def check_last_eat_under_3(numbers):
 #         return None
 
 
-os.system("./a.out 3 310 102 134 4 | grep eat > test_file.txt")
+os.system("./philo 3 310 102 134 4 | awk '$4 == \"eating\"' > test_file.txt")
 with open(f"test_file.txt", 'r') as file:
     file_contents = file.read()
 numbers = extract_numbers_from_text(file_contents)
 print(numbers)
 check_last_eat_under_3(numbers)
-# os.system("./a.out 3 310 102 134 4 > test_file.txt")
+# os.system("./philo 3 310 102 134 4 > test_file.txt")
 # check_died_under_10ms("test_file.txt", 310)
