@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/27 17:52:45 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:07:13 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct	s_philo
 	int					n_of_meals;
 	unsigned long long	time_last_meal;
 	pthread_mutex_t		last_meal_mutex;
+	unsigned int		not_dead;
 }						t_philo;
 
 # define MAX_PHILOS 50

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/26 18:50:24 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/29 20:07:45 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 		dinner[i].general_vars = gen_vars;	
 		dinner[i].tid = i + 1;
 		dinner[i].n_of_meals = 0;
+		dinner[i].not_dead = 1;
 		if (pthread_mutex_init(&dinner[i].last_meal_mutex, NULL))
 		{
 			write(2, "philo: error  creating mutex\n", 30);
