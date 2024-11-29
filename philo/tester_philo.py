@@ -12,6 +12,13 @@ def extract_numbers_from_text(text):
                 print(f"Warning: Invalid number '{match.group(1)}' in line: {line}")
     return numbers
 
+
+def remove_colors(text):
+    # Remove ANSI escape codes
+    text = re.sub(r'\x1b\[([0-?]*[ -/]*[@-~])', '', text)
+    return text
+
+
 def check_last_eat_under_3(numbers):
     dic_meals = {}
     for i in range(len(numbers)):
@@ -37,8 +44,8 @@ def	check_died_under_10ms(file_path, time_to_die):
             # Check for "died" event
             if "died" in line:
                 died_event = True
-                last_dying_time = int(re.search(r'\d+', line).group())
-                philo_tid = int(line.split()[1])
+                last_dying_time = int(remove_colors(line.split()[0]))
+                philo_tid = str(extract_numbers_from_text(line)[0])
                 break
 
     if not died_event:
@@ -48,18 +55,20 @@ def	check_died_under_10ms(file_path, time_to_die):
     with open(file_path, 'r') as file:
         for line in reversed(list(file)):
             if philo_tid in line and "is eating" in line:
-                last_eating_time = int(re.search(r'\d+', line).group())
+                last_eating_time = int(remove_colors(line.split()[0]))
                 break
 
     if last_eating_time is None:
         return None  # No eating event found
 
     time_difference = last_dying_time - last_eating_time
+    print(f"{last_dying_time} - {last_eating_time} = {time_difference}")
     allowed_limit = time_to_die + 10
     if time_difference <= allowed_limit:
         print("\033[32m[OK]\033[0m\n")
         return None
     else:
+        print(f"> {time_to_die}")
         print("\033[31m[KO]\033[0m")
         return None
 
@@ -70,5 +79,6 @@ with open(f"test_file.txt", 'r') as file:
 numbers = extract_numbers_from_text(file_contents)
 print(numbers)
 check_last_eat_under_3(numbers)
+print("\n---------------------------------\n")
 os.system("./philo 3 310 102 134 4 > test_file.txt")
 check_died_under_10ms("test_file.txt", 310)

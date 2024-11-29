@@ -95,7 +95,6 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	else
 		general_vars->run_4ever = 1;
 	general_vars->philo_alive = general_vars->n_philo;
-	write(1, "Franciso Javier", 16);
 }
 
 //int	main(int argc, char **argv)

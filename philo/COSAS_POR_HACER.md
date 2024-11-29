@@ -22,3 +22,6 @@
 ## 6. Retocar la función de parseo
 	Tiene mas de 25 líneas. Presumiblemente hacer una función para parsear el número de veces
 	que se tiene que comer.
+
+## Si falla un hilo:
+	Hay que dar de baja el resto de hilos.

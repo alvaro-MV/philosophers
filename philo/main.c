@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 20:23:02 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/29 21:31:41 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 		if (pthread_create(&philo[i], NULL, philo_routine, &args[i]))
 		{
 			write(2, "philo: error creating philosophers\n", 36);
+			// Si falla, hay que dar de baja el resto de hilos.
 			p_free(gen_vars, args, philo);
 		}
 		i++;
