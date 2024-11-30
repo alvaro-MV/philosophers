@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 20:25:29 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:56:04 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	think_routine(t_philo *args)
 void	eat_routine(t_philo *args)
 {
 	t_gen_var		*gen;
-	pthread_t		*philo;
 
 	gen = args->general_vars;
 
@@ -102,7 +101,7 @@ void	take_forks(t_philo *args)
 	}
 }
 
-static int	check_running(t_philo *args, int *i)
+static int	check_running(t_philo *args, unsigned int *i)
 {
 	if (args->general_vars->run_4ever) return (1);
 	else
@@ -119,8 +118,7 @@ static int	check_running(t_philo *args, int *i)
 void	*philo_routine(void *vargs)
 {
 	t_philo				*args;
-	unsigned long long	timestamp;
-	int					i;
+	unsigned int		i;
 
 	args = (t_philo *) vargs;
 	i = 0;

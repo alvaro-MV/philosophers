@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 21:31:41 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/11/30 18:52:34 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 
 void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 {
-	int			i;
-	pthread_t	manager;
+	unsigned int	i;
 
 	i = 0;
 	init_args(gen_vars, args, philo);
