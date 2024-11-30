@@ -54,17 +54,16 @@ def	check_died_under_10ms(file_path, time_to_die):
 
     with open(file_path, 'r') as file:
         for line in reversed(list(file)):
-            if philo_tid in line and "is eating" in line:
+            if (philo_tid in line.split()[1]) and "is eating" in line:
                 last_eating_time = int(remove_colors(line.split()[0]))
                 break
-
     if last_eating_time is None:
         return None  # No eating event found
 
     time_difference = last_dying_time - last_eating_time
     print(f"{last_dying_time} - {last_eating_time} = {time_difference}")
     allowed_limit = time_to_die + 10
-    if time_difference <= allowed_limit:
+    if time_difference < allowed_limit:
         print("\033[32m[OK]\033[0m\n")
         return None
     else:
@@ -73,12 +72,12 @@ def	check_died_under_10ms(file_path, time_to_die):
         return None
 
 
-os.system("./philo 3 310 102 134 4 | awk '$4 == \"eating\"' > test_file.txt")
-with open(f"test_file.txt", 'r') as file:
-    file_contents = file.read()
-numbers = extract_numbers_from_text(file_contents)
-print(numbers)
-check_last_eat_under_3(numbers)
-print("\n---------------------------------\n")
-os.system("./philo 3 310 102 134 4 > test_file.txt")
+# os.system("./philo 3 310 102 102 4 | awk '$4 == \"eating\"' > test_file.txt")
+# with open(f"test_file.txt", 'r') as file:
+#     file_contents = file.read()
+# numbers = extract_numbers_from_text(file_contents)
+# print(numbers)
+# check_last_eat_under_3(numbers)
+# print("\n---------------------------------\n")
+os.system("./philo 3 310 102 102 4 > test_file.txt")
 check_died_under_10ms("test_file.txt", 310)

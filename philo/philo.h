@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 18:54:11 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/30 19:59:21 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct	s_philo
 	unsigned int		not_dead;
 }						t_philo;
 
-# define MAX_PHILOS 50
+# define MAX_PHILOS 200
 # define WAI_T 3
 
 void				manage_usleep(__useconds_t	usenconds);

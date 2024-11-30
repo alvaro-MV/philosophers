@@ -23,5 +23,8 @@
 	Tiene mas de 25 líneas. Presumiblemente hacer una función para parsear el número de veces
 	que se tiene que comer.
 
-## Si falla un hilo:
+## Si falla un hilo en run_philos:
 	Hay que dar de baja el resto de hilos.
+
+## gen_vars->proc_mutex --> gen_vars->dead_mutex:
+	Meter un dead_mutex cuando para evitar que un hilo coma antes de palmarla.

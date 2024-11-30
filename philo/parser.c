@@ -70,7 +70,10 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	{
 		general_vars->n_philo = ft_atoui(argv[0]);
 		if (general_vars->n_philo > MAX_PHILOS) //testeo
+		{
+			ft_printf("nº of philos exceeds 200.\n");
 			exit (-1);
+		}
 		general_vars->time_to_die = ft_atoul(argv[1]);
 	}
 	else
