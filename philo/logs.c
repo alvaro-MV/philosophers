@@ -2,8 +2,8 @@
 
 void	take_fork_log(t_philo *args)
 {
-	unsigned long long 	time;
-	
+	unsigned long long	time;
+
 	time = get_actual_time();
 	//testeo
 	unsigned long long usecs = time / 10000;
@@ -15,8 +15,8 @@ void	take_fork_log(t_philo *args)
 
 void	eating_log(t_philo *args)
 {
-	unsigned long long 	time;
-	
+	unsigned long long	time;
+
 	time = get_actual_time();
 	//testeo
 	unsigned long long usecs = time / 10000;
@@ -28,8 +28,8 @@ void	eating_log(t_philo *args)
 
 void	sleeping_log(t_philo *args)
 {
-	unsigned long long 	time;
-	
+	unsigned long long	time;
+
 	time = get_actual_time();
 	//testeo
 	unsigned long long usecs = time / 10000;
@@ -41,8 +41,8 @@ void	sleeping_log(t_philo *args)
 
 void	thinking_log(t_philo *args)
 {
-	unsigned long long 	time;
-	
+	unsigned long long	time;
+
 	time = get_actual_time();
 	//testeo
 	unsigned long long usecs = time / 10000;
@@ -54,8 +54,8 @@ void	thinking_log(t_philo *args)
 
 void	died_log(t_philo *args)
 {
-	unsigned long long 	time;
-	
+	unsigned long long	time;
+
 	time = get_actual_time();
 	//testeo
 	unsigned long long usecs = time / 10000;

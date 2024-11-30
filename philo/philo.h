@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 19:59:21 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/30 20:11:54 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_general_vars
 	int					run_4ever;
 }						t_gen_var;
 
-typedef struct	s_philo	
+typedef struct s_philo	
 {
 	t_gen_var			*general_vars;
 	int					tid;
@@ -61,7 +61,6 @@ void				parse_input(t_gen_var *general_vars, char **argv);
 void				p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo);
 void				p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
 void				wait_philos(t_philo *args, pthread_t *philosophers);
-
 
 void				init_protection_mutexs(t_gen_var *general_vars);
 void				init_forks(t_gen_var *general_vars);

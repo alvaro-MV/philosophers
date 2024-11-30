@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 18:56:04 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/11/30 20:24:47 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,11 @@ void	think_routine(t_philo *args)
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);
 }
 
-
 void	eat_routine(t_philo *args)
 {
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
-
 	manage_usleep(gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!args->general_vars->philo_alive)
@@ -51,8 +49,7 @@ void	eat_routine(t_philo *args)
 	args->time_last_meal = get_actual_time();
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
-	pthread_mutex_unlock(&gen->forks[args->tid  % gen->n_philo]);
-
+	pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
 
@@ -103,7 +100,8 @@ void	take_forks(t_philo *args)
 
 static int	check_running(t_philo *args, unsigned int *i)
 {
-	if (args->general_vars->run_4ever) return (1);
+	if (args->general_vars->run_4ever)
+		return (1);
 	else
 	{
 		if (*i < args->general_vars->max_meals)
