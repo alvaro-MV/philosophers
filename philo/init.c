@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/29 20:07:45 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/12/01 17:39:25 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 			write(2, "philo: error  creating mutex\n", 30);
 			p_free(gen_vars, dinner, philo);
 		}
-		dinner[i].time_last_meal = get_actual_time();
+		// dinner[i].time_last_meal = get_actual_time();
 		i++;
 	}
 }

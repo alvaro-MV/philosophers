@@ -28,3 +28,8 @@
 
 ## gen_vars->proc_mutex --> gen_vars->dead_mutex:
 	Meter un dead_mutex cuando para evitar que un hilo coma antes de palmarla.
+
+## Casos de fallo:
+	100 :--> 17, 11, 15, 16, 12
+
+	50:--> 8, 11, 7, 8, 9, 10, 6, 8

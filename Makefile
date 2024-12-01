@@ -15,7 +15,7 @@ SRCS = philo/init.c philo/logs.c philo/main.c philo/manager_routine.c \
 CC = cc
 
 # Opciones de compilación
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 # Directorio de archivos fuente
 SRCDIR = .

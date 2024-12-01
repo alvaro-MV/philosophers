@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 20:24:47 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/01 18:53:19 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	*philo_routine(void *vargs)
 
 	args = (t_philo *) vargs;
 	i = 0;
+	args->time_last_meal = get_actual_time();
 	while (check_running(args, &i))
 	{
 		take_forks(args);

@@ -56,6 +56,7 @@ def	check_died_under_10ms(file_path, time_to_die):
         for line in reversed(list(file)):
             if (philo_tid in line.split()[1]) and "is eating" in line:
                 last_eating_time = int(remove_colors(line.split()[0]))
+                print(line)
                 break
     if last_eating_time is None:
         return None  # No eating event found
@@ -79,5 +80,5 @@ def	check_died_under_10ms(file_path, time_to_die):
 # print(numbers)
 # check_last_eat_under_3(numbers)
 # print("\n---------------------------------\n")
-os.system("./philo 3 310 102 102 4 > test_file.txt")
+os.system("./philo 50 800 200 200 3 > test_file.txt")
 check_died_under_10ms("test_file.txt", 310)
