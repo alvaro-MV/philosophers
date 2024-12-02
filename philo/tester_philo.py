@@ -46,6 +46,7 @@ def	check_died_under_10ms(file_path, time_to_die):
                 died_event = True
                 last_dying_time = int(remove_colors(line.split()[0]))
                 philo_tid = str(extract_numbers_from_text(line)[0])
+                print(line)
                 break
 
     if not died_event:
@@ -59,6 +60,7 @@ def	check_died_under_10ms(file_path, time_to_die):
                 print(line)
                 break
     if last_eating_time is None:
+        print("Last eating time is none")
         return None  # No eating event found
 
     time_difference = last_dying_time - last_eating_time

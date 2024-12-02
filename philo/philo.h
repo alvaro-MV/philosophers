@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 20:11:54 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/02 15:24:49 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef struct s_philo
 # define MAX_PHILOS 200
 # define WAI_T 3
 
-void				manage_usleep(__useconds_t	usenconds);
+void				manage_usleep(__useconds_t	miliseconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	time_diff_usecs(unsigned long long start);
 void				parse_input(t_gen_var *general_vars, char **argv);
