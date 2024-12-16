@@ -32,6 +32,32 @@ def check_last_eat_under_3(numbers):
         dic_meals[numbers[i]] = i
     return print("\033[32m[OK]\033[0m\n")
 
+
+def find_last_eating_before_died(file_content):
+    lines = file_content.split('\n')
+    died_index = -1
+    last_eating_number = None
+
+    for i, line in enumerate(lines):
+        columns = line.split()
+        if len(columns) >= 3 and 'died' in columns[2]:
+            died_index = i
+            break
+
+    if died_index == -1:
+        return None
+
+    for j in range(died_index - 1, -1, -1):
+        columns = lines[j].split()
+        if len(columns) >= 2 and '[0-9]' in columns[1] and 'is eating' in columns[-1]:
+            last_eating_number = int(re.search(r'\[(\d+)\]', columns[1]).group(1))
+            break
+
+    return last_eating_number
+
+
+#-----------------------------------
+
 def	check_died_under_10ms(file_path, time_to_die):
     died_event = False
     philo_tid = False
@@ -74,13 +100,15 @@ def	check_died_under_10ms(file_path, time_to_die):
         print("\033[31m[KO]\033[0m")
         return None
 
+#-----------------------------------
 
 # os.system("./philo 3 310 102 102 4 | awk '$4 == \"eating\"' > test_file.txt")
-# with open(f"test_file.txt", 'r') as file:
-#     file_contents = file.read()
+with open(f"check", 'r') as file:
+    file_contents = file.read()
 # numbers = extract_numbers_from_text(file_contents)
 # print(numbers)
 # check_last_eat_under_3(numbers)
-# print("\n---------------------------------\n")
-os.system("./philo 50 800 200 200 3 > test_file.txt")
-check_died_under_10ms("test_file.txt", 310)
+print(find_last_eating_before_died(file_contents))
+print("\n---------------------------------\n")
+# os.system("./philo 50 800 200 200 3 > test_file.txt")
+# check_died_under_10ms("test_file.txt", 310)
