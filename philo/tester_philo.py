@@ -103,12 +103,75 @@ def	check_died_under_10ms(file_path, time_to_die):
 #-----------------------------------
 
 # os.system("./philo 3 310 102 102 4 | awk '$4 == \"eating\"' > test_file.txt")
-with open(f"check", 'r') as file:
-    file_contents = file.read()
+# with open(f"check", 'r') as file:
+#     file_contents = file.read()
 # numbers = extract_numbers_from_text(file_contents)
 # print(numbers)
 # check_last_eat_under_3(numbers)
-print(find_last_eating_before_died(file_contents))
-print("\n---------------------------------\n")
+# print(find_last_eating_before_died(file_contents))
+# print("\n---------------------------------\n")
 # os.system("./philo 50 800 200 200 3 > test_file.txt")
 # check_died_under_10ms("test_file.txt", 310)
+
+
+import pandas as pd
+    
+action_counts = {}
+
+def extract_columns_from_file(file_path):
+    # Dictionary to store unique actions and their counts
+
+    # Read the file
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+
+    # Create a list to store the data
+    data = []
+
+    # Process each line
+    i = 0
+    for line in lines:
+        # Split the line into words
+        words = line.strip().split()
+        
+        # Extract the required columns
+        num1 = int(remove_colors(words[0]))
+        num2 = int(remove_colors(words[1]))
+        action = words[-1]
+        
+        # Update action_counts dictionary
+        if action not in action_counts:
+            action_counts[action] = i
+            i += 1
+        
+        # Add the extracted values to the data list
+        data.append([num1, num2, action_counts[action]])
+
+    # Create a DataFrame
+    df = pd.DataFrame(data, columns=['timestamp', 'philo', 'Action'])
+
+    return df
+
+def get_last_row_with_condition(df, target_value, final_state):
+    philo_last_eating = df[df['philo'] == target_value]
+    philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 1]
+    return philo_last_eating
+
+def get_last_eating_row_before_died(df):
+    last_died_row = df.iloc[-1]
+    target_value = last_died_row['philo']
+    last_eating_row = get_last_row_with_condition(df, target_value, action_counts['eating'])
+    return last_eating_row
+
+# Usage
+file_path = 'check'
+df = extract_columns_from_file(file_path)
+
+if (df.iloc[-1]['Action'] == 4):
+    last_eating_row = get_last_eating_row_before_died(df)
+    if last_eating_row.empty:
+        print("No eating row found before the last died row.")
+        print("Time without eating: ")
+    else:
+        print(f"Last eating timestamp of [{last_eating_row.iloc[-1]['philo']}]: {last_eating_row.iloc[-1]['timestamp']}")
+

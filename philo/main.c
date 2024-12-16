@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 18:52:34 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/16 21:31:10 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 		if (!args->not_dead)
 		{
 			// args->general_vars->philo_alive--;
-			ft_printf("phio_alive: %u\treturn join: %d\n",args->general_vars->philo_alive,
+			ft_printf("philo_alive: %u\treturn join: %d\n",args->general_vars->philo_alive,
 			pthread_join(philo[i], NULL));
 		}
 		i++;
