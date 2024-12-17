@@ -62,5 +62,5 @@ void	died_log(t_philo *args)
 	usecs *= 10000;
 	time -= usecs;
 	//testeo
-	ft_printf("\033[3;31m%l %d died\033[0m\n", time, args->tid);	
+	ft_printf("\033[3;31m%l %d died\n\033[0m", time, args->tid);	
 }

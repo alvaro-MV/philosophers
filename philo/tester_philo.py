@@ -123,7 +123,7 @@ def extract_columns_from_file(file_path):
 
     # Read the file
     with open(file_path, 'r') as f:
-        lines = f.readlines()
+        lines = f.readlines()[:-1]
 
     # Create a list to store the data
     data = []
@@ -154,6 +154,7 @@ def extract_columns_from_file(file_path):
 
 def get_last_row_with_condition(df, target_value):
     philo_last_eating = df[df['philo'] == target_value]
+    print(philo_last_eating)
     philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 1]
     return philo_last_eating
 
@@ -167,6 +168,7 @@ def get_last_eating_row_before_died(df):
 file_path = 'check'
 df = extract_columns_from_file(file_path)
 
+print(df.iloc[0]['timestamp'])
 if (df.iloc[-1]['Action'] == 4):
     last_eating_row = get_last_eating_row_before_died(df)
     if last_eating_row.empty:
@@ -175,7 +177,7 @@ if (df.iloc[-1]['Action'] == 4):
         print(f"Time without eating: {df.iloc[-1]['timestamp'] - df.iloc[0]['timestamp']}")
     else:
         print(f"Last eating timestamp of [{last_eating_row.iloc[-1]['philo']}]: {last_eating_row.iloc[-1]['timestamp']}")
-elif df.iloc[-1]['Action'] != 4:
-    print("All philos not correctly joined after the death of a philo!! \U0001f61f")
+elif df.iloc[-1]['Action'] != 4 and not df[df['Action'] == 4].empty:
+    print("Philos not correctly joined after the death of a philo!! \U0001f61f")
 else:
     print("All philo alive!! \U0001f600")
