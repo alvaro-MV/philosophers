@@ -168,7 +168,7 @@ def get_last_eating_row_before_died(df):
 file_path = 'check'
 df = extract_columns_from_file(file_path)
 
-print(df.iloc[0]['timestamp'])
+print(df.iloc[-1])
 if (df.iloc[-1]['Action'] == 4):
     last_eating_row = get_last_eating_row_before_died(df)
     if last_eating_row.empty:
@@ -177,6 +177,7 @@ if (df.iloc[-1]['Action'] == 4):
         print(f"Time without eating: {df.iloc[-1]['timestamp'] - df.iloc[0]['timestamp']}")
     else:
         print(f"Last eating timestamp of [{last_eating_row.iloc[-1]['philo']}]: {last_eating_row.iloc[-1]['timestamp']}")
+        print(f"difference: {df.iloc[-1]['timestamp'] - last_eating_row.iloc[-1]['timestamp']}")
 elif df.iloc[-1]['Action'] != 4 and not df[df['Action'] == 4].empty:
     print("Philos not correctly joined after the death of a philo!! \U0001f61f")
 else:

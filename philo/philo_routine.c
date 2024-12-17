@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/01 18:53:19 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/17 20:39:35 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sleep_routine(t_philo *args)
 
 void	think_routine(t_philo *args)
 {
-	manage_usleep(1);
+	manage_usleep(100);
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
 	if (!args->general_vars->philo_alive)
 		return ;
