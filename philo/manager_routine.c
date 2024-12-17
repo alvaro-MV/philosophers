@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/11/30 19:33:25 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/17 14:43:44 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	*manager_routine(void *args, pthread_t *philo)
 			if (diff_time >= gen->time_to_die)
 			{
 				died_log(&arr_args[i]);
-				pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
+				pthread_mutex_destroy(&arr_args->general_vars->logs_mutex);
+				// pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
 				return (NULL);
 			}
 			i++;

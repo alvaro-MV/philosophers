@@ -152,7 +152,7 @@ def extract_columns_from_file(file_path):
 
     return df
 
-def get_last_row_with_condition(df, target_value, final_state):
+def get_last_row_with_condition(df, target_value):
     philo_last_eating = df[df['philo'] == target_value]
     philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 1]
     return philo_last_eating
@@ -160,7 +160,7 @@ def get_last_row_with_condition(df, target_value, final_state):
 def get_last_eating_row_before_died(df):
     last_died_row = df.iloc[-1]
     target_value = last_died_row['philo']
-    last_eating_row = get_last_row_with_condition(df, target_value, action_counts['eating'])
+    last_eating_row = get_last_row_with_condition(df, target_value)
     return last_eating_row
 
 # Usage
@@ -171,7 +171,11 @@ if (df.iloc[-1]['Action'] == 4):
     last_eating_row = get_last_eating_row_before_died(df)
     if last_eating_row.empty:
         print("No eating row found before the last died row.")
-        print("Time without eating: ")
+
+        print(f"Time without eating: {df.iloc[-1]['timestamp'] - df.iloc[0]['timestamp']}")
     else:
         print(f"Last eating timestamp of [{last_eating_row.iloc[-1]['philo']}]: {last_eating_row.iloc[-1]['timestamp']}")
-
+elif df.iloc[-1]['Action'] != 4:
+    print("All philos not correctly joined after the death of a philo!! \U0001f61f")
+else:
+    print("All philo alive!! \U0001f600")

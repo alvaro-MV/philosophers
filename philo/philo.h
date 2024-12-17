@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/02 15:24:49 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/17 14:03:13 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@
 
 typedef struct s_general_vars
 {
-	pthread_mutex_t		proc_mutex;
+	pthread_mutex_t		proc_mutex; //testeo
+	pthread_mutex_t		death_mutex;
 	pthread_mutex_t		logs_mutex;
 	pthread_mutex_t		*forks;
 	pthread_t			*philo_ptrs;
