@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	take_fork_log(t_philo *args)
+void	take_fork_log(t_philo *args, size_t action)
 {
 	unsigned long long	time;
 
@@ -10,7 +10,10 @@ void	take_fork_log(t_philo *args)
 	usecs *= 10000;
 	time -= usecs;
 	//testeo
-	ft_printf("\033[3;33m%l %d has taken a fork\n", time, args->tid);
+	if (action)
+		ft_printf("\033[3;33m%l %d has taken a fork\n", time, args->tid);
+	else
+		ft_printf("\033[3;332m%l %d has release a fork\n", time, args->tid);
 }
 
 void	eating_log(t_philo *args)

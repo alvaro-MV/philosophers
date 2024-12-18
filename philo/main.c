@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/16 21:31:10 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/12/18 11:46:24 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ int	main(int argc, char **argv)
 	init_protection_mutexs(&general_vars);
 	init_forks(&general_vars);
 	run_philos(&general_vars, arr_args, philosophers);
+	write(1, "Final", 6); //testeo
 	p_free(&general_vars, arr_args, philosophers);
 }

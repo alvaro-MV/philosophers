@@ -168,7 +168,7 @@ def get_last_eating_row_before_died(df):
 file_path = 'check'
 df = extract_columns_from_file(file_path)
 
-print(df.iloc[-1])
+print(df.iloc[0]['timestamp'])
 if (df.iloc[-1]['Action'] == 4):
     last_eating_row = get_last_eating_row_before_died(df)
     if last_eating_row.empty:

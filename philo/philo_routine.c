@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/17 20:39:35 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 13:06:09 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ void	eat_routine(t_philo *args)
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
+	pthread_mutex_lock(&gen->logs_mutex);
+	eating_log(args);
+	pthread_mutex_unlock(&gen->logs_mutex);
 	manage_usleep(gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!args->general_vars->philo_alive)
 		return ;
-	eating_log(args);
 	args->time_last_meal = get_actual_time();
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
+	take_fork_log(args, 0);
 	pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
+	take_fork_log(args, 0);
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
 
@@ -64,7 +68,7 @@ void	take_forks(t_philo *args)
 	{
 		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
 		pthread_mutex_lock(&gen->logs_mutex);
-		take_fork_log(args);
+		take_fork_log(args, 1);
 		pthread_mutex_unlock(&gen->logs_mutex);
 
 		pthread_mutex_lock(&gen->forks[args->tid - 1]);
@@ -75,14 +79,14 @@ void	take_forks(t_philo *args)
 			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
 			return ;
 		}
-		take_fork_log(args);
+		take_fork_log(args, 1);
 		pthread_mutex_unlock(&gen->logs_mutex);
 	}
 	else
 	{
 		pthread_mutex_lock(&gen->forks[args->tid - 1]);
 		pthread_mutex_lock(&args->general_vars->logs_mutex);
-		take_fork_log(args);
+		take_fork_log(args, 1);
 		pthread_mutex_unlock(&args->general_vars->logs_mutex);
 
 		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
@@ -93,7 +97,7 @@ void	take_forks(t_philo *args)
 			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
 			return ;
 		}
-		take_fork_log(args);
+		take_fork_log(args, 1);
 		pthread_mutex_unlock(&args->general_vars->logs_mutex);
 	}
 }
