@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 21:22:42 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/12/18 21:30:58 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	take_forks(t_philo *args)
 
 		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
 		pthread_mutex_lock(&args->general_vars->logs_mutex);
-		if (!args->general_vars->philo_alive)
+		if (args->general_vars->philo_alive == 1)
 		{
 			pthread_mutex_lock(&gen->forks[args->tid - 1]);
 			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
