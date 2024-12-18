@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 15:48:46 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 21:22:42 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void	take_forks(t_philo *args)
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
-	if (args->tid % 2 != 0)
-		manage_usleep(WAI_T);
-	if (args->tid == 0)
+	if (args->tid % 2 && args->general_vars->n_philo % 2 == 0)
 	{
 		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
 		pthread_mutex_lock(&gen->logs_mutex);
@@ -74,7 +72,7 @@ void	take_forks(t_philo *args)
 
 		pthread_mutex_lock(&gen->forks[args->tid - 1]);
 		pthread_mutex_lock(&gen->logs_mutex);
-		if (!args->general_vars->philo_alive)
+		if (args->general_vars->n_philo == 1)
 		{
 			pthread_mutex_unlock(&gen->forks[args->tid - 1]);
 			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
@@ -126,6 +124,8 @@ void	*philo_routine(void *vargs)
 	args = (t_philo *) vargs;
 	i = 0;
 	args->time_last_meal = get_actual_time();
+	if (args->tid % 2)
+		usleep(450);
 	while (1)
 	{
 		if (!check_running(args, &i))
