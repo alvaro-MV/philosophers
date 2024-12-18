@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 14:02:18 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 15:51:07 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ unsigned long long	get_actual_time(void)
 
 unsigned long long	time_diff_usecs(unsigned long long start)
 {
-	start = get_actual_time() - start;
-	return (start);
+	unsigned long long	returned;
+
+	unsigned long long actual = get_actual_time();
+	returned =  actual - start;
+	return (returned);
 }
 
 void	p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo)

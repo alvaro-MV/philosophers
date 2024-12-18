@@ -46,7 +46,7 @@ def extract_columns_from_file(file_path):
 def get_last_row_with_condition(df, target_value):
     philo_last_eating = df[df['philo'] == target_value]
     print(philo_last_eating)
-    philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 1]
+    philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 2]
     return philo_last_eating
 
 def get_last_eating_row_before_died(df):
@@ -59,7 +59,6 @@ def get_last_eating_row_before_died(df):
 file_path = 'check'
 df = extract_columns_from_file(file_path)
 
-print("Ay jose")
 print(df.iloc[0]['timestamp'])
 if (df.iloc[-1]['Action'] == 5):
     last_eating_row = get_last_eating_row_before_died(df)

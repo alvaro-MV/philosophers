@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 14:05:15 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 15:48:46 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sleep_routine(t_philo *args)
 
 void	think_routine(t_philo *args)
 {
-	manage_usleep(100);
+	manage_usleep(1);
 	pthread_mutex_lock(&args->general_vars->logs_mutex);
 	if (!args->general_vars->philo_alive)
 		return ;
@@ -32,6 +32,7 @@ void	think_routine(t_philo *args)
 	if (args->n_of_meals == args->general_vars->max_meals)
 	{
 		args->general_vars->philo_alive--;
+		args->not_dead = 0;
 	}
 	pthread_mutex_unlock(&args->general_vars->logs_mutex);
 }
@@ -52,10 +53,8 @@ void	eat_routine(t_philo *args)
 	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
 	fork_log(args, 0);
-	gen->forks_used[args->tid - 1] = 0;
 	pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
 	fork_log(args, 0);
-	gen->forks_used[(args->tid) % gen->n_philo] = 0;
 	pthread_mutex_unlock(&gen->logs_mutex);
 }
 
@@ -127,8 +126,10 @@ void	*philo_routine(void *vargs)
 	args = (t_philo *) vargs;
 	i = 0;
 	args->time_last_meal = get_actual_time();
-	while (check_running(args, &i))
+	while (1)
 	{
+		if (!check_running(args, &i))
+			return (NULL);
 		take_forks(args);
 		eat_routine(args);
 		sleep_routine(args);

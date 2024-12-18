@@ -13,7 +13,7 @@ void	fork_log(t_philo *args, size_t action)
 	if (action)
 		ft_printf("\033[3;33m%l %d has taken a fork\n", time, args->tid);
 	else
-		ft_printf("\033[3;36m%l %d has release a fork.\n", time, args->tid);
+		ft_printf("\033[3;36m%l %d has release a forks\n", time, args->tid);
 }
 
 void	eating_log(t_philo *args)

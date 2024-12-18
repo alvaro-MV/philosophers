@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 11:46:24 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 15:52:58 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 	{
 		if (!args->not_dead)
 		{
-			// args->general_vars->philo_alive--;
-			ft_printf("philo_alive: %u\treturn join: %d\n",args->general_vars->philo_alive,
-			pthread_join(philo[i], NULL));
+			args->general_vars->philo_alive--;
+			pthread_join(philo[i], NULL);
 		}
 		i++;
 	}
