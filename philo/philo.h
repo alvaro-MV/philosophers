@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 13:05:03 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/18 14:08:16 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_philo
 }						t_philo;
 
 # define MAX_PHILOS 200
-# define WAI_T 3
+# define WAI_T 13
 
 void				manage_usleep(__useconds_t	miliseconds);
 unsigned long long	get_actual_time(void);
@@ -73,7 +73,7 @@ void				*manager_routine(void *args, pthread_t *philosophers);
 int					compatible(t_philo *args);
 
 void				take_forks(t_philo *args);
-void				take_fork_log(t_philo *args, size_t action);
+void				fork_log(t_philo *args, size_t action);
 void				eating_log(t_philo *args);
 void				sleeping_log(t_philo *args);
 void				thinking_log(t_philo *args);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/12 22:47:18 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/12/18 14:02:18 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	compatible(t_philo *args)
 	t_gen_var *gen;
 
 	gen = args->general_vars;
-	if (!gen->forks_used[args->tid])
+	if (!gen->forks_used[args->tid - 1])
 	{
-		if (!gen->forks_used[(args->tid + 1) % gen->n_philo])
+		if (!gen->forks_used[(args->tid) % gen->n_philo])
 			return (1);
 	}
 	return (0);
