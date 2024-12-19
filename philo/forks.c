@@ -22,14 +22,9 @@ void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 void	drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 {
 	pthread_mutex_unlock(&gen->forks[f1]);
-	pthread_mutex_lock(&gen->logs_mutex);
-	fork_log(args, 1);
-	pthread_mutex_unlock(&gen->logs_mutex);
-
+	fork_log(args, 0);
 	pthread_mutex_unlock(&gen->forks[f2]);
-	pthread_mutex_lock(&gen->logs_mutex);
-	fork_log(args, 1);
-	pthread_mutex_unlock(&gen->logs_mutex);
+	fork_log(args, 0);
 }
 
 void	take_forks_dispatcher(t_philo *args)
