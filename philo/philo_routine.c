@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 21:30:58 by alvmoral         ###   ########.fr       */
+/*   Updated: 2024/12/19 13:51:25 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,54 +51,10 @@ void	eat_routine(t_philo *args)
 		return ;
 	args->time_last_meal = get_actual_time();
 	args->n_of_meals++;
-	pthread_mutex_unlock(&gen->forks[args->tid - 1]);
-	fork_log(args, 0);
-	pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
-	fork_log(args, 0);
-	pthread_mutex_unlock(&gen->logs_mutex);
-}
-
-void	take_forks(t_philo *args)
-{
-	t_gen_var		*gen;
-
-	gen = args->general_vars;
 	if (args->tid % 2 && args->general_vars->n_philo % 2 == 0)
-	{
-		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
-		pthread_mutex_lock(&gen->logs_mutex);
-		fork_log(args, 1);
-		pthread_mutex_unlock(&gen->logs_mutex);
-
-		pthread_mutex_lock(&gen->forks[args->tid - 1]);
-		pthread_mutex_lock(&gen->logs_mutex);
-		if (args->general_vars->n_philo == 1)
-		{
-			pthread_mutex_unlock(&gen->forks[args->tid - 1]);
-			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
-			return ;
-		}
-		fork_log(args, 1);
-		pthread_mutex_unlock(&gen->logs_mutex);
-	}
+		drop_forks(gen, args, args->tid % gen->n_philo, args->tid - 1);
 	else
-	{
-		pthread_mutex_lock(&gen->forks[args->tid - 1]);
-		pthread_mutex_lock(&args->general_vars->logs_mutex);
-		fork_log(args, 1);
-		pthread_mutex_unlock(&args->general_vars->logs_mutex);
-
-		pthread_mutex_lock(&gen->forks[args->tid % gen->n_philo]);
-		pthread_mutex_lock(&args->general_vars->logs_mutex);
-		if (args->general_vars->philo_alive == 1)
-		{
-			pthread_mutex_lock(&gen->forks[args->tid - 1]);
-			pthread_mutex_unlock(&gen->forks[args->tid % gen->n_philo]);
-			return ;
-		}
-		fork_log(args, 1);
-		pthread_mutex_unlock(&args->general_vars->logs_mutex);
-	}
+		drop_forks(gen, args, args->tid - 1, args->tid % gen->n_philo);
 }
 
 static int	check_running(t_philo *args, unsigned int *i)
@@ -130,7 +86,7 @@ void	*philo_routine(void *vargs)
 	{
 		if (!check_running(args, &i))
 			return (NULL);
-		take_forks(args);
+		take_forks_dispatcher(args);
 		eat_routine(args);
 		sleep_routine(args);
 		think_routine(args);

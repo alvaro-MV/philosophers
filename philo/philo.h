@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 14:08:16 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/19 13:50:29 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_general_vars
 typedef struct s_philo	
 {
 	t_gen_var			*general_vars;
-	int					tid;
+	int		tid;
 	unsigned int		n_of_meals;
 	unsigned long long	time_last_meal;
 	pthread_mutex_t		last_meal_mutex;
@@ -55,6 +55,8 @@ typedef struct s_philo
 # define MAX_PHILOS 200
 # define WAI_T 13
 
+// ************Utils*****************
+
 void				manage_usleep(__useconds_t	miliseconds);
 unsigned long long	get_actual_time(void);
 unsigned long long	time_diff_usecs(unsigned long long start);
@@ -63,16 +65,22 @@ void				p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo);
 void				p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
 void				wait_philos(t_philo *args, pthread_t *philosophers);
 
+/* 	*************Initialization******* */
+
 void				init_protection_mutexs(t_gen_var *general_vars);
 void				init_forks(t_gen_var *general_vars);
 void				init_args(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
 
-
+/* ***************Routines************* */
 void				*philo_routine(void *vargs);
 void				*manager_routine(void *args, pthread_t *philosophers);
 int					compatible(t_philo *args);
+/* ***************Forks***************** */
+void				take_forks_dispatcher(t_philo *args);
+void				take_forks(t_gen_var *gen, t_philo *args, int f1, int f2);
+void				drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2);
 
-void				take_forks(t_philo *args);
+/* ***************Logs****************** */
 void				fork_log(t_philo *args, size_t action);
 void				eating_log(t_philo *args);
 void				sleeping_log(t_philo *args);

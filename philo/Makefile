@@ -2,7 +2,7 @@ NAME = philo
 
 SRCS = init.c logs.c main.c manager_routine.c \
 	   parser.c philo_routine.c \
-	   philo_utils.c sys_calls.c \
+	   philo_utils.c sys_calls.c forks.c \
 	   libft/ft_atoui.c libft/ft_atoul.c libft/ft_calloc.c \
 	   libft/ft_itoa.c libft/ft_ptoa.c \
 	   libft/ft_utoa.c libft/ft_xtoa.c libft/ft_printf.c \
@@ -15,7 +15,7 @@ SRCS = init.c logs.c main.c manager_routine.c \
 CC = cc
 
 # Opciones de compilación
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 # Directorio de archivos fuente
 SRCDIR = .
