@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 15:50:23 by alvaro           ###   ########.fr       */
+/*   Updated: 2024/12/19 11:31:48 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*manager_routine(void *args, pthread_t *philo)
 		i = 0;
 		manage_usleep(WAI_T);
 		pthread_mutex_lock(&arr_args->general_vars->logs_mutex);
-		// write(1, "\n-------Comprobacion-------------------\n\n", 42); //testeo
 		while (i < gen->n_philo && arr_args->not_dead)
 		{
 			diff_time = time_diff_usecs(arr_args[i].time_last_meal);
@@ -41,7 +40,6 @@ void	*manager_routine(void *args, pthread_t *philo)
 			i++;
 		}
 		pthread_mutex_unlock(&arr_args->general_vars->logs_mutex);
-		// write(1, "\n--------------------------------------\n\n", 42); //testeo
 	}
 	wait_philos(args, philo);
 	return (NULL);

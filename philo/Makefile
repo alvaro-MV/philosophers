@@ -38,4 +38,10 @@ fclean: clean
 
 re: fclean all
 
+norm:
+	@norminette *.c
+	@norminette */*.c
+	@norminette *.h
+	@norminette */*.h
+
 .PHONY: all clean fclean re
