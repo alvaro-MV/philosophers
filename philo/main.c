@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 15:52:58 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:44:36 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 	unsigned int	i;
 
 	i = 0;
+	gen_vars->init_time = 0;
 	init_args(gen_vars, args, philo);
 	while (i < gen_vars->n_philo)
 	{
@@ -48,6 +49,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo* args, pthread_t *philo)
 		i++;
 	}
 	gen_vars->philo_ptrs = philo;
+	gen_vars->init_time = get_actual_time();
 	manager_routine(args, philo);
 }
 

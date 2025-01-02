@@ -46,7 +46,7 @@ def extract_columns_from_file(file_path):
 def get_last_row_with_condition(df, target_value):
     philo_last_eating = df[df['philo'] == target_value]
     print(philo_last_eating)
-    philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 2]
+    philo_last_eating = philo_last_eating[philo_last_eating['Action'] == 1]
     return philo_last_eating
 
 def get_last_eating_row_before_died(df):

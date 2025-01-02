@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/19 14:01:01 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:56:59 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ void	eat_routine(t_philo *args)
 	gen = args->general_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
 	eating_log(args);
+	args->time_last_meal = get_actual_time();
+	args->n_of_meals++;
 	pthread_mutex_unlock(&gen->logs_mutex);
 	manage_usleep(gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!args->general_vars->philo_alive)
 		return ;
-	args->time_last_meal = get_actual_time();
-	args->n_of_meals++;
 	if (args->tid % 2 && args->general_vars->n_philo % 2 == 0)
 		drop_forks(gen, args, args->tid % gen->n_philo, args->tid - 1);
 	else
@@ -80,7 +80,9 @@ void	*philo_routine(void *vargs)
 
 	args = (t_philo *) vargs;
 	i = 0;
-	args->time_last_meal = get_actual_time();
+	while (!args->general_vars->init_time)
+		;
+	args->time_last_meal = args->general_vars->init_time;
 	if (args->tid % 2)
 		usleep(450);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/01 17:39:25 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 11:50:32 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	init_protection_mutexs(t_gen_var *general_vars)
 {
-	if (pthread_mutex_init(&general_vars->proc_mutex, NULL))
-	{
-		write(2, "philo: error initialization of protection mutex\n", 49);
-		exit(-1);
-	}
+	// if (pthread_mutex_init(&general_vars->proc_mutex, NULL))
+	// {
+	// 	write(2, "philo: error initialization of protection mutex\n", 49);
+	// 	exit(-1);
+	// }
 	if (pthread_mutex_init(&general_vars->logs_mutex, NULL))
 	{
 		write(2, "philo: error initialization of protection mutex\n", 49);
