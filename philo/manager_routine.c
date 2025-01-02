@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/19 11:31:48 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 12:30:13 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	*manager_routine(void *args, pthread_t *philo)
 		i = 0;
 		manage_usleep(WAI_T);
 		pthread_mutex_lock(&arr_args->general_vars->logs_mutex);
-		while (i < gen->n_philo && arr_args->not_dead)
+		while (i < gen->n_philo && arr_args[i].not_dead) 
 		{
 			diff_time = time_diff_usecs(arr_args[i].time_last_meal);
 			// ft_printf("philo_alive: %u\n", gen->philo_alive); //testeo

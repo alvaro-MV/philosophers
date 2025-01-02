@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/01/02 11:56:59 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 12:17:37 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	eat_routine(t_philo *args)
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!args->general_vars->philo_alive)
 		return ;
-	if (args->tid % 2 && args->general_vars->n_philo % 2 == 0)
+	if (args->tid % 2)
 		drop_forks(gen, args, args->tid % gen->n_philo, args->tid - 1);
 	else
 		drop_forks(gen, args, args->tid - 1, args->tid % gen->n_philo);

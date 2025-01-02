@@ -32,7 +32,7 @@ void	take_forks_dispatcher(t_philo *args)
 	t_gen_var		*gen;
 
 	gen = args->general_vars;
-	if (args->tid % 2 && args->general_vars->n_philo % 2 == 0)
+	if (args->tid % 2)
 		take_forks(gen, args, args->tid % gen->n_philo, args->tid - 1);
 	else
 		take_forks(gen, args, args->tid - 1, args->tid % gen->n_philo);
