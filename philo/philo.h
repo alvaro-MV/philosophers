@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/01/02 11:41:53 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/01/02 12:51:36 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct s_general_vars
 typedef struct s_philo	
 {
 	t_gen_var			*general_vars;
-	int		tid;
+	unsigned int		tid;
 	unsigned int		n_of_meals;
 	unsigned long long	time_last_meal;
 	pthread_mutex_t		last_meal_mutex;
