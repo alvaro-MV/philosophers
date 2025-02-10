@@ -18,7 +18,7 @@ int	is_in_range_of_ulong(char *next_n)
 {
 	size_t				len;
 	unsigned long long	max_common;
-	char				*ch_number;
+	char				*str_number;
 
 	if (!check_number(next_n))
 		return (0);
@@ -28,22 +28,24 @@ int	is_in_range_of_ulong(char *next_n)
 		return (0);
 	else if (len + 1 < 20)
 		return (1);
-	ch_number = ft_substr(next_n, 0, len);
-	if (!ch_number)
+	str_number = ft_substr(next_n, 0, len);
+	if (!str_number)
 		return (0);
-	if (ft_atoul(ch_number) > max_common) //Crear la function ft_atoul
-		return (free(ch_number), 0);
+	if (ft_atoul(str_number) > max_common) //Crear la function ft_atoul
+		return (free(str_number), 0);
+	else if (ft_atoul(str_number) < max_common) //Crear la function ft_atoul
+		return (free(str_number), 1);
 	else if (next_n[len] > '5') //la ultima cifra
-		return (free(ch_number), 0);
+		return (free(str_number), 0);
 	else
-		return (free(ch_number), 1);
+		return (free(str_number), 1);
 }
 
 int	is_in_range_of_uint(char *next_n)
 {
 	size_t			len;
 	unsigned int	max_common;
-	char			*ch_number;
+	char			*str_number;
 
 	if (!check_number(next_n))
 		return (0);
@@ -53,35 +55,37 @@ int	is_in_range_of_uint(char *next_n)
 		return (0);
 	else if (len + 1 < 10)
 		return (1);
-	ch_number = ft_substr(next_n, 0, len);
-	if (!ch_number)
+	str_number = ft_substr(next_n, 0, len);
+	if (!str_number)
 		return (0);
-	if (ft_atoui(ch_number) > max_common)
-		return (free(ch_number), 0);
+	if (ft_atoui(str_number) > max_common)
+		return (free(str_number), 0);
+	else if (ft_atoui(str_number) < max_common)
+		return (free(str_number), 1);
 	else if (next_n[len] > '5')
-		return (free(ch_number), 0);
+		return (free(str_number), 0);
 	else
-		return (free(ch_number), 1);
+		return (free(str_number), 1);
 }
 
-void	parse_input(t_gen_var *general_vars, char **argv)
+void	parse_input(t_gen_var *gen_vars, char **argv)
 {
 	if (is_in_range_of_uint(argv[0]) && is_in_range_of_ulong(argv[1]))
 	{
-		general_vars->n_philo = ft_atoui(argv[0]);
-		if (general_vars->n_philo > MAX_PHILOS) //testeo
+		gen_vars->n_philo = ft_atoui(argv[0]);
+		if (gen_vars->n_philo > MAX_PHILOS) //testeo
 		{
 			ft_printf("nº of philos exceeds 200.\n");
 			exit (-1);
 		}
-		general_vars->time_to_die = ft_atoul(argv[1]);
+		gen_vars->time_to_die = ft_atoul(argv[1]);
 	}
 	else
 		exit (-1);
 	if (is_in_range_of_ulong(argv[2]) && is_in_range_of_ulong(argv[3]))
 	{
-		general_vars->time_to_eat = ft_atoul(argv[2]);
-		general_vars->time_to_sleep = ft_atoul(argv[3]);
+		gen_vars->time_to_eat = ft_atoul(argv[2]);
+		gen_vars->time_to_sleep = ft_atoul(argv[3]);
 	}
 	else
 		exit (-1);
@@ -89,15 +93,15 @@ void	parse_input(t_gen_var *general_vars, char **argv)
 	{
 		if (is_in_range_of_ulong(argv[4]))
 		{
-			general_vars->max_meals = ft_atoui(argv[4]);
-			general_vars->run_4ever = 0;
+			gen_vars->max_meals = ft_atoui(argv[4]);
+			gen_vars->run_4ever = 0;
 		}
 		else
 			exit(-1);
 	}
 	else
-		general_vars->run_4ever = 1;
-	general_vars->philo_alive = general_vars->n_philo;
+		gen_vars->run_4ever = 1;
+	gen_vars->philo_alive = gen_vars->n_philo;
 }
 
 //int	main(int argc, char **argv)

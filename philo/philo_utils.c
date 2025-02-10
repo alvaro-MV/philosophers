@@ -3,48 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2024/12/18 15:51:07 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/10 13:26:00 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	compatible(t_philo *args)
+int	compatible(t_philo *dinner)
 {
 	t_gen_var *gen;
 
-	gen = args->general_vars;
-	if (!gen->forks_used[args->tid - 1])
+	gen = dinner->gen_vars;
+	if (!gen->forks_used[dinner->tid - 1])
 	{
-		if (!gen->forks_used[(args->tid) % gen->n_philo])
+		if (!gen->forks_used[(dinner->tid) % gen->n_philo])
 			return (1);
 	}
 	return (0);
 }
 
-unsigned long long	get_actual_time(void)
+uint64_t	get_actual_time(void)
 {
-	struct timeval		tv;
-	unsigned long long	timestamp;
+	struct timeval	tv;
+	uint64_t		timestamp;
 
 	gettimeofday(&tv, NULL);
 	timestamp = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (timestamp);
 }
 
-unsigned long long	time_diff_usecs(unsigned long long start)
+uint64_t	time_diff_usecs(uint64_t start)
 {
-	unsigned long long	returned;
+	uint64_t	actual;
+	uint64_t	returned;
 
-	unsigned long long actual = get_actual_time();
+	actual = get_actual_time();
 	returned =  actual - start;
 	return (returned);
 }
 
-void	p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo)
+void	p_new(t_gen_var *gen_vars, t_philo **dinner, pthread_t **philo)
 {
 	unsigned int	n_philo;
 	pthread_mutex_t	*forks;
@@ -55,8 +56,8 @@ void	p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo)
 	if (!forks)
 		ft_free_exit(gen_vars->forks_used);
 	gen_vars->forks = forks;
-	*args = (t_philo *) malloc(n_philo * sizeof(t_philo));
-	if (!*args)
+	*dinner = (t_philo *) malloc(n_philo * sizeof(t_philo));
+	if (!*dinner)
 	{
 		free(gen_vars->forks_used);
 		ft_free_exit(gen_vars->forks);
@@ -66,15 +67,15 @@ void	p_alloc(t_gen_var *gen_vars, t_philo **args, pthread_t **philo)
 	{
 		free(gen_vars->forks_used);
 		free(gen_vars->forks);
-		ft_free_exit(*args);
+		ft_free_exit(*dinner);
 	}
 }
 
-void	p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo)
+void	p_free(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 {
 	free(gen_vars->forks_used);
 	free(gen_vars->forks);
-	free(args);
+	free(dinner);
 	ft_free_exit(philo);
 }
 
