@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 13:43:42 by alvmoral          #+#    #+#             */
+/*   Updated: 2025/02/10 13:43:43 by alvmoral         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 int	check_number(char *str)
@@ -22,20 +34,20 @@ int	is_in_range_of_ulong(char *next_n)
 
 	if (!check_number(next_n))
 		return (0);
-	max_common = 1844674407370955161; //20 dígitos.
+	max_common = 1844674407370955161;
 	len = ft_strlen(next_n) - 1;
-	if (len + 1 > 20) //20 es el numero de digito sde ULLON_MAX
+	if (len + 1 > 20)
 		return (0);
 	else if (len + 1 < 20)
 		return (1);
 	str_number = ft_substr(next_n, 0, len);
 	if (!str_number)
 		return (0);
-	if (ft_atoul(str_number) > max_common) //Crear la function ft_atoul
+	if (ft_atoul(str_number) > max_common)
 		return (free(str_number), 0);
-	else if (ft_atoul(str_number) < max_common) //Crear la function ft_atoul
+	else if (ft_atoul(str_number) < max_common)
 		return (free(str_number), 1);
-	else if (next_n[len] > '5') //la ultima cifra
+	else if (next_n[len] > '5')
 		return (free(str_number), 0);
 	else
 		return (free(str_number), 1);

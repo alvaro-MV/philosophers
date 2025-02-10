@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   forks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 13:37:24 by alvmoral          #+#    #+#             */
+/*   Updated: 2025/02/10 13:37:55 by alvmoral         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
@@ -6,7 +18,6 @@ void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	pthread_mutex_lock(&gen->logs_mutex);
 	fork_log(args, 1);
 	pthread_mutex_unlock(&gen->logs_mutex);
-
 	pthread_mutex_lock(&gen->forks[f2]);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (args->gen_vars->n_philo == 1)

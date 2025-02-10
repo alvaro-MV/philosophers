@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:24:47 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:42:22 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 	}
 }
 
-void	run_philos(t_gen_var *gen_vars, t_philo* dinner, pthread_t *philo)
+void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 {
 	unsigned int	i;
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	}
 	argv++;
 	parse_input(&gen_vars, argv);
-	p_new(&gen_vars, &arr_dinner, &philosophers);	
+	p_new(&gen_vars, &arr_dinner, &philosophers);
 	init_protection_mutexs(&gen_vars);
 	init_forks(&gen_vars);
 	run_philos(&gen_vars, arr_dinner, philosophers);

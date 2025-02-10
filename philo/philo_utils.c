@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:26:00 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:46:03 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	compatible(t_philo *dinner)
 {
-	t_gen_var *gen;
+	t_gen_var	*gen;
 
 	gen = dinner->gen_vars;
 	if (!gen->forks_used[dinner->tid - 1])
@@ -41,7 +41,7 @@ uint64_t	time_diff_usecs(uint64_t start)
 	uint64_t	returned;
 
 	actual = get_actual_time();
-	returned =  actual - start;
+	returned = actual - start;
 	return (returned);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 12:48:22 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:39:42 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_protection_mutexs(t_gen_var *gen_vars)
 	{
 		write(2, "philo: error initialization of protection mutex\n", 49);
 		exit(-1);
-	}	
+	}
 }
 
 void	init_forks(t_gen_var *gen_vars)
@@ -48,7 +48,7 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 	i = 0;
 	while (i < n_philos)
 	{
-		dinner[i].gen_vars = gen_vars;	
+		dinner[i].gen_vars = gen_vars;
 		dinner[i].tid = i + 1;
 		dinner[i].n_of_meals = 0;
 		dinner[i].not_dead = 1;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   logs.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 13:39:52 by alvmoral          #+#    #+#             */
+/*   Updated: 2025/02/10 13:40:26 by alvmoral         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	fork_log(t_philo *dinner, size_t action)
@@ -27,7 +39,7 @@ void	sleeping_log(t_philo *dinner)
 
 	time = get_actual_time();
 	time = time - dinner->gen_vars->init_time + 1;
-	ft_printf("\033[3;35m%l %d is sleeping\n", time, dinner->tid);	
+	ft_printf("\033[3;35m%l %d is sleeping\n", time, dinner->tid);
 }
 
 void	thinking_log(t_philo *dinner)
@@ -36,7 +48,7 @@ void	thinking_log(t_philo *dinner)
 
 	time = get_actual_time();
 	time = time - dinner->gen_vars->init_time + 1;
-	ft_printf("\033[3;34m%l %d is thinking\n", time, dinner->tid);	
+	ft_printf("\033[3;34m%l %d is thinking\n", time, dinner->tid);
 }
 
 void	died_log(t_philo *dinner)
@@ -45,5 +57,5 @@ void	died_log(t_philo *dinner)
 
 	time = get_actual_time();
 	time = time - dinner->gen_vars->init_time + 1;
-	ft_printf("\033[3;31m%l %d died\n\033[0m", time, dinner->tid);	
+	ft_printf("\033[3;31m%l %d died\n\033[0m", time, dinner->tid);
 }

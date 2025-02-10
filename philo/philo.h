@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:26:49 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:45:07 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_general_vars
 	int				run_4ever;
 }					t_gen_var;
 
-typedef struct s_philo	
+typedef struct s_philo
 {
 	t_gen_var		*gen_vars;
 	unsigned int	tid;
