@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:42:22 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:04:40 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 		if (pthread_create(&philo[i], NULL, philo_routine, &dinner[i]))
 		{
 			write(2, "philo: error creating philosophers\n", 36);
+			pthread_mutex_lock(&gen_vars->logs_mutex);
 			p_free(gen_vars, dinner, philo);
 		}
 		i++;

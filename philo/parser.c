@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:43:42 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:43:43 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:22:37 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,28 @@ int	is_in_range_of_uint(char *next_n)
 		return (free(str_number), 1);
 }
 
+void	parse_n_meals(char **argv, t_gen_var *gen_vars)
+{
+	if (argv[4])
+	{
+		if (is_in_range_of_ulong(argv[4]))
+		{
+			gen_vars->max_meals = ft_atoui(argv[4]);
+			gen_vars->run_4ever = 0;
+		}
+		else
+			exit(-1);
+	}
+	else
+		gen_vars->run_4ever = 1;
+}
+
 void	parse_input(t_gen_var *gen_vars, char **argv)
 {
 	if (is_in_range_of_uint(argv[0]) && is_in_range_of_ulong(argv[1]))
 	{
 		gen_vars->n_philo = ft_atoui(argv[0]);
-		if (gen_vars->n_philo > MAX_PHILOS) //testeo
+		if (gen_vars->n_philo > MAX_PHILOS)
 		{
 			ft_printf("nº of philos exceeds 200.\n");
 			exit (-1);
@@ -101,25 +117,13 @@ void	parse_input(t_gen_var *gen_vars, char **argv)
 	}
 	else
 		exit (-1);
-	if (argv[4])
-	{
-		if (is_in_range_of_ulong(argv[4]))
-		{
-			gen_vars->max_meals = ft_atoui(argv[4]);
-			gen_vars->run_4ever = 0;
-		}
-		else
-			exit(-1);
-	}
-	else
-		gen_vars->run_4ever = 1;
+	parse_n_meals(argv, gen_vars);
 	gen_vars->philo_alive = gen_vars->n_philo;
 }
 
 //int	main(int argc, char **argv)
 //{
 	//t_general_vars	general_vars;
-	
 	//if (argc < 5 || argc > 6)
 	//{
 		//write(1, "Format: ./philo <n_philo> <time_to_die> <time_to_eat>", 54);
