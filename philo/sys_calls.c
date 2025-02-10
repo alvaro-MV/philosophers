@@ -6,20 +6,24 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:37:18 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:01:55 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <unistd.h>
 
-void	manage_usleep(__useconds_t	miliseconds)
+void	manage_usleep(pthread_mutex_t *logs_mutex, __useconds_t	miliseconds)
 {
 	unsigned long long	start;
 
 	start = get_actual_time();
 	while (get_actual_time() < start + miliseconds)
-		usleep(9);
+	{
+		if (usleep(9) == -1)
+			pthread_mutex_lock(logs_mutex);
+	}
+
 }
 
 // int	main(void)

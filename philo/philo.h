@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:45:07 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:56:57 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_philo
 
 // ************Utils*****************
 
-void		manage_usleep(__useconds_t	miliseconds);
+void		manage_usleep(pthread_mutex_t *mutex, __useconds_t miliseconds);
 uint64_t	get_actual_time(void);
 uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);

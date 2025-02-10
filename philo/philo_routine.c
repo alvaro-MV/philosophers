@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:45:22 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:59:31 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	sleep_routine(t_philo *dinner)
 {
-	manage_usleep(dinner->gen_vars->time_to_sleep);
+	pthread_mutex_t *logs_mutex;
+
+	logs_mutex = &dinner->gen_vars->logs_mutex;
+	manage_usleep(logs_mutex, dinner->gen_vars->time_to_sleep);
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -24,7 +27,9 @@ void	sleep_routine(t_philo *dinner)
 
 void	think_routine(t_philo *dinner)
 {
-	manage_usleep(1);
+	pthread_mutex_t *logs_mutex;
+
+	logs_mutex = &dinner->gen_vars->logs_mutex;
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -40,14 +45,16 @@ void	think_routine(t_philo *dinner)
 void	eat_routine(t_philo *dinner)
 {
 	t_gen_var		*gen;
+	pthread_mutex_t *logs_mutex;
 
+	logs_mutex = &dinner->gen_vars->logs_mutex;
 	gen = dinner->gen_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
 	dinner->n_of_meals++;
 	pthread_mutex_unlock(&gen->logs_mutex);
-	manage_usleep(gen->time_to_eat);
+	manage_usleep(logs_mutex, gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -76,8 +83,8 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 
 void	*philo_routine(void *vargs)
 {
-	t_philo				*dinner;
-	unsigned int		i;
+	t_philo			*dinner;
+	unsigned int	i;
 
 	dinner = (t_philo *) vargs;
 	i = 0;
