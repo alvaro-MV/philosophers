@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 18:43:24 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:50:43 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			init_args(t_gen_var *gen_vars, t_philo *args);
 /* ***************Routines************* */
 
 void		*philo_routine(void *vargs);
-void		*manager_routine(void *vargs, pthread_t *philo);
+void		*manager_routine(void *vargs);
 int			compatible(t_philo *args);
 
 /* ***************Forks***************** */

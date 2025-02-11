@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 18:55:34 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:46:40 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	run_philos(t_gen_var *gen_vars, t_philo *dinner)
 			exit(-1);
 		}
 		if (ret == 0);
-			philo_routine((void *) );
+			philo_routine((void *) &dinner[i]);
 		i++;
 	}
 	gen_vars->init_time = get_actual_time();
-	manager_routine(dinner, philo);
+	manager_routine(dinner);
 }
 
 int	main(int argc, char **argv)

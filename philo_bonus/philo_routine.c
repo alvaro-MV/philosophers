@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 15:19:13 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:44:14 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 void	sleep_routine(t_philo *dinner)
 {
-	pthread_mutex_t	*logs_mutex;
+	pthread_mutex_t	*logs_sem;
 
-	logs_mutex = &dinner->gen_vars->logs_mutex;
-	manage_usleep(logs_mutex, dinner->gen_vars->time_to_sleep);
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+	logs_sem = &dinner->gen_vars->logs_sem;
+	manage_usleep(logs_sem, dinner->gen_vars->time_to_sleep);
+	sem_wait(dinner->gen_vars->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	sleeping_log(dinner);
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+	sem_post(dinner->gen_vars->logs_sem);
 }
 
 void	think_routine(t_philo *dinner)
 {
-	pthread_mutex_t	*logs_mutex;
+	pthread_mutex_t	*logs_sem;
 
-	logs_mutex = &dinner->gen_vars->logs_mutex;
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+	logs_sem = &dinner->gen_vars->logs_sem;
+	sem_wait(dinner->gen_vars->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	thinking_log(dinner);
@@ -39,30 +39,30 @@ void	think_routine(t_philo *dinner)
 		dinner->gen_vars->philo_alive--;
 		dinner->not_dead = 0;
 	}
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+	sem_post(dinner->gen_vars->logs_sem);
 }
 
 void	eat_routine(t_philo *dinner)
 {
-	t_gen_var		*gen;
-	pthread_mutex_t	*logs_mutex;
+	t_gen_var	*gen;
+	sem_t		*logs_sem;
 
-	logs_mutex = &dinner->gen_vars->logs_mutex;
+	logs_sem = dinner->gen_vars->logs_sem;
 	gen = dinner->gen_vars;
-	pthread_mutex_lock(&gen->logs_mutex);
+	sem_wait(gen->logs_sem);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
 	dinner->n_of_meals++;
-	pthread_mutex_unlock(&gen->logs_mutex);
-	manage_usleep(logs_mutex, gen->time_to_eat);
-	pthread_mutex_lock(&gen->logs_mutex);
+	sem_post(gen->logs_sem);
+	manage_usleep(logs_sem, gen->time_to_eat);
+	sem_wait(gen->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	if (dinner->tid % 2)
 		drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
 	else
 		drop_forks(gen, dinner, dinner->tid - 1, dinner->tid % gen->n_philo);
-	pthread_mutex_unlock(&gen->logs_mutex);
+	sem_post(gen->logs_sem);
 }
 
 static int	check_running(t_philo *dinner, unsigned int *i)
