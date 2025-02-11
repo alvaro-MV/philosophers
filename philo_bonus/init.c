@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 18:52:20 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:12:17 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 int	init_protection_sem(t_gen_var *gen_vars)
 {
-	gen_vars->logs_sem = sem_open("logs_sem", O_CREAT | O_RDWR, 1);
+	sem_unlink("/logs_sem");
+	gen_vars->logs_sem = sem_open("/logs_sem", O_CREAT, S_IRUSR, 1);
 	if (gen_vars->logs_sem == SEM_FAILED)
 	{
+		perror("que ostias pasa");
 		write(2, "philo: error initialization of logs sem.\n", 42);
 		return (0);
 	}
 	return (1);
 }
 
-static int close_error_forks(sem_t **forks, int i_fail)
+static int	close_error_forks(sem_t **forks, int i_fail)
 {
 	int	i;
 
@@ -51,11 +53,12 @@ int	init_forks(t_gen_var *gen_vars)
 		fork_id = ft_itoa(i);
 		if (!fork_id)
 			return (0);
-		sem_fork_name = ft_strjoin("fork_", fork_id);
+		sem_fork_name = ft_strjoin("/fork_", fork_id);
 		if (!sem_fork_name)
 			return (free(fork_id), 0);
 		free(fork_id);
-		gen_vars->forks[i] = sem_open(sem_fork_name, O_CREAT | O_RDWR, 1);
+		sem_unlink(sem_fork_name);
+		gen_vars->forks[i] = sem_open(sem_fork_name, O_CREAT, S_IRUSR, 1);
 		free(sem_fork_name);
 		if (gen_vars->forks[i] == SEM_FAILED)
 			return (close_error_forks(gen_vars->forks, i),
@@ -70,7 +73,7 @@ static int	close_error_meal(t_gen_var *gen_vars, t_philo *dinner, int i_fail)
 	int	i;
 
 	i = 0;
-	write(2, "philo: error  creating mutex\n", 30);
+	write(2, "philo: error  creating semphore\n", 33);
 	while (i < i_fail)
 	{
 		sem_close(dinner[i].last_meal_mutex);
@@ -97,13 +100,16 @@ int	init_args(t_gen_var *gen_vars, t_philo *dinner)
 		dinner[i].tid = i + 1;
 		dinner[i].n_of_meals = 0;
 		dinner[i].not_dead = 1;
-		philo_id = ft_iota(i);
+		philo_id = ft_itoa(i);
 		if (!philo_id)
 			return (0);
-		sem_name = ft_strjoin("last_meal_", philo_id);
+		sem_name = ft_strjoin("/last_meal_", philo_id);
+		free(philo_id);
 		if (!sem_name)
-			return (free(philo_id), 0);
-		dinner[i].last_meal_mutex = sem_open(sem_name, O_CREAT | O_RDWR, 1);
+			return (0);
+		sem_unlink(sem_name);
+		dinner[i].last_meal_mutex = sem_open(sem_name, O_CREAT, S_IRWXU, 1);
+		free(sem_name);
 		if (dinner[i].last_meal_mutex == SEM_FAILED)
 			return (close_error_meal(gen_vars, dinner, i));
 	}

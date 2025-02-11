@@ -17,7 +17,7 @@ void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	sem_wait(gen->forks[f1]);
 	sem_wait(gen->logs_sem);
 	fork_log(args, 1);
-	seem_post(gen->logs_sem);
+	sem_post(gen->logs_sem);
 	sem_wait(gen->forks[f2]);
 	sem_wait(gen->logs_sem);
 	if (args->gen_vars->n_philo == 1)
@@ -27,7 +27,7 @@ void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 		return ;
 	}
 	fork_log(args, 1);
-	seem_post(gen->logs_sem);
+	sem_post(gen->logs_sem);
 }
 
 void	drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2)

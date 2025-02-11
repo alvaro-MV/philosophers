@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 20:50:43 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:47:16 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ typedef struct s_philo
 
 // ************Utils*****************
 
-void		manage_usleep(pthread_mutex_t *mutex, __useconds_t miliseconds);
+void		manage_usleep(sem_t *logs_sem, __useconds_t miliseconds);
 uint64_t	get_actual_time(void);
 uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **dinner);
 void		p_free(t_gen_var *gen_vars, t_philo *dinner);
+void		close_sem(sem_t *sem);
 void		wait_philos(t_philo *args);
 
 /* 	*************Initialization******* */
@@ -76,7 +77,6 @@ int			init_args(t_gen_var *gen_vars, t_philo *args);
 
 void		*philo_routine(void *vargs);
 void		*manager_routine(void *vargs);
-int			compatible(t_philo *args);
 
 /* ***************Forks***************** */
 

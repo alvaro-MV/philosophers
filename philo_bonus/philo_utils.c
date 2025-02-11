@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 16:58:37 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 23:48:49 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ uint64_t	time_diff_usecs(uint64_t start)
 void	p_new(t_gen_var *gen_vars, t_philo **dinner)
 {
 	unsigned int	n_philo;
-	pthread_mutex_t	*forks;
+	sem_t			**forks;
 
 	n_philo = gen_vars->n_philo;
 	forks = (sem_t **) malloc(n_philo * sizeof(sem_t *));
@@ -51,6 +51,12 @@ void	p_free(t_gen_var *gen_vars, t_philo *dinner)
 {
 	free(gen_vars->forks);
 	free(dinner);
+}
+
+void	close_sem(sem_t *sem)
+{
+	sem_close(sem);
+	// sem_unlink(sem->);
 }
 
 // int	main(void)

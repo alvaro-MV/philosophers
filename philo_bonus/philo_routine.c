@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 20:44:14 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/12 00:17:04 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	sleep_routine(t_philo *dinner)
 {
-	pthread_mutex_t	*logs_sem;
+	sem_t	*logs_sem;
 
-	logs_sem = &dinner->gen_vars->logs_sem;
+	logs_sem = dinner->gen_vars->logs_sem;
 	manage_usleep(logs_sem, dinner->gen_vars->time_to_sleep);
 	sem_wait(dinner->gen_vars->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
@@ -27,9 +27,6 @@ void	sleep_routine(t_philo *dinner)
 
 void	think_routine(t_philo *dinner)
 {
-	pthread_mutex_t	*logs_sem;
-
-	logs_sem = &dinner->gen_vars->logs_sem;
 	sem_wait(dinner->gen_vars->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
