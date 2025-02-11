@@ -6,22 +6,23 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 15:05:51 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:26:34 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_protection_mutexs(t_gen_var *gen_vars)
+int	init_protection_mutexs(t_gen_var *gen_vars)
 {
 	if (pthread_mutex_init(&gen_vars->logs_mutex, NULL))
 	{
 		write(2, "philo: error initialization of protection mutex\n", 49);
-		exit(-1);
+		return (0);
 	}
+	return (1);
 }
 
-void	init_forks(t_gen_var *gen_vars)
+int	init_forks(t_gen_var *gen_vars)
 {
 	unsigned int	i;
 	unsigned int	n_philos;
@@ -33,10 +34,11 @@ void	init_forks(t_gen_var *gen_vars)
 		if (pthread_mutex_init(&gen_vars->forks[i], NULL))
 		{
 			write(2, "philo: error initialization of forks mutex\n", 44);
-			ft_free_exit(gen_vars->forks_used);
+			return (0);
 		}
 		i++;
 	}
+	return (1);
 }
 
 void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)

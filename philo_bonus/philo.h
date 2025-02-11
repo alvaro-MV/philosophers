@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 12:51:28 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/11 18:43:24 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 # include <sys/time.h>
 # include <time.h>
 # include <limits.h>
+#include <sys/wait.h>
 # include "libft/libft.h"
 
 typedef struct s_general_vars
 {
-	sem_t			logs_mutex;
-	sem_t			*forks;
-	pthread_t		*philo_ptrs;
+	sem_t			*logs_sem;
+	sem_t			**forks;
 	unsigned int	n_philo;
 	uint64_t		init_time;
 	uint64_t		time_to_die;
@@ -49,7 +49,7 @@ typedef struct s_philo
 	unsigned int	tid;
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
-	sem_t			last_meal_mutex;
+	sem_t			*last_meal_mutex;
 	unsigned int	not_dead;
 }					t_philo;
 
@@ -64,13 +64,13 @@ uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **dinner);
 void		p_free(t_gen_var *gen_vars, t_philo *dinner);
-void		wait_philos(t_philo *args, pthread_t *philosophers);
+void		wait_philos(t_philo *args);
 
 /* 	*************Initialization******* */
 
-void		init_protection_sem(t_gen_var *general_vars);
-void		init_forks(t_gen_var *gen_vars);
-void		init_args(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+int			init_protection_sem(t_gen_var *general_vars);
+int			init_forks(t_gen_var *gen_vars);
+int			init_args(t_gen_var *gen_vars, t_philo *args);
 
 /* ***************Routines************* */
 

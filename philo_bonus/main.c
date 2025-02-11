@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 12:48:59 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/11 18:55:34 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	wait_philos(t_philo *args, pthread_t *philo)
+void	wait_philos(t_philo *args)
 {
 	unsigned int	n_philo;
 	unsigned int	i;
@@ -24,30 +24,36 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 		if (!args->not_dead)
 		{
 			args->gen_vars->philo_alive--;
-			pthread_join(philo[i], NULL);
+			wait(NULL);
 		}
 		i++;
 	}
 }
 
-void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
+void	run_philos(t_gen_var *gen_vars, t_philo *dinner)
 {
 	unsigned int	i;
+	int				ret;
 
 	i = 0;
 	gen_vars->init_time = 0;
-	init_args(gen_vars, dinner, philo);
+	if (init_args(gen_vars, dinner))
+		exit (-1);
 	while (i < gen_vars->n_philo)
 	{
-		if (pthread_create(&philo[i], NULL, philo_routine, &dinner[i]))
+		ret = fork();
+		if (ret == -1)
 		{
 			write(2, "philo: error creating philosophers\n", 36);
-			pthread_mutex_lock(&gen_vars->logs_mutex);
+			sem_wait(gen_vars->logs_sem);
+			wait_philos(dinner);
 			p_free(gen_vars, dinner);
+			exit(-1);
 		}
+		if (ret == 0);
+			philo_routine((void *) );
 		i++;
 	}
-	gen_vars->philo_ptrs = philo;
 	gen_vars->init_time = get_actual_time();
 	manager_routine(dinner, philo);
 }
@@ -56,7 +62,6 @@ int	main(int argc, char **argv)
 {
 	t_gen_var	gen_vars;
 	t_philo		*arr_dinner;
-	pthread_t	*philosophers;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -67,8 +72,10 @@ int	main(int argc, char **argv)
 	argv++;
 	parse_input(&gen_vars, argv);
 	p_new(&gen_vars, &arr_dinner);
-	init_protection_sem(&gen_vars);
-	init_forks(&gen_vars);
-	run_philos(&gen_vars, arr_dinner, philosophers);
+	if (!init_protection_sem(&gen_vars))
+		return (p_free(&gen_vars, arr_dinner), -1);
+	if (init_forks(&gen_vars))
+		return (p_free(&gen_vars, arr_dinner), -1);
+	run_philos(&gen_vars, arr_dinner);
 	p_free(&gen_vars, arr_dinner);
 }

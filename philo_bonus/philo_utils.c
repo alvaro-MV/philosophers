@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 12:46:22 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/11 16:58:37 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	p_new(t_gen_var *gen_vars, t_philo **dinner)
 	pthread_mutex_t	*forks;
 
 	n_philo = gen_vars->n_philo;
-	forks = (sem_t *) malloc(n_philo * sizeof(sem_t));
+	forks = (sem_t **) malloc(n_philo * sizeof(sem_t *));
 	if (!forks)
 		return ;
 	gen_vars->forks = forks;
