@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 13:28:03 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 17:40:02 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,9 @@ int	init_args(t_gen_var *gen_vars, t_philo *dinner)
 	while ((unsigned int) ++i < n_philos)
 	{
 		dinner[i].gen_vars = gen_vars;
-		dinner[i].tid = i + 1;
 		dinner[i].n_of_meals = 0;
 		dinner[i].not_dead = 1;
+		dinner[i].tid = i + 1;
 		philo_id = ft_itoa(i);
 		if (!philo_id)
 			return (0);

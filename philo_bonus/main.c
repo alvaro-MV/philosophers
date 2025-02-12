@@ -6,25 +6,31 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 13:27:32 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:05:51 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	wait_philos(t_philo *args)
+void	wait_philos(t_philo *arr_dinner)
 {
 	unsigned int	n_philo;
 	unsigned int	i;
+	int				status;
 
 	i = 0;
-	n_philo = args->gen_vars->n_philo;
+	n_philo = arr_dinner->gen_vars->n_philo;
 	while (i < n_philo)
 	{
-		if (!args->not_dead)
+		if (!arr_dinner[i].not_dead)
 		{
-			args->gen_vars->philo_alive--;
-			wait(NULL);
+			arr_dinner->gen_vars->philo_alive--;
+			waitpid(arr_dinner[i].pid, &status, 0);
+			if (status == -1)
+			{
+				manager_routine(arr_dinner);
+				return ;
+			}
 		}
 		i++;
 	}
@@ -52,11 +58,12 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 	pid_t			ret;
 
 	i = 0;
-	gen_vars->init_time = 456;
 	if (!init_args(gen_vars, arr_dinner))
 		exit (-1);
+	gen_vars->init_time = get_actual_time();
 	while (i < gen_vars->n_philo)
 	{
+		arr_dinner[i].time_last_meal = gen_vars->init_time;
 		ret = fork();
 		if (ret == -1)
 		{
@@ -69,12 +76,10 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 		}
 		if (ret == 0)
 			philo_routine((void *) &arr_dinner[i]);
+		arr_dinner[i].pid = ret;
 		i++;
 	}
 	wait_philos(arr_dinner);
-	gen_vars->init_time = get_actual_time();
-	printf("INNIcio time: %lu\n", gen_vars->init_time);
-	manager_routine(arr_dinner);
 }
 
 int	main(int argc, char **argv)

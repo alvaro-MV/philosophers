@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 23:47:16 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 18:04:19by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <pthread.h>
+# include <aio.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <signal.h>
 # include <semaphore.h>
 # include <unistd.h>
 # include <sys/types.h>
@@ -46,7 +48,8 @@ typedef struct s_general_vars
 typedef struct s_philo
 {
 	t_gen_var		*gen_vars;
-	unsigned int	tid;
+	int				tid;
+	unsigned int	pid;
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
 	sem_t			*last_meal_mutex;
@@ -65,7 +68,7 @@ void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **dinner);
 void		p_free(t_gen_var *gen_vars, t_philo *dinner);
 void		close_sem(sem_t *sem);
-void		wait_philos(t_philo *args);
+void		wait_philos(t_philo *arr_dinner);
 
 /* 	*************Initialization******* */
 
@@ -76,7 +79,7 @@ int			init_args(t_gen_var *gen_vars, t_philo *args);
 /* ***************Routines************* */
 
 void		*philo_routine(void *vargs);
-void		*manager_routine(void *vargs);
+void		manager_routine(t_philo *arr_dinner);
 
 /* ***************Forks***************** */
 
