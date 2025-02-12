@@ -37,6 +37,7 @@ void	*manager_routine(void *vargs)
 		while (i < gen->n_philo && arr_dinner[i].not_dead)
 		{
 			diff_time = time_diff_usecs(arr_dinner[i].time_last_meal);
+			printf("n_philo: %d   diff_time: %lu\n", gen->n_philo, diff_time); //testeo.
 			if (diff_time >= gen->time_to_die)
 				return (philo_died_routine(arr_dinner, i));
 			i++;

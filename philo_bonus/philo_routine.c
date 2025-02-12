@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 00:17:04 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 13:09:20 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	*philo_routine(void *vargs)
 
 	dinner = (t_philo *) vargs;
 	i = 0;
+	printf("init_time: %lu,   time_last_,meal: %lu\n", 
+		dinner->gen_vars->init_time, dinner->time_last_meal);
 	while (!dinner->gen_vars->init_time)
 		;
 	dinner->time_last_meal = dinner->gen_vars->init_time;

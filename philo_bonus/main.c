@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 00:11:09 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 13:27:32 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 	pid_t			ret;
 
 	i = 0;
-	gen_vars->init_time = 0;
+	gen_vars->init_time = 456;
 	if (!init_args(gen_vars, arr_dinner))
 		exit (-1);
 	while (i < gen_vars->n_philo)
@@ -71,7 +71,9 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 			philo_routine((void *) &arr_dinner[i]);
 		i++;
 	}
+	wait_philos(arr_dinner);
 	gen_vars->init_time = get_actual_time();
+	printf("INNIcio time: %lu\n", gen_vars->init_time);
 	manager_routine(arr_dinner);
 }
 

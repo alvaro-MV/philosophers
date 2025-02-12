@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 00:12:17 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/12 13:28:03 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,13 @@ static int	close_error_meal(t_gen_var *gen_vars, t_philo *dinner, int i_fail)
 int	init_args(t_gen_var *gen_vars, t_philo *dinner)
 {
 	unsigned int	n_philos;
-	unsigned int	i;
+	int				i;
 	char			*philo_id;
 	char			*sem_name;
 
 	n_philos = gen_vars->n_philo;
 	i = -1;
-	while (++i < n_philos)
+	while ((unsigned int) ++i < n_philos)
 	{
 		dinner[i].gen_vars = gen_vars;
 		dinner[i].tid = i + 1;
