@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 16:40:35 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:12:31 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	init_forks(t_gen_var *gen_vars)
 	i = 0;
 	n_philos = gen_vars->n_philo;
 	sem_unlink("/forks");
-	gen_vars->forks = sem_open("/forks", O_CREAT, S_IRUSR, 5);
+	gen_vars->forks = sem_open("/forks", O_CREAT, S_IRUSR, gen_vars->n_philo);
 	if (gen_vars->forks == SEM_FAILED)
 		return (sem_close(gen_vars->logs_sem), 0);
 	// while (i < n_philos)
@@ -86,7 +86,8 @@ static int	close_error_meal(t_gen_var *gen_vars, t_philo *dinner, int i_fail)
 	sem_close(gen_vars->logs_sem);
 	sem_close(gen_vars->forks);
 	// close_error_forks(gen_vars->forks, gen_vars->n_philo);
-	p_free(gen_vars, dinner);
+	free(dinner);
+	// p_free(gen_vars, dinner);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 15:52:56 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:07:02 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,11 @@ void	eat_routine(t_philo *dinner)
 	sem_wait(gen->logs_sem);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
-	printf("time_last_meal: %lu\n", dinner->time_last_meal);
 	// if (time_diff_usecs(dinner->time_last_meal) >= dinner->gen_vars->time_to_die)
 	// 	exit(-1);
 	dinner->n_of_meals++;
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
-	write(1, "Perolo\n", 7);
 	sem_wait(gen->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -101,7 +99,7 @@ void	*philo_routine(void *vargs)
 	while (1)
 	{
 		if (!check_running(dinner, &i))
-			return (NULL);
+			exit(0);
 		take_forks_dispatcher(dinner);
 		eat_routine(dinner);
 		sleep_routine(dinner);

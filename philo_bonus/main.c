@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 16:38:29 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:11:48 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 			sem_wait(gen_vars->logs_sem);
 			wait_philos(arr_dinner);
 			close_all_sem(arr_dinner);
-			p_free(gen_vars, arr_dinner);
+			free(arr_dinner);
+			// p_free(gen_vars, arr_dinner);
 			exit(-1);
 		}
 		if (ret == 0)
@@ -101,10 +102,12 @@ int	main(int argc, char **argv)
 	parse_input(&gen_vars, argv);
 	p_new(&gen_vars, &arr_dinner);
 	if (!init_protection_sem(&gen_vars))
-		return (p_free(&gen_vars, arr_dinner), -1);
+		return (free(arr_dinner), -1);
+		// return (p_free(&gen_vars, arr_dinner), -1);
 	if (!init_forks(&gen_vars))
-		return (p_free(&gen_vars, arr_dinner), -1);
+		return (free(arr_dinner), -1);
+		// return (p_free(&gen_vars, arr_dinner), -1);
 	run_philos(&gen_vars, arr_dinner);
 	close_all_sem(arr_dinner);
-	p_free(&gen_vars, arr_dinner);
+	free(arr_dinner);
 }
