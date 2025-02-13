@@ -67,7 +67,7 @@ uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **dinner);
 void		p_free(t_gen_var *gen_vars, t_philo *dinner);
-void		close_sem(sem_t *sem);
+void		close_sem(sem_t *sem, char *name);
 void		wait_philos(t_philo *arr_dinner);
 
 /* 	*************Initialization******* */

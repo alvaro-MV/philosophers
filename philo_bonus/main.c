@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 18:05:51 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 12:36:15 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,12 @@ void	wait_philos(t_philo *arr_dinner)
 	n_philo = arr_dinner->gen_vars->n_philo;
 	while (i < n_philo)
 	{
-		if (!arr_dinner[i].not_dead)
+		arr_dinner->gen_vars->philo_alive--;
+		waitpid(arr_dinner[i].pid, &status, 0);
+		if (status == -1)
 		{
-			arr_dinner->gen_vars->philo_alive--;
-			waitpid(arr_dinner[i].pid, &status, 0);
-			if (status == -1)
-			{
-				manager_routine(arr_dinner);
-				return ;
-			}
+			manager_routine(arr_dinner);
+			return ;
 		}
 		i++;
 	}
@@ -39,15 +36,21 @@ void	wait_philos(t_philo *arr_dinner)
 void	close_all_sem(t_philo *arr_dinner)
 {
 	unsigned int	i;
+	char			*sem_name;
+	char			*philo_id;
 
 	i = 0;
-	close_sem(arr_dinner->gen_vars->logs_sem);
-	close_sem(arr_dinner->last_meal_mutex);
-	close_sem(arr_dinner->gen_vars->logs_sem);
+	close_sem(arr_dinner->gen_vars->logs_sem, "/logs_sem");
 	while (i < arr_dinner->gen_vars->n_philo)
 	{
-		close_sem(arr_dinner[i].last_meal_mutex);
-		close_sem(arr_dinner->gen_vars->forks[i]);
+		philo_id = ft_itoa(i);
+		sem_name = ft_strjoin("/last_meal_", philo_id);
+		close_sem(arr_dinner[i].last_meal_mutex, sem_name);
+		free(sem_name);
+		sem_name = ft_strjoin("/fork_", philo_id);
+		close_sem(arr_dinner->gen_vars->forks[i], sem_name);
+		free(sem_name);
+		free(philo_id);
 		i++;	
 	}
 }

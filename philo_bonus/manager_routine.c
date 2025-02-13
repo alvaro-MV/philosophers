@@ -17,6 +17,7 @@ void	manager_routine(t_philo *arr_dinner)
 	unsigned int i;
 	
 	i = 0;
+	died_log(arr_dinner);
 	while (i < arr_dinner->gen_vars->n_philo)
 		kill(arr_dinner[i++].pid, SIGKILL);
 }

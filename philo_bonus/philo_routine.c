@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 18:54:34 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 11:48:51 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	eat_routine(t_philo *dinner)
 	dinner->n_of_meals++;
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
-	write(1, "Laura\n", 7);
+	write(1, "Perolo\n", 7);
 	sem_wait(gen->logs_sem);
 	if (!dinner->gen_vars->philo_alive)
 		return ;

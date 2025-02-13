@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 19:02:47 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 11:57:41 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@ void	manage_usleep(sem_t *logs_sem, __useconds_t	miliseconds)
 
 	(void) logs_sem;
 	start = get_actual_time();
-	write(1, "EL seño de la noche\n", 22);
-	while (get_actual_time() < start + (uint64_t) miliseconds);
-	{
+	while (get_actual_time() < start + miliseconds)
 		usleep(9);
-		// if (usleep(9) == -1)
-		// 	sem_wait(logs_sem);
-	}
 }
 
 // int	main(void)

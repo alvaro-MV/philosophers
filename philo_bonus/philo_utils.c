@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/12 12:50:38 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 12:30:28 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	p_free(t_gen_var *gen_vars, t_philo *dinner)
 	free(dinner);
 }
 
-void	close_sem(sem_t *sem)
+void	close_sem(sem_t *sem, char *name)
 {
 	sem_close(sem);
-	// sem_unlink(sem->);
+	sem_unlink(name);
 }
 
 // int	main(void)
