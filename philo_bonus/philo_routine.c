@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 18:27:41 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:35:14 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ void	eat_routine(t_philo *dinner)
 
 static int	check_running(t_philo *dinner, unsigned int *i)
 {
+	if (!dinner->not_dead)
+	{
+		ft_printf("Murió\n");
+		exit (9);
+	}
 	if (dinner->gen_vars->run_4ever)
 		return (1);
 	else
@@ -78,7 +83,7 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 	}
 }
 
-void	*philo_routine(void *vargs)
+void	philo_routine(void *vargs)
 {
 	t_philo			*dinner;
 	unsigned int	i;
@@ -88,7 +93,7 @@ void	*philo_routine(void *vargs)
 	if (pthread_create(&dinner->manager, NULL, manager_routine, dinner))
 	{
 		write(1, "Error creating manager thread.\n", 32);
-		return (NULL);
+		exit(-1);
 	}
 	while (!dinner->gen_vars->init_time)
 		;
@@ -106,5 +111,5 @@ void	*philo_routine(void *vargs)
 		if (!dinner->gen_vars->philo_alive)
 			break ;
 	}
-	return (NULL);
+	exit(0);
 }

@@ -78,7 +78,7 @@ int			init_args(t_gen_var *gen_vars, t_philo *args);
 
 /* ***************Routines************* */
 
-void		*philo_routine(void *vargs);
+void		philo_routine(void *vargs);
 void		*manager_routine(void *vargs);
 
 /* ***************Forks***************** */
