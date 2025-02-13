@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 19:31:51 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 20:20:06 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ void	wait_philos(t_philo *arr_dinner)
 	{
 		arr_dinner->gen_vars->philo_alive--;
 		waitpid(arr_dinner[i].pid, &status, 0);
-		if (status == 9)
+		ft_printf("status: %d\n", WEXITSTATUS(status));
+		if (WEXITSTATUS(status) == 9)
 		{
-			write(1, "Pero que está pasando\n", 24);
+			write(1, "Hijo de puta\n", 14);
 			while (j < n_philo)
 				kill(arr_dinner[j++].pid, SIGKILL);
 		}

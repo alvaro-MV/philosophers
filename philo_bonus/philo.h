@@ -35,6 +35,7 @@ typedef struct s_general_vars
 {
 	sem_t			*logs_sem;
 	sem_t			*forks;
+	sem_t			*last_meal_mutex;
 	unsigned int	n_philo;
 	uint64_t		init_time;
 	uint64_t		time_to_die;
@@ -52,7 +53,6 @@ typedef struct s_philo
 	unsigned int	pid;
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
-	sem_t			*last_meal_mutex;
 	pthread_t		manager;
 	unsigned int	not_dead;
 }					t_philo;
