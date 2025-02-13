@@ -34,7 +34,8 @@
 typedef struct s_general_vars
 {
 	sem_t			*logs_sem;
-	sem_t			**forks;
+	// sem_t			**forks;
+	sem_t			*forks;
 	unsigned int	n_philo;
 	uint64_t		init_time;
 	uint64_t		time_to_die;

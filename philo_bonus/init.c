@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 12:37:40 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:40:35 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,46 +25,50 @@ int	init_protection_sem(t_gen_var *gen_vars)
 	return (1);
 }
 
-static int	close_error_forks(sem_t **forks, int i_fail)
-{
-	int	i;
+// static int	close_error_forks(sem_t **forks, int i_fail)
+// {
+// 	int	i;
 
-	i = 0;
-	write(2, "philo: error initialization of forks sem.\n", 43);
-	while (i < i_fail)
-	{
-		sem_close(forks[i]);
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	write(2, "philo: error initialization of forks sem.\n", 43);
+// 	while (i < i_fail)
+// 	{
+// 		sem_close(forks[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	init_forks(t_gen_var *gen_vars)
 {
 	unsigned int	i;
 	unsigned int	n_philos;
-	char			*fork_id;
-	char			*sem_fork_name;
+	// char			*fork_id;
+	// char			*sem_fork_name;
 
 	i = 0;
 	n_philos = gen_vars->n_philo;
-	while (i < n_philos)
-	{
-		fork_id = ft_itoa(i);
-		if (!fork_id)
-			return (0);
-		sem_fork_name = ft_strjoin("/fork_", fork_id);
-		if (!sem_fork_name)
-			return (free(fork_id), 0);
-		free(fork_id);
-		sem_unlink(sem_fork_name);
-		gen_vars->forks[i] = sem_open(sem_fork_name, O_CREAT, S_IRUSR, 1);
-		free(sem_fork_name);
-		if (gen_vars->forks[i] == SEM_FAILED)
-			return (close_error_forks(gen_vars->forks, i),
-				sem_close(gen_vars->logs_sem), 0);
-		i++;
-	}
+	sem_unlink("/forks");
+	gen_vars->forks = sem_open("/forks", O_CREAT, S_IRUSR, 5);
+	if (gen_vars->forks == SEM_FAILED)
+		return (sem_close(gen_vars->logs_sem), 0);
+	// while (i < n_philos)
+	// {
+	// 	fork_id = ft_itoa(i);
+	// 	if (!fork_id)
+	// 		return (0);
+	// 	sem_fork_name = ft_strjoin("/fork_", fork_id);
+	// 	if (!sem_fork_name)
+	// 		return (free(fork_id), 0);
+	// 	free(fork_id);
+	// 	sem_unlink(sem_fork_name);
+	// 	gen_vars->forks[i] = sem_open(sem_fork_name, O_CREAT, S_IRUSR, 1);
+	// 	free(sem_fork_name);
+	// 	if (gen_vars->forks[i] == SEM_FAILED)
+	// 		return (close_error_forks(gen_vars->forks, i),
+	// 			sem_close(gen_vars->logs_sem), 0);
+	// 	i++;
+	// }
 	return (1);
 }
 
@@ -80,7 +84,8 @@ static int	close_error_meal(t_gen_var *gen_vars, t_philo *dinner, int i_fail)
 		i++;
 	}
 	sem_close(gen_vars->logs_sem);
-	close_error_forks(gen_vars->forks, gen_vars->n_philo);
+	sem_close(gen_vars->forks);
+	// close_error_forks(gen_vars->forks, gen_vars->n_philo);
 	p_free(gen_vars, dinner);
 	return (0);
 }

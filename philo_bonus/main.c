@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 12:36:15 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/13 16:38:29 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	close_all_sem(t_philo *arr_dinner)
 	char			*philo_id;
 
 	i = 0;
+	close_sem(arr_dinner->gen_vars->forks, "/forks");
 	close_sem(arr_dinner->gen_vars->logs_sem, "/logs_sem");
 	while (i < arr_dinner->gen_vars->n_philo)
 	{
@@ -47,9 +48,9 @@ void	close_all_sem(t_philo *arr_dinner)
 		sem_name = ft_strjoin("/last_meal_", philo_id);
 		close_sem(arr_dinner[i].last_meal_mutex, sem_name);
 		free(sem_name);
-		sem_name = ft_strjoin("/fork_", philo_id);
-		close_sem(arr_dinner->gen_vars->forks[i], sem_name);
-		free(sem_name);
+		// // sem_name = ft_strjoin("/fork_", philo_id);
+		// // close_sem(arr_dinner->gen_vars->forks[i], sem_name);
+		// free(sem_name);
 		free(philo_id);
 		i++;	
 	}
