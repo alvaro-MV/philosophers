@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 17:12:31 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:17:10 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	init_protection_sem(t_gen_var *gen_vars)
 	gen_vars->logs_sem = sem_open("/logs_sem", O_CREAT, S_IRUSR, 1);
 	if (gen_vars->logs_sem == SEM_FAILED)
 	{
-		perror("que ostias pasa");
 		write(2, "philo: error initialization of logs sem.\n", 42);
 		return (0);
 	}
@@ -77,7 +76,7 @@ static int	close_error_meal(t_gen_var *gen_vars, t_philo *dinner, int i_fail)
 	int	i;
 
 	i = 0;
-	write(2, "philo: error  creating semphore\n", 33);
+	write(2, "philo: error creating semphore\n", 33);
 	while (i < i_fail)
 	{
 		sem_close(dinner[i].last_meal_mutex);

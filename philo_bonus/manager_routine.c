@@ -12,12 +12,21 @@
 
 #include "philo.h"
 
-void	manager_routine(t_philo *arr_dinner)
+void	*manager_routine(void *vargs)
 {
-	unsigned int i;
+	t_philo 	*dinner;
+	t_gen_var	*gen_vars;
 	
-	i = 0;
-	died_log(arr_dinner);
-	while (i < arr_dinner->gen_vars->n_philo)
-		kill(arr_dinner[i++].pid, SIGKILL);
+	dinner = (t_philo *) vargs;
+	gen_vars = dinner->gen_vars;
+	while (gen_vars->philo_alive)
+	{
+		if (time_diff_usecs(dinner->time_last_meal) >= gen_vars->time_to_die)
+		{
+			sem_wait(dinner->gen_vars->logs_sem);
+			died_log(dinner);
+			kill(dinner->pid, SIGKILL);
+		}
+	}
+	return (NULL);
 }

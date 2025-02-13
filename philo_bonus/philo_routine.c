@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 17:07:02 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:27:41 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	sleep_routine(t_philo *dinner)
 	logs_sem = dinner->gen_vars->logs_sem;
 	manage_usleep(logs_sem, dinner->gen_vars->time_to_sleep);
 	sem_wait(dinner->gen_vars->logs_sem);
-	// if (time_diff_usecs(dinner->time_last_meal) >= dinner->gen_vars->time_to_die)
-	// 	exit(-1);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	sleeping_log(dinner);
@@ -30,8 +28,6 @@ void	sleep_routine(t_philo *dinner)
 void	think_routine(t_philo *dinner)
 {
 	sem_wait(dinner->gen_vars->logs_sem);
-	// if (time_diff_usecs(dinner->time_last_meal) >= dinner->gen_vars->time_to_die)
-	// 	exit(-1);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	thinking_log(dinner);
@@ -53,8 +49,6 @@ void	eat_routine(t_philo *dinner)
 	sem_wait(gen->logs_sem);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
-	// if (time_diff_usecs(dinner->time_last_meal) >= dinner->gen_vars->time_to_die)
-	// 	exit(-1);
 	dinner->n_of_meals++;
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
@@ -91,6 +85,11 @@ void	*philo_routine(void *vargs)
 
 	dinner = (t_philo *) vargs;
 	i = 0;
+	if (pthread_create(&dinner->manager, NULL, manager_routine, dinner))
+	{
+		write(1, "Error creating manager thread.\n", 32);
+		return (NULL);
+	}
 	while (!dinner->gen_vars->init_time)
 		;
 	dinner->time_last_meal = dinner->gen_vars->init_time;

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 17:11:48 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:35:20 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ void	wait_philos(t_philo *arr_dinner)
 	{
 		arr_dinner->gen_vars->philo_alive--;
 		waitpid(arr_dinner[i].pid, &status, 0);
-		if (status == -1)
-		{
-			manager_routine(arr_dinner);
-			return ;
-		}
+		if (status == 9)
+			exit(0);
 		i++;
 	}
 }
@@ -76,7 +73,6 @@ void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)
 			wait_philos(arr_dinner);
 			close_all_sem(arr_dinner);
 			free(arr_dinner);
-			// p_free(gen_vars, arr_dinner);
 			exit(-1);
 		}
 		if (ret == 0)
@@ -103,10 +99,8 @@ int	main(int argc, char **argv)
 	p_new(&gen_vars, &arr_dinner);
 	if (!init_protection_sem(&gen_vars))
 		return (free(arr_dinner), -1);
-		// return (p_free(&gen_vars, arr_dinner), -1);
 	if (!init_forks(&gen_vars))
 		return (free(arr_dinner), -1);
-		// return (p_free(&gen_vars, arr_dinner), -1);
 	run_philos(&gen_vars, arr_dinner);
 	close_all_sem(arr_dinner);
 	free(arr_dinner);

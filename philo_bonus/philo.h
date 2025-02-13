@@ -34,7 +34,6 @@
 typedef struct s_general_vars
 {
 	sem_t			*logs_sem;
-	// sem_t			**forks;
 	sem_t			*forks;
 	unsigned int	n_philo;
 	uint64_t		init_time;
@@ -54,6 +53,7 @@ typedef struct s_philo
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
 	sem_t			*last_meal_mutex;
+	pthread_t		manager;
 	unsigned int	not_dead;
 }					t_philo;
 
@@ -79,7 +79,7 @@ int			init_args(t_gen_var *gen_vars, t_philo *args);
 /* ***************Routines************* */
 
 void		*philo_routine(void *vargs);
-void		manager_routine(t_philo *arr_dinner);
+void		*manager_routine(void *vargs);
 
 /* ***************Forks***************** */
 
