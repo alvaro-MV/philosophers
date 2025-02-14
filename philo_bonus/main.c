@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/14 17:57:54 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:59:43 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,14 @@ void	wait_philos(t_philo *arr_dinner)
 		{
 			// waitpid(arr_dinner[i].pid, &status, 0);
 			wait(&status);
-			// ft_printf("pid: %d  Puta status: %d\n", i, WEXITSTATUS(status));
 			if (WEXITSTATUS(status) == 9)
 			{
-				// write(1, "Hijo de puta\n", 14);
 				while (j < n_philo)
 					kill(arr_dinner[j++].pid, SIGKILL);
 				return ;
 			}
 			if (WEXITSTATUS(status) == 6)
-			{
 				philos_full++;
-				// ft_printf("philos_full: %d  i: %d  Esta entradno tronco\n"
-					// , philos_full, i);
-			}
 			i++;
 		}
 		if (philos_full == n_philo)
