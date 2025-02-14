@@ -42,7 +42,6 @@ typedef struct s_general_vars
 	uint64_t		time_to_eat;
 	uint64_t		time_to_sleep;
 	unsigned int	max_meals;
-	unsigned int	philo_alive;
 	int				run_4ever;
 }					t_gen_var;
 
@@ -55,6 +54,7 @@ typedef struct s_philo
 	uint64_t		time_last_meal;
 	pthread_t		manager;
 	unsigned int	not_dead;
+	unsigned int	all_meals;
 }					t_philo;
 
 # define MAX_PHILOS 200

@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:43:42 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/11 00:20:00 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:45:48 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ void	parse_input(t_gen_var *gen_vars, char **argv)
 	else
 		exit (-1);
 	parse_n_meals(argv, gen_vars);
-	gen_vars->philo_alive = gen_vars->n_philo;
+	// gen_vars->philo_alive = gen_vars->n_philo;
 }
 
 //int	main(int argc, char **argv)

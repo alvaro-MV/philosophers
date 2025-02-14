@@ -19,17 +19,17 @@ void	*manager_routine(void *vargs)
 	
 	dinner = (t_philo *) vargs;
 	gen_vars = dinner->gen_vars;
-	while (gen_vars->philo_alive)
+	while (dinner->not_dead)
 	{
 		if (time_diff_usecs(dinner->time_last_meal) >= gen_vars->time_to_die)
 		{
 			sem_wait(dinner->gen_vars->logs_sem);
 			died_log(dinner);
 			dinner->not_dead = 0;
-			sem_post(dinner->gen_vars->logs_sem);
+			// sem_post(dinner->gen_vars->logs_sem);
 			// kill(dinner->pid, SIGKILL);
-			// exit(9);
-			return (vargs);
+			exit(9);
+			// return (vargs);
 		}
 	}
 	return (NULL);

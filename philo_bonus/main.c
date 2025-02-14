@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 20:20:06 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:57:54 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,43 @@ void	wait_philos(t_philo *arr_dinner)
 	unsigned int	i;
 	unsigned int	j;
 	int				status;
+	unsigned 		philos_full;
 
-	i = 0;
 	j = 0;
 	n_philo = arr_dinner->gen_vars->n_philo;
-	while (i < n_philo)
+	while (1)
 	{
-		arr_dinner->gen_vars->philo_alive--;
-		waitpid(arr_dinner[i].pid, &status, 0);
-		ft_printf("status: %d\n", WEXITSTATUS(status));
-		if (WEXITSTATUS(status) == 9)
+		i = 0;
+		philos_full = 0;
+		while (i < n_philo)
 		{
-			write(1, "Hijo de puta\n", 14);
-			while (j < n_philo)
-				kill(arr_dinner[j++].pid, SIGKILL);
+			// waitpid(arr_dinner[i].pid, &status, 0);
+			wait(&status);
+			// ft_printf("pid: %d  Puta status: %d\n", i, WEXITSTATUS(status));
+			if (WEXITSTATUS(status) == 9)
+			{
+				// write(1, "Hijo de puta\n", 14);
+				while (j < n_philo)
+					kill(arr_dinner[j++].pid, SIGKILL);
+				return ;
+			}
+			if (WEXITSTATUS(status) == 6)
+			{
+				philos_full++;
+				// ft_printf("philos_full: %d  i: %d  Esta entradno tronco\n"
+					// , philos_full, i);
+			}
+			i++;
 		}
-		i++;
+		if (philos_full == n_philo)
+			return ;
 	}
 }
 
 void	close_all_sem(t_philo *arr_dinner)
 {
-	unsigned int	i;
-	char			*sem_name;
-	char			*philo_id;
-
-	i = 0;
 	close_sem(arr_dinner->gen_vars->forks, "/forks");
 	close_sem(arr_dinner->gen_vars->logs_sem, "/logs_sem");
-	while (i < arr_dinner->gen_vars->n_philo)
-	{
-		philo_id = ft_itoa(i);
-		sem_name = ft_strjoin("/last_meal_", philo_id);
-		close_sem(arr_dinner[i].last_meal_mutex, sem_name);
-		free(sem_name);
-		free(philo_id);
-		i++;	
-	}
 }
 
 void	run_philos(t_gen_var *gen_vars, t_philo *arr_dinner)

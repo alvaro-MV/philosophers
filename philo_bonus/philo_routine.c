@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 20:15:15 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:54:29 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	sleep_routine(t_philo *dinner)
 	logs_sem = dinner->gen_vars->logs_sem;
 	manage_usleep(logs_sem, dinner->gen_vars->time_to_sleep);
 	sem_wait(dinner->gen_vars->logs_sem);
-	if (!dinner->gen_vars->philo_alive)
-		return ;
+	// if (!dinner->gen_vars->philo_alive)
+	// 	return ;
 	sleeping_log(dinner);
 	sem_post(dinner->gen_vars->logs_sem);
 }
@@ -28,13 +28,13 @@ void	sleep_routine(t_philo *dinner)
 void	think_routine(t_philo *dinner)
 {
 	sem_wait(dinner->gen_vars->logs_sem);
-	if (!dinner->gen_vars->philo_alive)
-		return ;
+	// if (!dinner->gen_vars->philo_alive)
+	// 	return ;
 	thinking_log(dinner);
 	if (dinner->n_of_meals == dinner->gen_vars->max_meals)
 	{
-		dinner->gen_vars->philo_alive--;
-		dinner->not_dead = 0;
+		// dinner->gen_vars->philo_alive--;
+		// dinner->not_dead = 0;
 	}
 	sem_post(dinner->gen_vars->logs_sem);
 }
@@ -53,8 +53,8 @@ void	eat_routine(t_philo *dinner)
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
 	sem_wait(gen->logs_sem);
-	if (!dinner->gen_vars->philo_alive)
-		return ;
+	// if (!dinner->gen_vars->philo_alive)
+	// 	return ;
 	if (dinner->tid % 2)
 		drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
 	else
@@ -66,9 +66,11 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 {
 	if (!dinner->not_dead)
 	{
-		ft_printf("Murió\n");
+		write(1, "queeeee\n", 9);
+		pthread_join(dinner->manager, NULL);
 		exit(9);
 	}
+	
 	if (dinner->gen_vars->run_4ever)
 		return (1);
 	else
@@ -100,16 +102,12 @@ void	philo_routine(void *vargs)
 	dinner->time_last_meal = dinner->gen_vars->init_time;
 	if (dinner->tid % 2)
 		usleep(450);
-	while (1)
+	while (check_running(dinner, &i))
 	{
-		if (!check_running(dinner, &i))
-			exit(0);
 		take_forks_dispatcher(dinner);
 		eat_routine(dinner);
 		sleep_routine(dinner);
 		think_routine(dinner);
-		if (!dinner->gen_vars->philo_alive)
-			break ;
 	}
-	exit(0);
+	exit(6);
 }
