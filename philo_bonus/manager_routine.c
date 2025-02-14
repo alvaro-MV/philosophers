@@ -25,9 +25,11 @@ void	*manager_routine(void *vargs)
 		{
 			sem_wait(dinner->gen_vars->logs_sem);
 			died_log(dinner);
-			sem_post(dinner->gen_vars->logs_sem);
 			dinner->not_dead = 0;
-			exit(9);
+			sem_post(dinner->gen_vars->logs_sem);
+			// kill(dinner->pid, SIGKILL);
+			// exit(9);
+			return (vargs);
 		}
 	}
 	return (NULL);

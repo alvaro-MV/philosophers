@@ -50,7 +50,7 @@ typedef struct s_philo
 {
 	t_gen_var		*gen_vars;
 	int				tid;
-	pid_t			pid;
+	unsigned int	pid;
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
 	pthread_t		manager;
@@ -68,7 +68,7 @@ uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **dinner);
 void		close_sem(sem_t *sem, char *name);
-void		*wait_philos(void *vargs);
+void		wait_philos(t_philo *arr_dinner);
 
 /* 	*************Initialization******* */
 

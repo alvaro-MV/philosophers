@@ -16,7 +16,7 @@ SRCS = init.c logs.c main.c manager_routine.c \
 CC = cc
 
 # Opciones de compilación
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 
 # Directorio de archivos fuente
 SRCDIR = .
