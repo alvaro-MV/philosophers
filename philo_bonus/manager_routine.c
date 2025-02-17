@@ -23,19 +23,20 @@ void	*manager_routine(void *vargs)
 	gen_vars = dinner->gen_vars;
 	while (dinner->not_dead)
 	{
+		sem_wait(dinner->gen_vars->logs_sem);
 		since_last_meal = time_diff_usecs(dinner->time_last_meal);
 		control = get_actual_time() - dinner->time_last_meal;
 		if (since_last_meal >= gen_vars->time_to_die)
 		{
 			if (control >= gen_vars->time_to_die)
 			{
-				sem_wait(dinner->gen_vars->logs_sem);
 				died_log(dinner);
 				printf("since last meal: %lu   control: %lu \n", since_last_meal, control); //testeo
 				dinner->not_dead = 0;
 				exit(9);
 			}
 		}
+		sem_post(dinner->gen_vars->logs_sem);
 	}
 	return (NULL);
 }
