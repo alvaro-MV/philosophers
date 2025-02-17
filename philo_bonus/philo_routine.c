@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/14 17:54:29 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/17 11:16:21 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	sleep_routine(t_philo *dinner)
 	logs_sem = dinner->gen_vars->logs_sem;
 	manage_usleep(logs_sem, dinner->gen_vars->time_to_sleep);
 	sem_wait(dinner->gen_vars->logs_sem);
-	// if (!dinner->gen_vars->philo_alive)
-	// 	return ;
 	sleeping_log(dinner);
 	sem_post(dinner->gen_vars->logs_sem);
 }
@@ -28,14 +26,7 @@ void	sleep_routine(t_philo *dinner)
 void	think_routine(t_philo *dinner)
 {
 	sem_wait(dinner->gen_vars->logs_sem);
-	// if (!dinner->gen_vars->philo_alive)
-	// 	return ;
 	thinking_log(dinner);
-	if (dinner->n_of_meals == dinner->gen_vars->max_meals)
-	{
-		// dinner->gen_vars->philo_alive--;
-		// dinner->not_dead = 0;
-	}
 	sem_post(dinner->gen_vars->logs_sem);
 }
 
@@ -53,8 +44,6 @@ void	eat_routine(t_philo *dinner)
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
 	sem_wait(gen->logs_sem);
-	// if (!dinner->gen_vars->philo_alive)
-	// 	return ;
 	if (dinner->tid % 2)
 		drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
 	else
@@ -66,9 +55,8 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 {
 	if (!dinner->not_dead)
 	{
-		write(1, "queeeee\n", 9);
 		pthread_join(dinner->manager, NULL);
-		exit(9);
+		exit(PHILO_DIED);
 	}
 	
 	if (dinner->gen_vars->run_4ever)
@@ -97,11 +85,9 @@ void	philo_routine(void *vargs)
 		write(1, "Error creating manager thread.\n", 32);
 		exit(-1);
 	}
-	while (!dinner->gen_vars->init_time)
-		;
 	dinner->time_last_meal = dinner->gen_vars->init_time;
 	if (dinner->tid % 2)
-		usleep(450);
+		usleep(45000);
 	while (check_running(dinner, &i))
 	{
 		take_forks_dispatcher(dinner);
@@ -109,5 +95,5 @@ void	philo_routine(void *vargs)
 		sleep_routine(dinner);
 		think_routine(dinner);
 	}
-	exit(6);
+	exit(PHILO_END_EATING);
 }

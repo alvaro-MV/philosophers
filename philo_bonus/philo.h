@@ -60,6 +60,9 @@ typedef struct s_philo
 # define MAX_PHILOS 200
 # define WAI_T 13
 
+# define PHILO_DIED 9
+# define PHILO_END_EATING 6
+
 // ************Utils*****************
 
 void		manage_usleep(sem_t *logs_sem, __useconds_t miliseconds);

@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/14 17:59:43 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/17 11:10:38 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	wait_philos(t_philo *arr_dinner)
 		{
 			// waitpid(arr_dinner[i].pid, &status, 0);
 			wait(&status);
-			if (WEXITSTATUS(status) == 9)
+			if (WEXITSTATUS(status) == PHILO_DIED)
 			{
 				while (j < n_philo)
 					kill(arr_dinner[j++].pid, SIGKILL);
 				return ;
 			}
-			if (WEXITSTATUS(status) == 6)
+			if (WEXITSTATUS(status) == PHILO_END_EATING)
 				philos_full++;
 			i++;
 		}
