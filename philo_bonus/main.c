@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 12:25:18 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:17:01 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	wait_philos(t_philo *arr_dinner)
 			if (WEXITSTATUS(status) == PHILO_DIED)
 			{
 				while (n_philo--)
+				{
+					// pthread_join(arr_dinner[n_philo].manager, NULL);
 					kill(arr_dinner[n_philo].pid, SIGKILL);
+				}
 				return ;
 			}
 			if (WEXITSTATUS(status) == PHILO_END_EATING)
