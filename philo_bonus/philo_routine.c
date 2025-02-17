@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 11:50:37 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/17 12:50:37 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 		pthread_join(dinner->manager, NULL);
 		exit(PHILO_DIED);
 	}
-	
 	if (dinner->gen_vars->run_4ever)
 		return (1);
 	else
@@ -95,5 +94,6 @@ void	philo_routine(void *vargs)
 		sleep_routine(dinner);
 		think_routine(dinner);
 	}
+	pthread_join(dinner->manager, NULL);
 	exit(PHILO_END_EATING);
 }

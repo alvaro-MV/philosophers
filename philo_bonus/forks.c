@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:24 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 13:37:55by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/17 12:12:10 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,6 @@ void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	}
 	fork_log(args, 1);
 	sem_post(gen->logs_sem);
-	// sem_wait(gen->forks[f1]);
-	// sem_wait(gen->logs_sem);
-	// fork_log(args, 1);
-	// sem_post(gen->logs_sem);
-	// sem_wait(gen->forks[f2]);
-	// sem_wait(gen->logs_sem);
-	// if (args->gen_vars->n_philo == 1)
-	// {
-	// 	sem_post(gen->forks[f2]);
-	// 	sem_post(gen->forks[f1]);
-	// 	return ;
-	// }
-	// fork_log(args, 1);
-	// sem_post(gen->logs_sem);
 }
 
 void	drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
@@ -54,10 +40,6 @@ void	drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	fork_log(args, 0);
 	sem_post(gen->forks);
 	fork_log(args, 0);
-	// sem_post(gen->forks[f1]);
-	// fork_log(args, 0);
-	// sem_post(gen->forks[f2]);
-	// fork_log(args, 0);
 }
 
 void	take_forks_dispatcher(t_philo *dinner)

@@ -16,7 +16,7 @@ SRCS = init.c logs.c main.c manager_routine.c \
 CC = cc
 
 # Opciones de compilación
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 
 # Directorio de archivos fuente
 SRCDIR = .

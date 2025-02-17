@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 11:48:23 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/17 12:25:18 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,25 @@ void	wait_philos(t_philo *arr_dinner)
 {
 	unsigned int	n_philo;
 	unsigned int	i;
-	unsigned int	j;
 	int				status;
-	unsigned 		philos_full;
+	unsigned int	philos_full;
 
-	j = 0;
 	n_philo = arr_dinner->gen_vars->n_philo;
 	while (1)
 	{
-		i = 0;
+		i = -1;
 		philos_full = 0;
-		while (i < n_philo)
+		while (++i < n_philo)
 		{
-			// waitpid(arr_dinner[i].pid, &status, WNOHANG);
 			wait(&status);
 			if (WEXITSTATUS(status) == PHILO_DIED)
 			{
-				while (j < n_philo)
-					kill(arr_dinner[j++].pid, SIGKILL);
+				while (n_philo--)
+					kill(arr_dinner[n_philo].pid, SIGKILL);
 				return ;
 			}
 			if (WEXITSTATUS(status) == PHILO_END_EATING)
 				philos_full++;
-			i++;
 		}
 		if (philos_full == n_philo)
 			return ;
