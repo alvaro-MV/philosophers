@@ -1,4 +1,4 @@
-NAME = philo
+NAME = philo_bonus
 
 SRCS = init.c logs.c main.c manager_routine.c \
 	   parser.c philo_routine.c \

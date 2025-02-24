@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/14 18:05:00 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/24 14:07:46 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ void	*philo_routine(void *vargs)
 	i = 0;
 	while (!dinner->gen_vars->init_time)
 		;
+	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	dinner->time_last_meal = dinner->gen_vars->init_time;
+	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 	if (dinner->tid % 2)
 		usleep(450);
 	while (1)
