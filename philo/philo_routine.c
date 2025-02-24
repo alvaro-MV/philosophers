@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 14:07:46 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:34:34 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@ void	think_routine(t_philo *dinner)
 	if (!dinner->gen_vars->philo_alive)
 		return ;
 	thinking_log(dinner);
+	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
 	if (dinner->n_of_meals == dinner->gen_vars->max_meals)
 	{
 		dinner->gen_vars->philo_alive--;
 		dinner->not_dead = 0;
 	}
+	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 }
 
@@ -47,9 +49,11 @@ void	eat_routine(t_philo *dinner)
 	logs_mutex = &dinner->gen_vars->logs_mutex;
 	gen = dinner->gen_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
+	pthread_mutex_lock(&gen->death_mutex);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
 	dinner->n_of_meals++;
+	pthread_mutex_unlock(&gen->death_mutex);
 	pthread_mutex_unlock(&gen->logs_mutex);
 	manage_usleep(logs_mutex, gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
@@ -87,9 +91,9 @@ void	*philo_routine(void *vargs)
 	i = 0;
 	while (!dinner->gen_vars->init_time)
 		;
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
 	dinner->time_last_meal = dinner->gen_vars->init_time;
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
 	if (dinner->tid % 2)
 		usleep(450);
 	while (1)

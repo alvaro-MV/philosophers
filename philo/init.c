@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 12:12:40 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:24:03 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 int	init_protection_mutexs(t_gen_var *gen_vars)
 {
 	if (pthread_mutex_init(&gen_vars->logs_mutex, NULL))
+	{
+		write(2, "philo: error initialization of protection mutex\n", 49);
+		return (0);
+	}
+	if (pthread_mutex_init(&gen_vars->death_mutex, NULL))
 	{
 		write(2, "philo: error initialization of protection mutex\n", 49);
 		return (0);
