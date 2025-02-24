@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 17:24:54 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/24 19:27:00 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 		if (!args->not_dead)
 		{
 			args->gen_vars->philo_alive--;
+			write(1, "Me cago en la puta\n", 20);
 			pthread_join(philo[i], NULL);
 		}
 		i++;
