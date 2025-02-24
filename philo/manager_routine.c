@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 22:26:27 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/24 22:32:50 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	*philo_died_routine(t_philo *arr_dinner, pthread_t *philo, int i)
 {
 	died_log(&arr_dinner[i]);
 	wait_philos(arr_dinner, philo);
-	// p_free(arr_dinner->gen_vars, arr_dinner, philo);
+	p_free(arr_dinner->gen_vars, arr_dinner, philo);
 	exit (-1);
-	// pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
-	// pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
 	
 	return (NULL);
 }
