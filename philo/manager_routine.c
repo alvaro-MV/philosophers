@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 17:35:38 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/24 17:45:22 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,17 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 	t_gen_var		*gen;
 	t_philo			*arr_dinner;
 	unsigned int	i;
-	// unsigned int	philo_alive;
 	uint64_t		diff_time;
 
 	arr_dinner = (t_philo *) vargs;
 	gen = arr_dinner->gen_vars;
-	while (gen->philo_alive)
+	while (1)
 	{
 		i = 0;
+		pthread_mutex_lock(&arr_dinner->gen_vars->death_mutex);
+		if (!gen->philo_alive)
+			break ;
+		pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
 		manage_usleep(&arr_dinner->gen_vars->logs_mutex, WAI_T);
 		pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
 		while (i < gen->n_philo && arr_dinner[i].not_dead)
