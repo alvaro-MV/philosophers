@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 23:09:14 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/02/26 12:44:52 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	*philo_died_routine(t_philo *arr_dinner, pthread_t *philo, int i)
 	free(arr_dinner->gen_vars->forks_used);
 	free(arr_dinner->gen_vars->forks);
 	ft_free_exit(philo);
-	// p_free(arr_dinner->gen_vars, arr_dinner, philo);
 	return (NULL);
 }
 
