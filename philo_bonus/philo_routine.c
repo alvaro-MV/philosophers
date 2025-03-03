@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 16:35:24 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/03 18:03:42 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,9 @@ void	philo_routine(void *vargs)
 		write(1, "Error creating manager thread.\n", 32);
 		exit(-1);
 	}
+	sem_wait(dinner->gen_vars->last_meal_mutex);
 	dinner->time_last_meal = dinner->gen_vars->init_time;
+	sem_post(dinner->gen_vars->last_meal_mutex);
 	if (dinner->tid % 2)
 		usleep(25000);
 	while (check_running(dinner, &i))

@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 12:39:48 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:06:01 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ int	init_protection_sem(t_gen_var *gen_vars)
 	sem_unlink("/logs_sem");
 	gen_vars->logs_sem = sem_open("/logs_sem", O_CREAT, S_IRUSR, 1);
 	if (gen_vars->logs_sem == SEM_FAILED)
+	{
+		write(2, "philo: error initialization of logs sem.\n", 42);
+		return (0);
+	}
+	sem_unlink("/last_meal_sem");
+	gen_vars->last_meal_mutex = sem_open("/last_meal_sem", O_CREAT, S_IRUSR, 1);
+	if (gen_vars->last_meal_mutex == SEM_FAILED)
 	{
 		write(2, "philo: error initialization of logs sem.\n", 42);
 		return (0);

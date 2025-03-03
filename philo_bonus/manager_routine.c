@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 15:18:29 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:04:44 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ void	*manager_routine(void *vargs)
 	while (dinner->not_dead)
 	{
 		sem_wait(dinner->gen_vars->logs_sem);
+		sem_wait(dinner->gen_vars->last_meal_mutex);
 		since_last_meal = time_diff_usecs(dinner->time_last_meal);
+		sem_post(dinner->gen_vars->last_meal_mutex);
 		if (since_last_meal >= gen_vars->time_to_die)
 		{
 			died_log(dinner);
