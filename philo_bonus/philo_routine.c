@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 18:03:42 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/03 18:39:12 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ void	eat_routine(t_philo *dinner)
 	logs_sem = dinner->gen_vars->logs_sem;
 	gen = dinner->gen_vars;
 	sem_wait(gen->logs_sem);
+	sem_wait(gen->last_meal_mutex);
 	eating_log(dinner);
 	dinner->time_last_meal = get_actual_time();
 	dinner->n_of_meals++;
+	sem_post(gen->last_meal_mutex);
 	sem_post(gen->logs_sem);
 	manage_usleep(logs_sem, gen->time_to_eat);
 	sem_wait(gen->logs_sem);
@@ -53,11 +55,13 @@ void	eat_routine(t_philo *dinner)
 
 static int	check_running(t_philo *dinner, unsigned int *i)
 {
+	sem_wait(dinner->gen_vars->last_meal_mutex);
 	if (!dinner->not_dead)
 	{
 		pthread_join(dinner->manager, NULL);
 		exit(PHILO_DIED);
 	}
+	sem_post(dinner->gen_vars->last_meal_mutex);
 	if (dinner->gen_vars->run_4ever)
 		return (1);
 	else
@@ -69,7 +73,9 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 		}
 		else
 		{
+			sem_wait(dinner->gen_vars->last_meal_mutex);
 			dinner->not_dead = 0;
+			sem_post(dinner->gen_vars->last_meal_mutex);
 			return (0);
 		}
 	}
