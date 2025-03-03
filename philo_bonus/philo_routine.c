@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 16:09:16 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/03 16:35:24 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 			return (1);
 		}
 		else
+		{
+			dinner->not_dead = 0;
 			return (0);
+		}
 	}
 }
 
