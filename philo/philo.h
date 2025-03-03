@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/13 12:36:58 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/03 16:57:28 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void		wait_philos(t_philo *args, pthread_t *philosophers);
 int			init_protection_mutexs(t_gen_var *general_vars);
 int			init_forks(t_gen_var *gen_vars);
 void		init_args(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+t_philo		*init_philo_routine(void *vargs, unsigned int *i);
 
 /* ***************Routines************* */
 

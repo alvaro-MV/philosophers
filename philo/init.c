@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 17:24:03 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/03 17:13:18 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 		}
 		i++;
 	}
+}
+
+t_philo	*init_philo_routine(void *vargs, unsigned int *i)
+{
+	t_philo			*dinner;
+
+	dinner = (t_philo *) vargs;
+	*i = 0;
+	while (!dinner->gen_vars->init_time)
+		;
+	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
+	dinner->time_last_meal = dinner->gen_vars->init_time;
+	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
+	if (dinner->tid % 2)
+		usleep(450);
+	return (dinner);
 }

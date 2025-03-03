@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/24 18:57:04 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/03 17:00:26 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,7 @@ void	*philo_routine(void *vargs)
 	t_philo			*dinner;
 	unsigned int	i;
 
-	dinner = (t_philo *) vargs;
-	i = 0;
-	while (!dinner->gen_vars->init_time)
-		;
-	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
-	dinner->time_last_meal = dinner->gen_vars->init_time;
-	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
-	if (dinner->tid % 2)
-		usleep(450);
+	dinner = init_philo_routine(vargs, &i);
 	while (1)
 	{
 		if (!check_running(dinner, &i))
