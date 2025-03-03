@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo_routine.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 12:50:37 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:09:16 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	philo_routine(void *vargs)
 	}
 	dinner->time_last_meal = dinner->gen_vars->init_time;
 	if (dinner->tid % 2)
-		usleep(45000);
+		usleep(25000);
 	while (check_running(dinner, &i))
 	{
 		take_forks_dispatcher(dinner);
