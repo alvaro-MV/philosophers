@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:43:42 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/10 15:22:37 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:00:31 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ void	parse_input(t_gen_var *gen_vars, char **argv)
 	if (is_in_range_of_uint(argv[0]) && is_in_range_of_ulong(argv[1]))
 	{
 		gen_vars->n_philo = ft_atoui(argv[0]);
-		if (gen_vars->n_philo > MAX_PHILOS)
+		if (gen_vars->n_philo > MAX_PHILOS || gen_vars->n_philo <= 0)
 		{
-			ft_printf("nº of philos exceeds 200.\n");
+			ft_printf("Invalid nº of philos.\n");
 			exit (-1);
 		}
 		gen_vars->time_to_die = ft_atoul(argv[1]);

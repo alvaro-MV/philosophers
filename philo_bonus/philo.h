@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/02/17 12:19:31 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:31:26 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <time.h>
 # include <limits.h>
 # include <sys/wait.h>
-# include "libft/libft.h"
+# include "utils/utils.h"
 
 typedef struct s_general_vars
 {

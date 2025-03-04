@@ -3,14 +3,14 @@ NAME = philo_bonus
 SRCS = init.c logs.c main.c manager_routine.c \
 	   parser.c philo_routine.c \
 	   philo_utils.c sys_calls.c forks.c \
-	   libft/ft_atoui.c libft/ft_atoul.c libft/ft_calloc.c \
-	   libft/ft_itoa_w.c libft/ft_ptoa.c \
-	   libft/ft_utoa.c libft/ft_xtoa.c libft/ft_printf.c \
-	   libft/ft_strtoa.c libft/ft_chtoa.c \
-	   libft/ft_putnbr.c libft/ft_putstr.c \
-	   libft/ft_strlen.c libft/ft_strncmp.c libft/ft_substr.c \
-	   libft/ft_free_exit.c libft/ft_llutoa.c libft/ft_itoa.c \
-	   libft/ft_strjoin.c
+	   utils/ft_atoui.c utils/ft_atoul.c utils/ft_calloc.c \
+	   utils/ft_itoa_w.c utils/ft_ptoa.c \
+	   utils/ft_utoa.c utils/ft_xtoa.c utils/ft_printf.c \
+	   utils/ft_strtoa.c utils/ft_chtoa.c \
+	   utils/ft_putnbr.c utils/ft_putstr.c \
+	   utils/ft_strlen.c utils/ft_strncmp.c utils/ft_substr.c \
+	   utils/ft_free_exit.c utils/ft_llutoa.c utils/ft_itoa.c \
+	   utils/ft_strjoin.c
 
 
 CC = cc
