@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 17:00:26 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/06 17:55:31 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	sleep_routine(t_philo *dinner)
 {
 	pthread_mutex_t	*logs_mutex;
 
+	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
+	if (!dinner->not_dead)
+		return ;
+	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
 	logs_mutex = &dinner->gen_vars->logs_mutex;
 	manage_usleep(logs_mutex, dinner->gen_vars->time_to_sleep);
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
@@ -27,6 +31,8 @@ void	sleep_routine(t_philo *dinner)
 
 void	think_routine(t_philo *dinner)
 {
+	if (!dinner->not_dead)
+		return ;
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -46,6 +52,8 @@ void	eat_routine(t_philo *dinner)
 	t_gen_var		*gen;
 	pthread_mutex_t	*logs_mutex;
 
+	if (!dinner->not_dead)
+		return ;
 	logs_mutex = &dinner->gen_vars->logs_mutex;
 	gen = dinner->gen_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
@@ -90,8 +98,12 @@ void	*philo_routine(void *vargs)
 	dinner = init_philo_routine(vargs, &i);
 	while (1)
 	{
+		if (!dinner->not_dead)
+			return (NULL);
 		if (!check_running(dinner, &i))
 			return (NULL);
+		if (dinner->tid % 2)
+			usleep (4500);
 		take_forks_dispatcher(dinner);
 		eat_routine(dinner);
 		sleep_routine(dinner);

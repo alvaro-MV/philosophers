@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:24 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/04 17:30:17 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:51:55 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,25 @@
 void	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 {
 	pthread_mutex_lock(&gen->forks[f1]);
+	if (!args->not_dead)
+		return ;
 	pthread_mutex_lock(&gen->logs_mutex);
+	if (!args->not_dead)
+	{
+		pthread_mutex_unlock(&gen->forks[f1]);
+		pthread_mutex_unlock(&gen->logs_mutex);
+		return ;
+	}
 	fork_log(args, 1);
 	pthread_mutex_unlock(&gen->logs_mutex);
 
 	pthread_mutex_lock(&gen->forks[f2]);
+	if (!args->not_dead)
+	{
+		pthread_mutex_unlock(&gen->forks[f1]);
+		pthread_mutex_unlock(&gen->logs_mutex);
+		return ;
+	}
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (args->gen_vars->n_philo == 1)
 	{
