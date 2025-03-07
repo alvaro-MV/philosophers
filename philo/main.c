@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 15:54:43 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/07 18:43:08 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 		pthread_detach(philo[i]);
 		i++;
 	}
+	// pthread_mutex_unlock(&args->gen_vars->logs_mutex);
 }
 
 void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
