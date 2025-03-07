@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 15:48:43 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/07 16:10:43 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,11 @@
 
 void	sleep_routine(t_philo *dinner)
 {
-	pthread_mutex_t	*logs_mutex;
-
 	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
 	if (!dinner->not_dead)
 		return ;
 	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
-	logs_mutex = &dinner->gen_vars->logs_mutex;
-	manage_usleep(logs_mutex, dinner->gen_vars->time_to_sleep);
+	manage_usleep(dinner->gen_vars->time_to_sleep);
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;
@@ -50,11 +47,9 @@ void	think_routine(t_philo *dinner)
 void	eat_routine(t_philo *dinner)
 {
 	t_gen_var		*gen;
-	pthread_mutex_t	*logs_mutex;
 
 	if (!dinner->not_dead)
 		return ;
-	logs_mutex = &dinner->gen_vars->logs_mutex;
 	gen = dinner->gen_vars;
 	pthread_mutex_lock(&gen->logs_mutex);
 	pthread_mutex_lock(&gen->death_mutex);
@@ -63,7 +58,7 @@ void	eat_routine(t_philo *dinner)
 	dinner->n_of_meals++;
 	pthread_mutex_unlock(&gen->death_mutex);
 	pthread_mutex_unlock(&gen->logs_mutex);
-	manage_usleep(logs_mutex, gen->time_to_eat);
+	manage_usleep(gen->time_to_eat);
 	pthread_mutex_lock(&gen->logs_mutex);
 	if (!dinner->gen_vars->philo_alive)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 13:35:57 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/07 16:02:20 alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,18 @@ void	p_new(t_gen_var *gen_vars, t_philo **dinner, pthread_t **philo)
 
 void	p_free(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 {
+	size_t	i;
+
+	i = 0;
 	while (dinner->gen_vars->philo_alive)
 		;
+	pthread_mutex_destroy(&gen_vars->death_mutex);
+	pthread_mutex_destroy(&gen_vars->logs_mutex);
+	while (i < gen_vars->n_philo)
+	{
+		pthread_mutex_destroy(&gen_vars->forks[i]);
+		i++;
+	}
 	free(gen_vars->forks_used);
 	free(gen_vars->forks);
 	free(dinner);
