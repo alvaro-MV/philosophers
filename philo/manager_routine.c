@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manager_routine.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/04 17:11:49 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:54:01 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	check_liveness(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 {
 	uint64_t		diff_time;
 
-	pthread_mutex_lock(&arr_dinner->gen_vars->death_mutex);
 	diff_time = time_diff_usecs(arr_dinner[*i].time_last_meal);
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
+		pthread_mutex_lock(&arr_dinner->gen_vars->death_mutex);
 		arr_dinner[*i].not_dead = 0;
 		arr_dinner[*i].gen_vars->philo_alive--;
+		pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
 		philo_died_routine(arr_dinner, philo, *i);
 		return (0);
 	}
 	(*i)++;
-	pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
 	return (1);
 }
 
@@ -59,7 +59,10 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 		while (i < gen->n_philo && arr_dinner[i].not_dead)
 		{
 			if (!check_liveness(arr_dinner, &i, philo))
+			{
+				pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 				return (NULL);
+			}
 		}
 		pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 	}

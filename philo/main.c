@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 15:53:12 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:54:43 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 
 	i = 0;
 	n_philo = args->gen_vars->n_philo;
-	while (i < n_philo)
+	while (i < n_philo && args->not_dead)
 	{
 		args->gen_vars->philo_alive--;
-		pthread_join(philo[i], NULL);
+		pthread_detach(philo[i]);
 		i++;
 	}
 }
