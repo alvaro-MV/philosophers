@@ -73,11 +73,26 @@ void	p_new(t_gen_var *gen_vars, t_philo **dinner, pthread_t **philo)
 
 void	p_free(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 {
-	size_t	i;
+	unsigned int	i;
 
+	while (1)
+	{
+		i = 0;
+		while (i < gen_vars->n_philo)
+		{
+			pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+			if (!dinner[i].th_finish)
+			{
+				pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+				break ;
+			}
+			pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+			i++;
+		}
+		if (i == gen_vars->n_philo)
+			break;
+	}
 	i = 0;
-	while (dinner->gen_vars->philo_alive)
-		;
 	pthread_mutex_destroy(&gen_vars->death_mutex);
 	pthread_mutex_destroy(&gen_vars->logs_mutex);
 	while (i < gen_vars->n_philo)

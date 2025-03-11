@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 16:06:25 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:12:19 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ typedef struct s_philo
 	unsigned int	tid;
 	unsigned int	n_of_meals;
 	uint64_t		time_last_meal;
+	uint64_t		born_time;
 	pthread_mutex_t	last_meal_mutex;
 	unsigned int	not_dead;
+	unsigned int	th_finish;
 }					t_philo;
 
 # define MAX_PHILOS 200
@@ -80,8 +82,8 @@ int			compatible(t_philo *args);
 
 /* ***************Forks***************** */
 
-void		take_forks_dispatcher(t_philo *dinner);
-void		take_forks(t_gen_var *gen, t_philo *args, int f1, int f2);
+int			take_forks_dispatcher(t_philo *dinner);
+int			take_forks(t_gen_var *gen, t_philo *args, int f1, int f2);
 void		drop_forks(t_gen_var *gen, t_philo *args, int f1, int f2);
 
 /* ***************Logs****************** */

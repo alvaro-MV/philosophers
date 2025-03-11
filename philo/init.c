@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 17:13:18 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:12:37 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	init_args(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 		dinner[i].tid = i + 1;
 		dinner[i].n_of_meals = 0;
 		dinner[i].not_dead = 1;
+		dinner[i].th_finish = 0;
 		if (pthread_mutex_init(&dinner[i].last_meal_mutex, NULL))
 		{
 			write(2, "philo: error  creating mutex\n", 30);
@@ -74,11 +75,10 @@ t_philo	*init_philo_routine(void *vargs, unsigned int *i)
 
 	dinner = (t_philo *) vargs;
 	*i = 0;
-	while (!dinner->gen_vars->init_time)
-		;
-	pthread_mutex_lock(&dinner->gen_vars->death_mutex);
-	dinner->time_last_meal = dinner->gen_vars->init_time;
-	pthread_mutex_unlock(&dinner->gen_vars->death_mutex);
+	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+	dinner->born_time = get_actual_time();
+	dinner->time_last_meal = get_actual_time();
+	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 	if (dinner->tid % 2)
 		usleep(450);
 	return (dinner);

@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 18:51:58 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:56:31alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@ void	*philo_died_routine(t_philo *arr_dinner, pthread_t *philo, int i)
 {
 	(void) philo;
 	died_log(&arr_dinner[i]);
-	// free(arr_dinner->gen_vars->forks_used);
-	// free(arr_dinner->gen_vars->forks);
-	// free(philo);
 	return (NULL);
 }
 
@@ -28,18 +25,16 @@ int	check_liveness(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 	size_t			j;
 
 	j = 0;
+
 	diff_time = time_diff_usecs(arr_dinner[*i].time_last_meal);
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
-		pthread_mutex_lock(&arr_dinner->gen_vars->death_mutex);
 		while (j < arr_dinner->gen_vars->n_philo)
 			arr_dinner[j++].not_dead = 0;
 		arr_dinner->gen_vars->philo_alive--;
-		pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
 		philo_died_routine(arr_dinner, philo, *i);
 		return (0);
 	}
-	(*i)++;
 	return (1);
 }
 
@@ -48,32 +43,35 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 	t_gen_var		*gen;
 	t_philo			*arr_dinner;
 	unsigned int	i;
+	unsigned int	n_dead;
 
 	arr_dinner = (t_philo *) vargs;
 	gen = arr_dinner->gen_vars;
 	while (1)
 	{
-		i = 0;
-		pthread_mutex_lock(&arr_dinner->gen_vars->death_mutex);
-		if (!gen->philo_alive)
-		{
-			pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
+		if (n_dead == gen->n_philo)
 			break ;
-		}
-		pthread_mutex_unlock(&arr_dinner->gen_vars->death_mutex);
-		manage_usleep(WAI_T);
-		pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
-		while (i < gen->n_philo && arr_dinner[i].not_dead)
+		n_dead = 0;
+		i = 0;
+		// manage_usleep(WAI_T);
+		while (i < gen->n_philo)
 		{
-			if (!check_liveness(arr_dinner, &i, philo))
+			pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
+			if (arr_dinner[i].not_dead && !check_liveness(arr_dinner, &i, philo))
 			{
-				// pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
+				// if (!check_liveness(arr_dinner, &i, philo))
+				// {
+				n_dead = gen->n_philo;
+				pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 				break ;
-				// return (NULL);
+				// }
 			}
+			if (!arr_dinner[i].not_dead)
+				n_dead++;
+			i++;
+			pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		}
-		pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 	}
-	wait_philos(arr_dinner, philo);
+	// wait_philos(arr_dinner, philo);
 	return (NULL);
 }

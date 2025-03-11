@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 18:43:08 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:39:44 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 
 	i = 0;
 	n_philo = args->gen_vars->n_philo;
-	while (i < n_philo && args->not_dead)
+	while (i < n_philo && args[i].not_dead)
 	{
 		args->gen_vars->philo_alive--;
-		pthread_detach(philo[i]);
+		pthread_join(philo[i], NULL);
+		// pthread_detach(philo[i]);
 		i++;
 	}
 	// pthread_mutex_unlock(&args->gen_vars->logs_mutex);
@@ -41,7 +42,6 @@ void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 		if (pthread_create(&philo[i], NULL, philo_routine, &dinner[i]))
 		{
 			write(2, "philo: error creating philosophers\n", 36);
-			pthread_mutex_lock(&gen_vars->logs_mutex);
 			p_free(gen_vars, dinner, philo);
 		}
 		i++;
@@ -70,4 +70,5 @@ int	main(int argc, char **argv)
 		return (p_free(&gen_vars, arr_dinner, philosophers), -1);
 	run_philos(&gen_vars, arr_dinner, philosophers);
 	p_free(&gen_vars, arr_dinner, philosophers);
+	return (0);
 }
