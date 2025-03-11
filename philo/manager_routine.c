@@ -47,24 +47,22 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 
 	arr_dinner = (t_philo *) vargs;
 	gen = arr_dinner->gen_vars;
+	n_dead = 0;
 	while (1)
 	{
 		if (n_dead == gen->n_philo)
 			break ;
 		n_dead = 0;
 		i = 0;
-		// manage_usleep(WAI_T);
+		manage_usleep(WAI_T);
 		while (i < gen->n_philo)
 		{
 			pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
 			if (arr_dinner[i].not_dead && !check_liveness(arr_dinner, &i, philo))
 			{
-				// if (!check_liveness(arr_dinner, &i, philo))
-				// {
 				n_dead = gen->n_philo;
 				pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 				break ;
-				// }
 			}
 			if (!arr_dinner[i].not_dead)
 				n_dead++;

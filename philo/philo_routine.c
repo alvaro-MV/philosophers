@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 12:46:32 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 12:55:01 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	think_routine(t_philo *dinner)
 		pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 		return ;
 	}	
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	thinking_log(dinner);
 	if (dinner->n_of_meals == dinner->gen_vars->max_meals)
 	{
