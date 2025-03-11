@@ -39,7 +39,13 @@ int	check_liveness(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
 		while (j < arr_dinner->gen_vars->n_philo)
-			arr_dinner[j++].not_dead = 0;
+		{
+			arr_dinner[j].not_dead = 0;
+			j++;
+		}
+		j = 0;
+		while (j < arr_dinner->gen_vars->n_philo)
+			pthread_detach(philo[j++]);
 		arr_dinner->gen_vars->philo_alive--;
 		philo_died_routine(arr_dinner, philo, *i);
 		return (0);
