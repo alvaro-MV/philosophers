@@ -70,6 +70,5 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 			pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		}
 	}
-	// wait_philos(arr_dinner, philo);
 	return (NULL);
 }

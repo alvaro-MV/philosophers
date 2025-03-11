@@ -34,10 +34,11 @@ int	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	// }
 	// pthread_mutex_unlock(&gen->logs_mutex);
 	pthread_mutex_lock(&gen->logs_mutex);
-	if (args->gen_vars->n_philo == 1)
+	if (!args->not_dead || args->gen_vars->n_philo == 1)
 	{
 		pthread_mutex_unlock(&gen->forks[f2]);
 		pthread_mutex_unlock(&gen->forks[f1]);
+		pthread_mutex_unlock(&gen->logs_mutex);
 		return (0);
 	}
 	fork_log(args, 1);
