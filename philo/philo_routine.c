@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 14:08:53 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/11 20:59:35 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sleep_routine(t_philo *dinner)
 	{
 		pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 		return ;
-	}	
+	}
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	sleeping_log(dinner);
@@ -37,11 +37,11 @@ void	think_routine(t_philo *dinner)
 		return ;
 	}	
 	thinking_log(dinner);
-	if (dinner->n_of_meals == dinner->gen_vars->max_meals)
-	{
-		dinner->gen_vars->philo_alive--;
-		dinner->not_dead = 0;
-	}
+	// if (dinner->n_of_meals == dinner->gen_vars->max_meals)
+	// {
+	// 	dinner->gen_vars->philo_alive--;
+	// 	dinner->not_dead = 0;
+	// }
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 }
 
@@ -73,8 +73,7 @@ void	eat_routine(t_philo *dinner)
 		eating_log(dinner);
 	}
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-	if (dinner->not_dead)
-		manage_usleep(dinner->gen_vars->time_to_eat);
+	manage_usleep(dinner->gen_vars->time_to_eat);
 	if (dinner->tid % 2)
 		drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
 	else

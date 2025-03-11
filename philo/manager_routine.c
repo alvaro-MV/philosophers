@@ -23,9 +23,18 @@ int	check_liveness(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 {
 	uint64_t		diff_time;
 	size_t			j;
+	size_t			stop;
 
 	j = 0;
-
+	stop = 1;
+	while (j < arr_dinner->gen_vars->n_philo && stop)
+	{
+		stop = arr_dinner[j].n_of_meals >= arr_dinner[j].gen_vars->max_meals;
+		j++;
+	}
+	if (stop)
+		return (0);
+	j = 0;
 	diff_time = time_diff_usecs(arr_dinner[*i].time_last_meal);
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
@@ -70,5 +79,6 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 			pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		}
 	}
+	wait_philos(arr_dinner, philo);
 	return (NULL);
 }
