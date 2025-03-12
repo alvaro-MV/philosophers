@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sys_calls.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 16:05:55 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/12 16:19:39 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	manage_usleep(__useconds_t	miliseconds)
 	start = get_actual_time();
 	while (get_actual_time() < start + miliseconds)
 	{
-		usleep(9);
+		usleep(3);
 	}
 }
 
