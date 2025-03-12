@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:44 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 12:12:19 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/12 01:18:52 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ uint64_t	time_diff_usecs(uint64_t start);
 void		parse_input(t_gen_var *gen_vars, char **argv);
 void		p_new(t_gen_var *gen_vars, t_philo **args, pthread_t **philo);
 void		p_free(t_gen_var *gen_vars, t_philo *args, pthread_t *philo);
+void		free_dinner(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo);
 void		wait_philos(t_philo *args, pthread_t *philosophers);
 
 /* 	*************Initialization******* */
@@ -77,6 +78,7 @@ t_philo		*init_philo_routine(void *vargs, unsigned int *i);
 /* ***************Routines************* */
 
 void		*philo_routine(void *vargs);
+void		eat_routine(t_philo *dinner);
 void		*manager_routine(void *vargs, pthread_t *philo);
 int			compatible(t_philo *args);
 

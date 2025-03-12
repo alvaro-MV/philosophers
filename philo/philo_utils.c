@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:17 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/07 16:02:20 alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/12 01:19:28 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,37 +90,7 @@ void	p_free(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 			i++;
 		}
 		if (i == gen_vars->n_philo)
-			break;
+			break ;
 	}
-	i = 0;
-	pthread_mutex_destroy(&gen_vars->death_mutex);
-	pthread_mutex_destroy(&gen_vars->logs_mutex);
-	while (i < gen_vars->n_philo)
-	{
-		pthread_mutex_destroy(&gen_vars->forks[i]);
-		i++;
-	}
-	free(gen_vars->forks_used);
-	free(gen_vars->forks);
-	free(dinner);
-	ft_free_exit(philo);
+	free_dinner(gen_vars, dinner, philo);
 }
-
-// int	main(void)
-// {
-// 	unsigned long long	timestamp;
-// 	unsigned long long	zero_tmstmp;
-// 	struct timeval		tv;
-// 	int	i = 0;
-
-// 	gettimeofday(&tv, NULL);
-// 	zero_tmstmp = tv.tv_usec;
-// 	while (i < 7)
-// 	{
-// 		gettimeofday(&tv, NULL);
-// 		timestamp = tv.tv_usec - zero_tmstmp;
-// 		printf("Paco Javier: %llu\n", timestamp);
-// 		i++;
-// 	}
-// 	return (0);
-// }

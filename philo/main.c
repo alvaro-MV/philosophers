@@ -6,11 +6,29 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 13:31:52 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/12 01:19:46 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_dinner(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
+{
+	size_t	i;
+
+	i = 0;
+	pthread_mutex_destroy(&gen_vars->death_mutex);
+	pthread_mutex_destroy(&gen_vars->logs_mutex);
+	while (i < gen_vars->n_philo)
+	{
+		pthread_mutex_destroy(&gen_vars->forks[i]);
+		i++;
+	}
+	free(gen_vars->forks_used);
+	free(gen_vars->forks);
+	free(dinner);
+	free(philo);
+}
 
 void	wait_philos(t_philo *args, pthread_t *philo)
 {
@@ -23,10 +41,8 @@ void	wait_philos(t_philo *args, pthread_t *philo)
 	{
 		args->gen_vars->philo_alive--;
 		pthread_join(philo[i], NULL);
-		// pthread_detach(philo[i]);
 		i++;
 	}
-	// pthread_mutex_unlock(&args->gen_vars->logs_mutex);
 }
 
 void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)

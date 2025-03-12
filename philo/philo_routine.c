@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:58 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 20:59:35 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/12 01:14:33 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,55 +29,14 @@ void	sleep_routine(t_philo *dinner)
 
 void	think_routine(t_philo *dinner)
 {
-
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	if (!dinner->not_dead)
 	{
 		pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 		return ;
-	}	
+	}
 	thinking_log(dinner);
-	// if (dinner->n_of_meals == dinner->gen_vars->max_meals)
-	// {
-	// 	dinner->gen_vars->philo_alive--;
-	// 	dinner->not_dead = 0;
-	// }
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-}
-
-void	eat_routine(t_philo *dinner)
-{
-	t_gen_var		*gen;
-
-	gen = dinner->gen_vars;
-
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
-	if (!dinner->not_dead)
-	{
-		if (dinner->tid % 2)
-		{
-			pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-			drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
-		}
-		else
-		{
-			pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-			drop_forks(gen, dinner, dinner->tid - 1, dinner->tid % gen->n_philo);
-		}
-		return ;
-	}
-	if (dinner->not_dead)
-	{
-		dinner->time_last_meal = get_actual_time();
-		dinner->n_of_meals++;
-		eating_log(dinner);
-	}
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-	manage_usleep(dinner->gen_vars->time_to_eat);
-	if (dinner->tid % 2)
-		drop_forks(gen, dinner, dinner->tid % gen->n_philo, dinner->tid - 1);
-	else
-		drop_forks(gen, dinner, dinner->tid - 1, dinner->tid % gen->n_philo);
 }
 
 static int	check_running(t_philo *dinner, unsigned int *i)
@@ -103,6 +62,13 @@ static int	check_running(t_philo *dinner, unsigned int *i)
 	}
 }
 
+void	_philo_routine(t_philo *dinner)
+{
+	eat_routine(dinner);
+	sleep_routine(dinner);
+	think_routine(dinner);
+}
+
 void	*philo_routine(void *vargs)
 {
 	t_philo			*dinner;
@@ -116,7 +82,7 @@ void	*philo_routine(void *vargs)
 		{
 			pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 			break ;
-		}	
+		}
 		pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 		if (!check_running(dinner, &i))
 			break ;
@@ -124,9 +90,7 @@ void	*philo_routine(void *vargs)
 			usleep(450);
 		if (!take_forks_dispatcher(dinner))
 			break ;
-		eat_routine(dinner);
-		sleep_routine(dinner);
-		think_routine(dinner);
+		_philo_routine(dinner);
 	}
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	dinner->th_finish = 1;

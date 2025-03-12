@@ -1,7 +1,7 @@
 NAME = philo
 
 SRCS = init.c logs.c main.c manager_routine.c \
-	   parser.c philo_routine.c \
+	   parser.c philo_routine.c eat_routine.c \
 	   philo_utils.c sys_calls.c forks.c \
 	   utils/ft_atoui.c utils/ft_atoul.c utils/ft_calloc.c \
 	   utils/ft_itoa.c utils/ft_ptoa.c \
