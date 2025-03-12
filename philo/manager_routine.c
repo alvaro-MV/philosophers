@@ -6,7 +6,7 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/12 16:29:49 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:03:42 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,15 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 	{
 		n_dead = 0;
 		i = -1;
-		usleep(1000);
+		manage_usleep(1);
 		while (++i < arr_dinner->gen_vars->n_philo)
 		{
-			//pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
 			if (arr_dinner[i].not_dead && !check_live(arr_dinner, &i, philo))
 			{
 				n_dead = arr_dinner->gen_vars->n_philo;
-				//pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 				break ;
 			}
 			n_dead += !arr_dinner[i].not_dead;
-			//pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		}
 	}
 	return (wait_philos(arr_dinner, philo), NULL);

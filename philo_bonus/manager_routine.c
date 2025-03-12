@@ -6,11 +6,20 @@
 /*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/03 18:26:43 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:06:37 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	died_routine(t_philo *dinner)
+{
+	died_log(dinner);
+	sem_wait(dinner->gen_vars->last_meal_mutex);
+	dinner->not_dead = 0;
+	sem_post(dinner->gen_vars->last_meal_mutex);
+	exit(9);
+}
 
 void	*manager_routine(void *vargs)
 {
@@ -34,13 +43,7 @@ void	*manager_routine(void *vargs)
 		since_last_meal = time_diff_usecs(dinner->time_last_meal);
 		sem_post(dinner->gen_vars->last_meal_mutex);
 		if (since_last_meal >= gen_vars->time_to_die)
-		{
-			died_log(dinner);
-			sem_wait(dinner->gen_vars->last_meal_mutex);
-			dinner->not_dead = 0;
-			sem_post(dinner->gen_vars->last_meal_mutex);
-			exit(9);
-		}
+			died_routine(dinner);
 		sem_post(dinner->gen_vars->logs_sem);
 	}
 	return (NULL);
