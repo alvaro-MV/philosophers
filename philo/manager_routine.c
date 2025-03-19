@@ -43,8 +43,8 @@ int	check_live(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 	if (!check_philos_end_eating(arr_dinner))
 		return (0);
 	j = 0;
-	diff_time = time_diff_usecs(arr_dinner[*i].time_last_meal);
 	pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
+	diff_time = time_diff_usecs(arr_dinner[*i].time_last_meal);
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
 		while (j < arr_dinner->gen_vars->n_philo)
