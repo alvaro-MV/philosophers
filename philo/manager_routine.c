@@ -51,7 +51,6 @@ int	check_live(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 		while (j < arr_dinner->gen_vars->n_philo)
 		{
 			arr_dinner[j].not_dead = 0;
-			printf("id: %zu\n", j);
 			j++;
 		}
 		j = 0;
@@ -77,19 +76,18 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 	{
 		n_dead = 0;
 		i = -1;
-		pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
-			// write(1, "pero como no va a entra hijo de puta\n", 38);
 		while (++i < arr_dinner->gen_vars->n_philo)
 		{
+			pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
 			if (arr_dinner[i].not_dead && !check_live(arr_dinner, &i, philo))
 			{
 				n_dead = arr_dinner->gen_vars->n_philo;
-				// pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
+				pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 				break ;
 			}
 			n_dead += !arr_dinner[i].not_dead;
+			pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		}
-		pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 	}
 	return (wait_philos(arr_dinner, philo), NULL);
 }
