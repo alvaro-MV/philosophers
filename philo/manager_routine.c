@@ -6,7 +6,7 @@
 /*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:04 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/19 12:22:19 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/19 12:37:41y alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	check_live(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 	pthread_mutex_lock(&arr_dinner->gen_vars->logs_mutex);
 	if (diff_time >= arr_dinner[*i].gen_vars->time_to_die)
 	{
-		pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		while (j < arr_dinner->gen_vars->n_philo)
 		{
 			arr_dinner[j].not_dead = 0;
@@ -58,6 +57,7 @@ int	check_live(t_philo *arr_dinner, unsigned int *i, pthread_t *philo)
 			pthread_detach(philo[j++]);
 		arr_dinner->gen_vars->philo_alive--;
 		philo_died_routine(arr_dinner, *i);
+		pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
 		return (0);
 	}
 	pthread_mutex_unlock(&arr_dinner->gen_vars->logs_mutex);
@@ -72,12 +72,11 @@ void	*manager_routine(void *vargs, pthread_t *philo)
 
 	arr_dinner = (t_philo *) vargs;
 	n_dead = -1;
-	manage_usleep(WAI_T);
+	manage_usleep(2);
 	while (n_dead != arr_dinner->gen_vars->n_philo)
 	{
 		n_dead = 0;
 		i = -1;
-		manage_usleep(1);
 		while (++i < arr_dinner->gen_vars->n_philo)
 		{
 			if (arr_dinner[i].not_dead && !check_live(arr_dinner, &i, philo))
