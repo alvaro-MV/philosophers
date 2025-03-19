@@ -31,12 +31,8 @@ int	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 	{
 		if (gen->n_philo == 1)
 		{
-			args->not_dead = 0;
 			manage_usleep(gen->time_to_die);
 			died_log(args);
-			pthread_mutex_unlock(&gen->forks[f1]);
-			pthread_mutex_unlock(&gen->logs_mutex);
-			return (0);
 		}
 		else
 			pthread_mutex_unlock(&gen->forks[f2]);

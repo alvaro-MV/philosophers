@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   eat_routine.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/12 16:07:43 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/12 16:07:44 by alvmoral         ###   ########.fr       */
+/*   Updated: 2025/03/19 13:13:34 by alvaro           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	philo_eating(t_philo *dinner)
 {
 	if (dinner->not_dead)
 	{
+		pthread_mutex_lock(&dinner->last_meal_mutex);
 		dinner->time_last_meal = get_actual_time();
+		pthread_mutex_unlock(&dinner->last_meal_mutex);
 		dinner->n_of_meals++;
 		eating_log(dinner);
 	}
