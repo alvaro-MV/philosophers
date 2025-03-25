@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:37:24 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/19 12:47:37by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:09:15 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int	take_forks(t_gen_var *gen, t_philo *args, int f1, int f2)
 		pthread_mutex_unlock(&gen->logs_mutex);
 		return (0);
 	}
-	fork_log(args, 1);
-	pthread_mutex_unlock(&gen->logs_mutex);
+	(fork_log(args, 1), pthread_mutex_unlock(&gen->logs_mutex));
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:41:30 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/12 01:19:46 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:05:55 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	run_philos(t_gen_var *gen_vars, t_philo *dinner, pthread_t *philo)
 	gen_vars->init_time = get_actual_time();
 	while (i < gen_vars->n_philo)
 	{
+		dinner[i].born_time = get_actual_time();
+		dinner[i].time_last_meal = get_actual_time();
 		if (pthread_create(&philo[i], NULL, philo_routine, &dinner[i]))
 		{
 			write(2, "philo: error creating philosophers\n", 36);

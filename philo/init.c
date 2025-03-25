@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alvaro <alvaro@student.42.fr>              +#+  +:+       +#+        */
+/*   By: alvmoral <alvmoral@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 22:40:54 by alvmoral          #+#    #+#             */
-/*   Updated: 2025/03/11 12:12:37 by alvaro           ###   ########.fr       */
+/*   Updated: 2025/03/25 15:13:11 by alvmoral         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ t_philo	*init_philo_routine(void *vargs, unsigned int *i)
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 	if (dinner->tid % 2)
 		usleep(450);
+	manage_usleep(5);
 	return (dinner);
 }
