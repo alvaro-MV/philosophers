@@ -76,7 +76,7 @@ t_philo	*init_philo_routine(void *vargs, unsigned int *i)
 	dinner = (t_philo *) vargs;
 	*i = 0;
 	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
-	dinner->born_time = get_actual_time();
+	dinner->born_time = dinner->gen_vars->init_time;
 	dinner->time_last_meal = get_actual_time();
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 	if (dinner->tid % 2)

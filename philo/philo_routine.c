@@ -21,8 +21,8 @@ void	sleep_routine(t_philo *dinner)
 		pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 		return ;
 	}
-	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
-	pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
+	// pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
+	// pthread_mutex_lock(&dinner->gen_vars->logs_mutex);
 	sleeping_log(dinner);
 	pthread_mutex_unlock(&dinner->gen_vars->logs_mutex);
 }

@@ -18,9 +18,9 @@ void	philo_eating(t_philo *dinner)
 	{
 		pthread_mutex_lock(&dinner->last_meal_mutex);
 		dinner->time_last_meal = get_actual_time();
-		pthread_mutex_unlock(&dinner->last_meal_mutex);
 		dinner->n_of_meals++;
 		eating_log(dinner);
+		pthread_mutex_unlock(&dinner->last_meal_mutex);
 	}
 }
 
